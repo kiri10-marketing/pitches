@@ -191,10 +191,10 @@ export const landing: Record<Audience, Landing> = {
       { label: "FAQ", href: "#faq" },
     ],
     hero: {
-      eyebrow: "For small and medium builders",
-      title: "You build for developers.",
+      eyebrow: "For ambitious NZ builders",
+      title: "You built for developers.",
       highlight: "Develop your own site",
-      titleEnd: "with two developers in your corner.",
+      titleEnd: "with experienced developers in your corner.",
       body:
         "You know how to build. We help with everything around it: whether a site stacks up before you buy, what to build on it, the numbers your bank will ask for, and the marketing that gets you pre-sales.",
       primary: "Check a site",
