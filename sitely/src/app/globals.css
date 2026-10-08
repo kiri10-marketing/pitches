@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --color-green: #093b23;
+  --color-green-2: #0f4d2f;
+  --color-mint: #a9dcb9;
+  --color-gold: #e3a72f;
+  --color-gold-dark: #a8720c;
+  --color-cream: #faf7f0;
+  --color-sand: #f1ece0;
+  --color-ink: #1a2420;
+  --color-muted: #48544e;
+  --color-line: #ddd6c6;
+  --font-head: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+html { scroll-behavior: smooth; }
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-head); color: var(--color-green); letter-spacing: -0.02em; line-height: 1.1; }
+}
+
+@layer components {
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 999px; font-weight: 700; white-space: nowrap; padding: .85rem 1.6rem; transition: background .15s, transform .15s; }
+.btn-gold { background: var(--color-gold); color: #1d1606; }
+.btn-gold:hover { background: #d4961d; }
+.btn-line { border: 2px solid currentColor; }
+.btn:active { transform: translateY(1px); }
+
+.field { display: block; width: 100%; border: 1.5px solid var(--color-line); background: #fff; border-radius: .75rem; padding: .75rem 1rem; font-size: 1rem; color: var(--color-ink); }
+.field:focus { outline: 3px solid color-mix(in srgb, var(--color-gold) 45%, transparent); border-color: var(--color-gold-dark); }
+.label { display: block; font-weight: 600; font-size: .95rem; margin-bottom: .35rem; color: var(--color-ink); }
+}
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
