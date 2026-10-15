@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { CLAUSE } from "@/lib/access";
 
 export const metadata: Metadata = {
   title: "The Oval | Private preview",
@@ -17,12 +18,16 @@ export default async function AccessPage({ searchParams }: { searchParams: Promi
         </div>
         <h1 className="mt-8 text-4xl font-extrabold leading-tight" style={{ fontFamily: "var(--font-heading)", color: "#fff" }}>Private preview</h1>
         <p className="mt-4 text-lg leading-relaxed text-white/85">
-          This concept for 120 Main South Road, Sockburn, has been shared with you personally. Enter the access code you were sent to continue.
+          This concept for 120 Main South Road, Sockburn, has been shared with you personally. Enter your name and the access code you were sent, then agree to keep it confidential.
         </p>
 
         <form action="/api/access" method="post" className="mt-8">
           <input type="hidden" name="next" value={next ?? "/"} />
-          <label htmlFor="code" className="block text-sm font-semibold uppercase tracking-wider text-amber">Access code</label>
+          <label htmlFor="name" className="block text-sm font-semibold uppercase tracking-wider text-amber">Your full name</label>
+          <input id="name" name="name" required autoComplete="name" className="mt-2 w-full rounded-xl border border-white/30 bg-white/10 px-4 py-4 text-xl text-white placeholder:text-white/40 focus:border-amber focus:outline-none" />
+          {error === "name" && <p className="mt-2 text-base text-amber" role="alert">Please enter your name.</p>}
+
+          <label htmlFor="code" className="mt-6 block text-sm font-semibold uppercase tracking-wider text-amber">Access code</label>
           <input
             id="code"
             name="code"
@@ -31,11 +36,25 @@ export default async function AccessPage({ searchParams }: { searchParams: Promi
             autoCapitalize="characters"
             spellCheck={false}
             placeholder="OVAL-XXXX-XXXX"
-            className="mt-2 w-full rounded-xl border border-white/30 bg-white/10 px-4 py-4 text-xl tracking-wider text-white placeholder:text-white/40 focus:border-amber focus:outline-none"
+            className="mt-2 w-full rounded-xl border border-white/30 bg-white/10 px-4 py-4 text-xl text-white placeholder:text-white/40 focus:border-amber focus:outline-none tracking-wider"
           />
-          {error && <p className="mt-3 text-base text-amber" role="alert">That code isn&apos;t recognised. Please check it, or ask Angela Webb for a new one.</p>}
-          <button type="submit" className="mt-5 w-full rounded-full bg-amber px-6 py-4 text-lg font-bold text-ink hover:brightness-105">
-            View The Oval
+          {error && error !== "name" && error !== "agree" && <p className="mt-2 text-base text-amber" role="alert">That code isn&apos;t recognised. Please check it, or ask Angela Webb for a new one.</p>}
+
+          <div className="mt-8 rounded-xl border border-white/25 bg-white/5 p-5">
+            <p className="text-sm font-semibold uppercase tracking-wider text-amber">Confidentiality</p>
+            <p className="mt-2 text-base text-white/90">By ticking the box I agree that:</p>
+            <ul className="mt-2 list-disc space-y-2 pl-5 text-base leading-relaxed text-white/85">
+              {CLAUSE.map((c) => <li key={c}>{c}</li>)}
+            </ul>
+            <label className="mt-5 flex cursor-pointer items-start gap-3 text-lg font-semibold">
+              <input type="checkbox" name="agree" value="yes" required className="mt-1 h-6 w-6 shrink-0 accent-[#f4a93a]" />
+              I have read and agree to keep this information confidential.
+            </label>
+            {error === "agree" && <p className="mt-2 text-base text-amber" role="alert">Please tick the box to agree before continuing.</p>}
+          </div>
+
+          <button type="submit" className="mt-6 w-full rounded-full bg-amber px-6 py-4 text-lg font-bold text-ink hover:brightness-105">
+            I agree, view The Oval
           </button>
         </form>
 

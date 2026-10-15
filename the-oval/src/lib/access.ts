@@ -25,3 +25,13 @@ export function holderOf(code: string | undefined): string | null {
   if (!code) return null;
   return accessCodes().get(normalise(code)) ?? null;
 }
+
+// Shown on the gate page and saved word for word with each acceptance.
+export const CLAUSE_VERSION = "2026-10-15";
+export const CLAUSE = [
+  "The concept for 120 Main South Road, Sockburn (\"The Oval\"), including this website, the brochure, the development documents and all images, plans and figures, is confidential.",
+  "It is provided to me only so I can evaluate this proposal with Bayleys and the developer.",
+  "I will not share it, or my access code, with any other agency, agent or party, and I will not use it to market or develop the site with anyone else.",
+  "I will not copy, forward, publish or reproduce it, in whole or in part, without written consent.",
+  "I understand it is a concept only, has not been consented, and may change.",
+];

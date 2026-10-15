@@ -21,9 +21,28 @@ export const nav = {
     { label: "Buying", href: "#buying" },
     { label: "Agent", href: "#agents" },
     { label: "FAQ", href: "#faq" },
+    { label: "Documents", href: "/documents" },
   ],
   cta: "Register interest",
   brochure: { label: "Brochure", href: "/the-oval-brochure.pdf" },
+  documents: { label: "Documents", href: "/documents" },
+};
+
+export const documents = {
+  title: "Development documents",
+  intro: "The concept documents behind The Oval. Confidential, for evaluating this proposal only. Concept only, not consented.",
+  items: [
+    {
+      title: "Development Vision, Revision G",
+      detail: "Render showcase for 120 Main South Road: site plan, aerials, street views and the terrace elevation. 7 pages.",
+      href: "/documents/120-Main-South-Road-Development-Vision-Rev-G.pdf",
+    },
+    {
+      title: "The Oval brochure",
+      detail: "Twelve-page A3 brochure: homes, schools, location, buying process and agent details.",
+      href: "/the-oval-brochure.pdf",
+    },
+  ],
 };
 
 export const hero = {

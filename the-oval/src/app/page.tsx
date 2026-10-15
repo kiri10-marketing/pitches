@@ -63,7 +63,7 @@ export default function Home() {
             {nav.links.map((l) => <a key={l.href} href={l.href} className="hover:text-white">{l.label}</a>)}
           </nav>
           <div className="flex items-center gap-3">
-            <a href={nav.brochure.href} target="_blank" rel="noopener" className="inline-flex items-center rounded-full border-2 border-white/80 px-4 py-2 text-base font-bold text-white hover:bg-white/10">{nav.brochure.label}</a>
+            <a href={nav.documents.href} className="inline-flex items-center rounded-full border-2 border-white/80 px-4 py-2 text-base font-bold text-white hover:bg-white/10">{nav.documents.label}</a>
             <a href="#register" className="hidden rounded-full bg-amber px-5 py-2.5 text-base font-bold text-[#1f1410] sm:inline-flex">{nav.cta}</a>
           </div>
         </div>
@@ -427,7 +427,7 @@ export default function Home() {
           <p className="mt-6 text-sm">{agents.licence}</p>
           <p className="mt-1 text-sm">{footer.developer}</p>
           <p className="mt-6 max-w-4xl text-sm leading-relaxed">{footer.disclaimer}</p>
-          <p className="mt-6 text-sm">© {new Date().getFullYear()} {footer.copyright} · <a className="underline" href={nav.brochure.href} target="_blank" rel="noopener">{nav.brochure.label}</a> · <a className="underline" href="/marketing">{footer.marketingLink}</a></p>
+          <p className="mt-6 text-sm">© {new Date().getFullYear()} {footer.copyright} · <a className="underline" href={nav.brochure.href} target="_blank" rel="noopener">{nav.brochure.label}</a> · <a className="underline" href={nav.documents.href}>{nav.documents.label}</a> · <a className="underline" href="/marketing">{footer.marketingLink}</a></p>
         </div>
       </footer>
 
