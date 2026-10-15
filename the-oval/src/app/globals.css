@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --ink: #1c2427;        /* charcoal from the roofs and joinery */
+  --body: #343c40;       /* body text, dark not light grey */
+  --brick: #9c5a2c;      /* bronze timber-look Nu-Wall accent */
+  --brick-soft: #f4ede3; /* pale cream-brick wash */
+  --dusk: #183a44;       /* deep teal from the plan set, for dark sections */
+  --dusk-2: #22505c;
+  --amber: #f4a93a;      /* sunset gold for buttons, like the garden lights */
+  --amber-hover: #ffbb52;
+  --cream: #fbf8f3;
+  --line: #e4dbcf;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-body: var(--body);
+  --color-brick: var(--brick);
+  --color-brick-soft: var(--brick-soft);
+  --color-dusk: var(--dusk);
+  --color-dusk-2: var(--dusk-2);
+  --color-amber: var(--amber);
+  --color-amber-hover: var(--amber-hover);
+  --color-cream: var(--cream);
+  --color-line: var(--line);
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--cream);
+  color: var(--body);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading), system-ui, sans-serif;
+  color: var(--ink);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+@layer components {
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  background: var(--amber); color: #1f1410; font-weight: 700;
+  border-radius: 999px; padding: 1rem 1.75rem; font-size: 1.05rem; min-height: 56px;
+  box-shadow: 0 8px 24px -10px rgba(244,169,58,.8);
+  transition: background .2s, transform .2s;
+}
+.btn-primary:hover { background: var(--amber-hover); transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 2px solid currentColor; border-radius: 999px; padding: .9rem 1.6rem;
+  font-weight: 700; min-height: 56px;
+}
+.eyebrow {
+  font-family: var(--font-heading), sans-serif;
+  text-transform: uppercase; letter-spacing: .14em; font-size: .85rem; font-weight: 700;
+  color: var(--brick);
+}
+
+.render-tag {
+  position: absolute; left: .75rem; bottom: .75rem;
+  background: rgba(14,24,28,.72); color: #fff; font-size: .8rem; font-weight: 600;
+  padding: .3rem .65rem; border-radius: 6px;
+}
+}
+
+@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+
+/* Unlayered so they beat the base heading colour */
+.on-dark .eyebrow { color: var(--amber); }
+.on-dark h2, .on-dark h3 { color: #fff; }

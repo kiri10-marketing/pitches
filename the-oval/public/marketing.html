@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>The Oval Ad Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@600;700;800;900&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: a working review board. Sticky filter bar, a grid of ads rendered at true proportions, then the go-to-market plan as a long-form brief. */
+:root {
+  --bg: #f6f3ee;
+  --surface: #ffffff;
+  --ink: #1c2427;
+  --muted: #4c5559;
+  --line: #e2d9cd;
+  --dusk: #183a44;
+  --amber: #f4a93a;
+  --brick: #9c5a2c;
+  --pick: #1f7a4d;
+  --chip: #efe6dd;
+  --font-display: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10191c; --surface: #18252a; --ink: #eef2f2; --muted: #b6c2c4; --line: #2c3c42;
+    --dusk: #0b1418; --amber: #f5b14a; --brick: #e0a070; --pick: #4cc38a; --chip: #22343a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #10191c; --surface: #18252a; --ink: #eef2f2; --muted: #b6c2c4; --line: #2c3c42;
+  --dusk: #0b1418; --amber: #f5b14a; --brick: #e0a070; --pick: #4cc38a; --chip: #22343a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.02em; line-height: 1.1; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.eyebrow { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--brick); }
+
+header.top { padding-block: 40px 28px; display: grid; gap: 14px; }
+header.top h1 { font-size: clamp(32px, 5vw, 52px); font-weight: 900; }
+header.top .lede { max-width: 68ch; color: var(--muted); font-size: 17px; }
+.jump { display: flex; gap: 10px; flex-wrap: wrap; }
+.jump a { color: var(--ink); font-weight: 600; text-decoration: none; border-bottom: 2px solid var(--amber); }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-block: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding-block: 12px; }
+.group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.group > span { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-right: 2px; }
+.chipbtn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px; padding: 6px 12px; font: 600 14px var(--font-body); cursor: pointer; }
+.chipbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chipbtn:focus-visible, .pickbtn:focus-visible, .copy:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+.picks { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.count { font-variant-numeric: tabular-nums; font-weight: 700; }
+.copy { background: var(--amber); color: #1f1410; border: 0; border-radius: 999px; padding: 9px 16px; font: 700 14px var(--font-body); cursor: pointer; }
+.status { font-size: 13px; color: var(--muted); min-height: 1em; }
+#copyFallback { width: 100%; font: 13px var(--font-body); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; padding-block: 26px 40px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card.picked { border-color: var(--pick); box-shadow: 0 0 0 2px var(--pick); }
+.stage { background: var(--chip); padding: 14px; display: flex; justify-content: center; align-items: center; min-height: 120px; }
+.frame { position: relative; overflow: hidden; border-radius: 4px; box-shadow: 0 6px 20px -8px rgba(0,0,0,.35); max-width: 100%; }
+.meta { padding: 14px 16px 16px; display: grid; gap: 8px; min-width: 0; }
+.metaTop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.num { font-family: var(--font-display); font-weight: 800; font-size: 20px; font-variant-numeric: tabular-nums; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 600; background: var(--chip); border-radius: 6px; padding: 2px 8px; color: var(--ink); }
+.tag.angle { background: color-mix(in srgb, var(--brick) 16%, var(--surface)); }
+dl.spec { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+dl.spec div { display: grid; gap: 1px; }
+dl.spec dt { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+dl.spec dd { margin: 0; overflow-wrap: anywhere; }
+.pickbtn { justify-self: start; border: 2px solid var(--ink); background: transparent; color: var(--ink); border-radius: 999px; padding: 6px 14px; font: 700 14px var(--font-body); cursor: pointer; }
+.card.picked .pickbtn { background: var(--pick); border-color: var(--pick); color: #fff; }
+
+/* The ads themselves: fixed brand colours, they are artwork not page chrome */
+.ad { position: absolute; top: 0; left: 0; transform-origin: top left; font-family: "Instrument Sans", Arial, sans-serif; color: #fff; background: #183a44; overflow: hidden; }
+.ad img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ad .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(14,28,33,.92) 0%, rgba(14,28,33,.45) 38%, rgba(14,28,33,0) 62%); }
+.ad .shadeTop { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(14,28,33,.75) 0%, rgba(14,28,33,0) 40%); }
+.ad .brand { font-family: "Schibsted Grotesk", Arial, sans-serif; font-weight: 900; letter-spacing: -0.02em; }
+.ad .h { font-family: "Schibsted Grotesk", Arial, sans-serif; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; }
+.ad .btn { display: inline-flex; align-items: center; justify-content: center; background: #f4a93a; color: #1f1410; font-weight: 700; border-radius: 999px; white-space: nowrap; }
+.ad .fine { color: rgba(255,255,255,.85); font-weight: 600; }
+.ad .pill { background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.4); border-radius: 999px; font-weight: 600; }
+.ad .agents { display: flex; align-items: center; }
+.ad .agents img { border-radius: 50%; object-fit: cover; border: 3px solid #f4a93a; }
+.ad .oval { display:inline-block; width:1.3em; height:.72em; border:.15em solid #f4a93a; border-radius:50%; margin-right:.3em; vertical-align:-.02em; }
+
+/* Plan */
+.plan { padding-block: 40px 70px; border-top: 1px solid var(--line); display: grid; gap: 44px; }
+.plan h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 900; }
+.plan section { display: grid; gap: 16px; }
+.plan h3 { font-size: 20px; font-weight: 800; }
+.plan .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 8px; min-width: 0; }
+.box p, .box li { color: var(--ink); }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.note { color: var(--muted); font-size: 14px; max-width: 75ch; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { font-family: var(--font-display); background: var(--chip); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; counter-reset: s; }
+.flow .step { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: grid; gap: 4px; }
+.flow .step b { font-family: var(--font-display); }
+.flow .step small { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.mock { display: grid; gap: 10px; margin: 0; min-width: 0; }
+.mock img { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); display: block; }
+.mock figcaption { font-size: 14px; color: var(--muted); }
+.mock figcaption b { color: var(--ink); }
+.mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+.mock.wide { grid-column: 1 / -1; }
+footer.end { padding-block: 24px 50px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+@media (max-width: 640px) { .picks { margin-left: 0; width: 100%; } }
+@media (max-width: 900px) { .bar { position: static; } }
+@media (max-width: 520px) { .flow { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">The Oval · Marketing with Angela Webb, Bayleys</p>
+    <h1>100 ad concepts and a go-to-market plan</h1>
+    <p class="lede">Static lead-generation ads for Meta and Google, built from the site's renders, fonts and colours. Every ad sends people to the "Register your interest" form. Tap <b>Pick</b> on the ones you like, then <b>Copy my picks</b> and send the numbers back. The finished ads will be made in Higgsfield at exact sizes.</p>
+    <nav class="jump" aria-label="Jump to"><a href="/">Back to the website</a><a href="#ads">Ad concepts</a><a href="#plan">Go-to-market plan</a><a href="#traditional">Billboards and print</a></nav>
+  </header>
+</div>
+<div class="bar" id="ads">
+  <div class="wrap">
+    <div class="group" role="group" aria-label="Platform"><span>Platform</span>
+      <button class="chipbtn" id="pf-all" data-pf="all" aria-pressed="true">All</button>
+      <button class="chipbtn" id="pf-meta" data-pf="Meta" aria-pressed="false">Meta</button>
+      <button class="chipbtn" id="pf-google" data-pf="Google" aria-pressed="false">Google</button>
+    </div>
+    <div class="group" role="group" aria-label="Angle" id="angleGroup"><span>Angle</span></div>
+    <div class="group" role="group" aria-label="Show"><span>Show</span>
+      <button class="chipbtn" id="onlyPicked" aria-pressed="false">Picked only</button>
+    </div>
+    <div class="picks">
+      <span><span class="count" id="count">0</span> picked</span>
+      <button class="copy" id="copyBtn">Copy my picks</button>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <textarea id="copyFallback" rows="2" hidden aria-label="Your picks, ready to copy"></textarea>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="wrap">
+<article class="plan" id="plan">
+  <header style="display:grid;gap:10px">
+    <p class="eyebrow">Go-to-market plan</p>
+    <h2>Selling The Oval with Angela Webb</h2>
+    <p class="note">The Oval is at concept stage and pre-consent, so the first job of marketing is to build a register of qualified buyers who see plans and pricing first. With only 16 homes, the goal is a short, high-quality register rather than volume. Figures marked "estimate" are starting assumptions to test, not results.</p>
+  </header>
+
+  <section>
+    <h3>Perfect customer</h3>
+    <div class="two">
+      <div class="box"><p class="eyebrow">Primary · detached homes</p><h3>Growing families upsizing</h3>
+        <p>Couples aged 30 to 45 with two or more children aged 3 to 14, often in an older three-bedroom home or rental in Sockburn, Upper Riccarton, Hornby, Hei Hei, Broomfield or Wigram. Includes many Indian, Filipino and Chinese families who already live in the west of Christchurch.</p>
+        <ul><li><b>Trigger:</b> a child starting school, a new baby, or a rental that's too small or too cold.</li><li><b>Wants:</b> a safe street for bikes, schools within walking distance, a garage and a garden.</li><li><b>Objections:</b> buying off the plans feels risky, and the timing is unknown before consent.</li></ul></div>
+      <div class="box"><p class="eyebrow">Primary · terrace homes</p><h3>First home buyers and young couples</h3>
+        <p>Aged 25 to 38, using KiwiSaver and First Home Partner or family help, working in Hornby, Sockburn, Middleton or near the airport.</p>
+        <ul><li><b>Trigger:</b> rent rising, a deposit finally saved, or a baby on the way.</li><li><b>Wants:</b> a new, warm, low-maintenance home with a garage, close to work.</li><li><b>Objections:</b> deposit size and finance approval timing.</li></ul></div>
+      <div class="box"><p class="eyebrow">Secondary</p><h3>Investors</h3>
+        <p>Local and North Island buyers wanting new-build, low-maintenance rentals near the university, airport and Hornby employment hub. Angela's investment database is the natural first audience.</p>
+        <ul><li><b>Objections:</b> rental yield and the time until completion.</li></ul></div>
+      <div class="box"><p class="eyebrow">Secondary</p><h3>Parents buying near family</h3>
+        <p>Grandparents aged 55 to 70 who want to be close to their grandchildren and their schools, often moving from a larger section nearby.</p>
+        <ul><li><b>Objections:</b> stairs in a two-storey home, and selling their own home first.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Channels and targeting</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Channel</th><th scope="col">Targeting</th><th scope="col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><b>Meta</b> (Facebook, Instagram)</td><td>Christchurch plus 20 km, weighted to the western suburbs. Interests: parenting, primary schools, first home buyers, Trade Me Property, realestate.co.nz. Lookalikes from registrations once there are about 100. Retarget site visitors and hero-video viewers.</td><td>Main volume and register building</td></tr>
+        <tr><td><b>Google Search</b></td><td>Keywords: "new homes Christchurch", "townhouses Riccarton", "new build Sockburn", "off the plans Christchurch", "family homes near Riccarton High School", "house and land Hornby", plus Bayleys and Angela Webb brand terms.</td><td>Captures people already looking; highest intent</td></tr>
+        <tr><td><b>Google Display, Performance Max and Demand Gen</b></td><td>Christchurch. In-market audiences for residential property, and custom segments built from property-portal visitors. Retargeting.</td><td>Reach and retargeting</td></tr>
+        <tr><td><b>Property portals</b></td><td>Trade Me Property and realestate.co.nz new-development listings linking to the site.</td><td>Credibility and search traffic</td></tr>
+        <tr><td><b>Bayleys database</b></td><td>Angela's investor and buyer database and the Bayleys Canterbury residential list, sent as an email and SMS preview.</td><td>Fastest early registrations</td></tr>
+        <tr><td><b>Community and partners</b></td><td>Local Sockburn, Riccarton and Hornby Facebook groups, Indian and other community associations and temples, mortgage brokers, early childhood centres, and signage at the Main South Road entrance.</td><td>Local reach at low cost</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Meta may require housing ads to run under its Housing special ad category, which limits age, gender and postcode targeting. Check at campaign setup and lean on creative and lookalikes if it applies. Consider Hindi or Punjabi versions of the best ads for community channels.</p>
+  </section>
+
+  <section>
+    <h3>Funnel</h3>
+    <div class="flow">
+      <div class="step"><small>Step 1</small><b>Ad</b><p>One clear promise: first access to plans and pricing.</p></div>
+      <div class="step"><small>Step 2</small><b>Landing page</b><p>The Oval site, opening on the family street film.</p></div>
+      <div class="step"><small>Step 3</small><b>Register form</b><p>Four required fields: name, email, phone and home type.</p></div>
+      <div class="step"><small>Step 4</small><b>Speed to lead</b><p>Angela calls or texts within 5 minutes during business hours.</p></div>
+      <div class="step"><small>Step 5</small><b>Nurture</b><p>Information pack email straight away, then fortnightly updates on consent, plans and the release date.</p></div>
+      <div class="step"><small>Step 6</small><b>Retarget</b><p>Visitors who didn't register see school, agent and early-access ads for 30 days.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Launch timeline</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">When</th><th scope="col">What happens</th></tr></thead>
+      <tbody>
+        <tr><td class="n">Week 0</td><td>Site live with a webhook to the CRM. Pixel, Conversions API, Google tag and GA4 tested with a real registration. Bayleys database preview sent.</td></tr>
+        <tr><td class="n">Week 1</td><td>Test 15 to 20 of the picked ads across all angles on Meta, plus Google Search. Spend evenly.</td></tr>
+        <tr><td class="n">Weeks 2 to 4</td><td>Cut ads above twice the average cost per lead, and move budget to the best two or three angles. Add Display and Performance Max with the winners.</td></tr>
+        <tr><td class="n">Month 2 onward</td><td>Lookalikes from registrations, retargeting, and fresh creative every 3 to 4 weeks. Short video cuts of the family street film.</td></tr>
+        <tr><td class="n">Consent granted</td><td>VIP release to the register first, with pricing, then the public launch on portals and with signage.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h3>Budget and targets</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Item</th><th scope="col">Starting point (estimate)</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly ad budget</td><td class="n">NZ$2,500: Meta $1,500, Google Search $700, Display and retargeting $300</td></tr>
+        <tr><td>Cost per registration</td><td class="n">Aim for NZ$25 to $60</td></tr>
+        <tr><td>Landing page conversion rate</td><td class="n">Aim for 6 to 12% of visitors</td></tr>
+        <tr><td>Cost per qualified lead (finance-ready and wants to buy within 12 months)</td><td class="n">Aim for under NZ$150</td></tr>
+        <tr><td>Register goal before release</td><td class="n">120+ registrations for 16 homes</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">These numbers are planning estimates based on typical NZ property lead-generation results. Replace them with real figures after the first two weeks.</p>
+  </section>
+
+  <section>
+    <h3>Tracking</h3>
+    <ul>
+      <li><b>Meta Pixel and Conversions API:</b> a "Lead" event on successful form submission, sent from the browser and the server with deduplication.</li>
+      <li><b>Google Ads conversion tag and GA4:</b> a "generate_lead" event on the same submission, with the home type as a parameter.</li>
+      <li><b>UTM tags</b> on every ad, so each registration in the CRM shows its platform, angle and ad number.</li>
+      <li><b>Weekly report:</b> spend, registrations, cost per registration, qualified rate and the best ads.</li>
+    </ul>
+  </section>
+
+  <section id="traditional">
+    <h3>Traditional media: billboards, print and outdoor</h3>
+    <p class="note">Traditional media builds local awareness that sends people to search for The Oval, so it works best alongside the digital ads above. Every piece carries Angela, one call to action and the site address. The mock-ups below are concepts for discussion, not booked placements, and the web address is a placeholder until the domain is chosen.</p>
+    <div class="mocks">
+      <figure class="mock wide"><img src="/media/mock-billboard.jpg" alt="Mock-up of a roadside billboard for The Oval with Angela Webb" loading="lazy"><figcaption><b>Roadside billboard.</b> A digital or printed board on Main South Road, Riccarton Road or Yaldhurst Road.</figcaption></figure>
+      <figure class="mock"><img src="/media/mock-newspaper.jpg" alt="Mock-up of a half-page newspaper property advertisement for The Oval" loading="lazy"><figcaption><b>Newspaper property section</b>, for example The Press weekend property pages, with Angela's direct number.</figcaption></figure>
+      <figure class="mock"><img src="/media/mock-magazine.jpg" alt="Mock-up of a full-page magazine advertisement for The Oval" loading="lazy"><figcaption><b>Local magazine full page</b>, for example a western suburbs community magazine or school newsletter sponsorship.</figcaption></figure>
+      <figure class="mock wide"><img src="/media/mock-bus-shelter.jpg" alt="Mock-up of a backlit bus shelter poster for The Oval" loading="lazy"><figcaption><b>Bus shelter poster.</b> Backlit panels on Main South Road, Riccarton Road and near Church Corner.</figcaption></figure>
+    </div>
+
+    <h3>Booking a Christchurch billboard</h3>
+    <div class="flow">
+      <div class="step"><small>Step 1</small><b>Brief the suppliers</b><p>Ask the main outdoor companies (such as JCDecaux, oOh!media and LUMO Digital Outdoor) for available sites and rates.</p></div>
+      <div class="step"><small>Step 2</small><b>Choose sites</b><p>Pick roads western-suburbs families drive daily, such as Main South Road, Riccarton Road, Yaldhurst Road and Blenheim Road.</p></div>
+      <div class="step"><small>Step 3</small><b>Book dates</b><p>Digital boards book in 1 to 2 week slots. Printed boards usually run for 4 weeks or more.</p></div>
+      <div class="step"><small>Step 4</small><b>Supply artwork</b><p>Use the supplier's exact size and resolution. Keep it to 7 words or fewer plus Angela and the web address.</p></div>
+      <div class="step"><small>Step 5</small><b>Go live and track</b><p>Watch direct visits and branded searches for "The Oval Sockburn" during the run.</p></div>
+    </div>
+
+    <h3>Options, costs and lead times</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Medium</th><th scope="col">What you get</th><th scope="col">Indicative cost (NZD, estimate)</th><th scope="col">Lead time</th></tr></thead>
+      <tbody>
+        <tr><td><b>Digital billboard</b></td><td>A share of a rotating screen on a main road, usually 1 to 2 week slots</td><td class="n">$2,500 to $8,000 per site, 2 weeks</td><td>1 to 2 weeks</td></tr>
+        <tr><td><b>Printed billboard</b></td><td>One large static board for the whole booking, plus print and install</td><td class="n">$4,000 to $12,000 per site, 4 weeks</td><td>3 to 4 weeks</td></tr>
+        <tr><td><b>Bus shelters</b></td><td>A package of backlit panels across chosen suburbs</td><td class="n">$3,000 to $8,000, 2 to 4 weeks</td><td>2 to 3 weeks</td></tr>
+        <tr><td><b>Newspaper property section</b></td><td>A half or full page in the weekend property pages</td><td class="n">$1,500 to $5,000 per insertion</td><td>About 1 week</td></tr>
+        <tr><td><b>Local magazine or school newsletter</b></td><td>A full page or sponsorship in a western suburbs publication</td><td class="n">$500 to $3,000 per issue</td><td>2 to 6 weeks</td></tr>
+        <tr><td><b>Letterbox drop</b></td><td>A flyer to about 8,000 homes in Sockburn, Upper Riccarton, Hornby and Hei Hei</td><td class="n">$1,200 to $2,500 incl. print</td><td>About 2 weeks</td></tr>
+        <tr><td><b>Site signage</b></td><td>A large sign at the Main South Road entrance, seen by thousands of passing cars a day</td><td class="n">$2,500 to $8,000</td><td>2 to 3 weeks, subject to council rules</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">These costs are rough planning estimates, because suppliers don't publish NZ rate cards. Get written quotes before booking. A sensible first traditional push is site signage on Main South Road, a letterbox drop and a newspaper half page, timed with the VIP release once consent is granted.</p>
+  </section>
+
+  <section>
+    <h3>Rules for every ad</h3>
+    <ul>
+      <li>Label renders as artist's impressions, concept only and not consented, which keeps the ads in line with the Fair Trading Act.</li>
+      <li>Don't quote prices, completion dates or bedroom counts that aren't confirmed.</li>
+      <li>School walk times are approximate, and ads must not promise school zoning.</li>
+      <li>Include Bayleys branding and the licence line wherever the format has room.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<div class="wrap"><footer class="end">Prepared for The Oval, 120 Main South Road, Sockburn. All images are artist's impressions, concept only, not consented. Ads are concepts for selection, not final artwork.</footer></div>
+<script>
+(function () {
+  const SIZES = [
+    { p: "Meta", n: "Feed square", w: 1080, h: 1080 },
+    { p: "Meta", n: "Feed portrait", w: 1080, h: 1350 },
+    { p: "Meta", n: "Stories / Reels", w: 1080, h: 1920 },
+    { p: "Google", n: "Medium rectangle", w: 300, h: 250 },
+    { p: "Google", n: "PMax / Demand Gen landscape", w: 1200, h: 628 },
+    { p: "Meta", n: "Feed square", w: 1080, h: 1080 },
+    { p: "Meta", n: "Feed portrait", w: 1080, h: 1350 },
+    { p: "Google", n: "Large rectangle", w: 336, h: 280 },
+    { p: "Google", n: "Leaderboard", w: 728, h: 90 },
+    { p: "Google", n: "Half page", w: 300, h: 600 },
+    { p: "Google", n: "PMax / Demand Gen square", w: 1200, h: 1200 },
+    { p: "Meta", n: "Stories / Reels", w: 1080, h: 1920 },
+    { p: "Google", n: "Mobile banner", w: 320, h: 50 }
+  ];
+  const ANGLES = [
+    { key: "family", name: "Aspiration: family life",
+      heads: ["A neighbourhood made for growing up", "Where kids ride and neighbours wave", "A quiet loop for little legs", "No through traffic. Just bikes and scooters.", "Your family's next chapter starts here"],
+      short: "Made for growing up",
+      prim: ["A private, landscaped loop with no through traffic, and private outdoor space for every home. Register for first access to plans and pricing at The Oval, Sockburn.", "16 new brick homes designed around family life in Sockburn. Be first to see the plans.", "Detached and terrace homes around a quiet loop, minutes from Church Corner and Hornby. Register your interest today."],
+      btn: ["Register interest", "Learn more", "See the homes"], imgs: ["hero-poster", "arrival", "aerial-day"],
+      aud: "Parents aged 28 to 45 in western Christchurch; interests in parenting, schools and home buying" },
+    { key: "school", name: "Schools: walk to school",
+      heads: ["School is a walk away", "Four schools within a 12-minute walk", "The school run, on foot", "From primary to high school, close by", "Next door to Our Lady of Victories"],
+      short: "School's a walk away",
+      prim: ["Our Lady of Victories School is next door, with Te Kāpehu Riccarton School, Riccarton High and St Thomas of Canterbury within about a 12-minute walk. Register for first access to The Oval.", "16 new family homes in Sockburn, with four schools within a short walk. Check zoning with each school.", "Swap the school traffic for a walk. Register your interest in The Oval."],
+      btn: ["Register interest", "See the location", "Learn more"], imgs: ["terrace-street", "hero-poster", "arrival"],
+      aud: "Parents with children aged 3 to 14 in Christchurch west; interests in primary and secondary schools" },
+    { key: "pain", name: "Pain point: renting and old homes",
+      heads: ["Done with cold, damp rentals?", "Outgrown your three-bedroom?", "Tired of weekend maintenance?", "Swap the draughts for new brick", "Still renting in Riccarton?"],
+      short: "Done renting? Register now",
+      prim: ["New, warm, low-maintenance brick homes with garages and private outdoor space are coming to Sockburn. Register now to see plans and pricing first.", "The Oval brings 16 new homes to Main South Road. Be first in line when plans are released.", "Brick homes built for modern families. No obligation to register."],
+      btn: ["Register interest", "Get the info pack", "Learn more"], imgs: ["detached-home", "terrace-street", "aerial-dusk"],
+      aud: "Renters aged 25 to 40 in Christchurch; interests in first home buyers, KiwiSaver and Trade Me Property" },
+    { key: "curious", name: "Curiosity question",
+      heads: ["What's coming to 120 Main South Road?", "16 new homes in Sockburn?", "Detached or terrace: which suits you?", "Seen the new loop in Sockburn?", "Why is it called The Oval?"],
+      short: "What's new on Main South Rd?",
+      prim: ["A new neighbourhood of 16 homes is planned for 120 Main South Road. See the plans before anyone else.", "Two home types, one quiet loop. Find out which suits you and register for first access.", "Register to get the information pack as soon as it's ready."],
+      btn: ["Find out more", "Register interest", "See the homes"], imgs: ["aerial-day", "aerial-dusk", "arrival"],
+      aud: "Christchurch adults aged 25 to 65 who engage with property and local news content" },
+    { key: "proof", name: "Social proof: the agent",
+      heads: ["Marketed by Angela Webb, Bayleys", "Bayleys' top 10% agent, now The Oval", "Talk to Angela first", "Angela Webb has The Oval", "Award-winning Bayleys agent"],
+      short: "Angela Webb, Bayleys",
+      prim: ["Multi-award-winning Bayleys agent Angela Webb is proud to bring The Oval to market. Register to hear first.", "Angela heads Bayleys Canterbury's residential investment team and is taking registrations for The Oval, Sockburn.", "Get the information pack and a call from an agent who knows Christchurch new builds."],
+      btn: ["Register interest", "Contact agent", "Learn more"], imgs: ["arrival", "hero-poster", "terrace-street"],
+      aud: "Bayleys database lookalikes; Christchurch property-intent audiences; retargeting site visitors" },
+    { key: "early", name: "Urgency: early access",
+      heads: ["Register now. See pricing first.", "Only 16 homes. Registered buyers first.", "Just 6 terrace homes", "Be first when plans are released", "Early access list now open"],
+      short: "Get first access to pricing",
+      prim: ["Pricing for The Oval goes to registered buyers before the public release. Register in under a minute.", "Only 10 detached homes and 6 terraces. Get on the register for first choice.", "No obligation. Register now and we'll send plans as soon as they're ready."],
+      btn: ["Register interest", "Sign up", "Get early access"], imgs: ["hero-poster", "terrace-street", "detached-home"],
+      aud: "Retargeting site visitors and video viewers; lookalikes of registrations" },
+    { key: "local", name: "Local: Sockburn and Riccarton",
+      heads: ["New homes, minutes from Church Corner", "Between Riccarton and Hornby", "12 minutes to the airport", "Brand new in established Sockburn", "Close to Westfield and The Hub"],
+      short: "New homes in Sockburn",
+      prim: ["The Oval at 120 Main South Road: 16 new homes close to Church Corner, The Hub Hornby and Westfield Riccarton.", "Detached and terrace homes in Sockburn, an easy run to the airport and the central city. Register for first access.", "Love the west side? Be first to see the plans for Sockburn's newest neighbourhood."],
+      btn: ["Register interest", "Learn more", "See location"], imgs: ["aerial-day", "arrival", "aerial-dusk"],
+      aud: "People living within 5 km of Sockburn; workers in Hornby, Middleton and the airport" },
+    { key: "how", name: "How it works: info pack offer",
+      heads: ["Get the free information pack", "Buying off the plans, made simple", "Plans, sizes and pricing, sent to you", "Register, choose, settle when complete", "Your deposit held in trust"],
+      short: "Free info pack: The Oval",
+      prim: ["Register for the free information pack: home types, the site plan and how buying off the plans works. Deposits are held in a solicitor's trust account.", "Three steps: register, choose your home with Angela, and settle when it's complete.", "Everything you need to know about The Oval, sent to your inbox."],
+      btn: ["Get info pack", "Download", "Register interest"], imgs: ["detached-home", "aerial-day", "terrace-street"],
+      aud: "First home buyers and investors researching new builds; Google Search 'off the plans Christchurch'" }
+  ];
+  const IMGALT = { "hero-poster": "Family street view", "arrival": "Entry street at sunset", "aerial-day": "Aerial view by day", "aerial-dusk": "Aerial view at dusk", "terrace-street": "Terrace homes", "detached-home": "Detached home" };
+
+  const ads = [];
+  for (let i = 0; i < 100; i++) {
+    const a = ANGLES[i % 8], s = SIZES[i % 13], r = Math.floor(i / 8);
+    ads.push({ n: i + 1, angle: a, size: s, head: a.heads[r % 5], prim: a.prim[r % 3], btn: a.btn[r % 3], img: a.imgs[r % 3], aud: a.aud });
+  }
+
+  function faces(size) {
+    return `<span class="agents"><img src="/media/angela-webb.jpg" alt="" style="width:${size}px;height:${size}px"></span>`;
+  }
+  function adMarkup(ad) {
+    const { w, h } = ad.size, ratio = w / h, img = "/media/" + ad.img + ".jpg";
+    if (h <= 90) { // banners: photo, faces, line, button
+      const small = h <= 50;
+      return `<img class="bg" src="${img}" alt="" style="width:${small ? 60 : 170}px;left:0;right:auto">
+        <div style="position:absolute;inset:0 0 0 ${small ? 60 : 170}px;background:#183a44;display:flex;align-items:center;justify-content:space-between;gap:${small ? 6 : 14}px;padding:0 ${small ? 6 : 16}px">
+          ${faces(small ? 30 : 58)}
+          <div style="min-width:0;flex:1"><div class="brand" style="font-size:${small ? 9 : 13}px;color:#f4a93a">THE OVAL · ANGELA WEBB, BAYLEYS</div><div class="h" style="font-size:${small ? 12 : 22}px">${ad.angle.short}</div></div>
+          <span class="btn" style="font-size:${small ? 10 : 16}px;padding:${small ? "5px 8px" : "11px 18px"}">${ad.btn}</span></div>`;
+    }
+    const agentsLine = (fsz) => `<span class="fine" style="font-size:${fsz}px;color:#fff">Angela Webb · Bayleys</span>`;
+    if (ratio > 1.4) { // landscape
+      return `<img class="bg" src="${img}" alt=""><div class="shadeTop"></div><div class="shade"></div>
+        <div class="brand" style="position:absolute;top:36px;left:48px;font-size:34px"><span class="oval"></span>The Oval</div>
+        <div style="position:absolute;top:28px;right:40px;display:flex;align-items:center;gap:14px;background:rgba(26,18,32,.7);padding:10px 18px 10px 10px;border-radius:999px">${faces(78)}${agentsLine(22)}</div>
+        <div style="position:absolute;left:48px;right:48px;bottom:40px;display:grid;gap:18px;max-width:780px">
+          <div class="h" style="font-size:62px">${ad.head}</div>
+          <div style="display:flex;gap:22px;align-items:center;flex-wrap:wrap"><span class="btn" style="font-size:26px;padding:18px 34px">${ad.btn}</span><span class="fine" style="font-size:18px">Artist's impression, concept only · Licensed REAA 2008</span></div></div>`;
+    }
+    const sm = w <= 336;
+    const tall = h / w > 1.6;
+    const pad = sm ? 14 : 64, hs = sm ? (h >= 600 ? 32 : 22) : (h >= 1900 ? 100 : 84), bs = sm ? 13 : 34, bp = sm ? "8px 13px" : "24px 44px", br = sm ? 13 : 32, fs = sm ? 9 : 22;
+    const big = ad.angle.key === "proof";
+    const faceSize = sm ? (big ? 46 : 32) : (big ? 150 : 104);
+    return `<img class="bg" src="${img}" alt="" style="object-position:${tall ? "45% 50%" : "50% 50%"}"><div class="shadeTop"></div><div class="shade"></div>
+      <div class="brand" style="position:absolute;top:${pad}px;left:${pad}px;font-size:${br}px"><span class="oval"></span>The Oval</div>
+      <div style="position:absolute;left:${pad}px;right:${pad}px;bottom:${tall && !sm ? 250 : pad}px;display:grid;gap:${sm ? 7 : 26}px">
+        <div style="display:flex;align-items:center;gap:${sm ? 6 : 20}px">${faces(faceSize)}${agentsLine(sm ? (big ? 11 : 10) : (big ? 30 : 26))}</div>
+        <div class="h" style="font-size:${hs}px">${ad.head}</div>
+        <div><span class="btn" style="font-size:${bs}px;padding:${bp}">${ad.btn}</span></div>
+        <div class="fine" style="font-size:${fs}px">Artist's impression, concept only · Bayleys · Licensed REAA 2008</div>
+      </div>`;
+  }
+
+  let picks = new Set();
+  try { const s = localStorage.getItem("oval-picks"); if (s) picks = new Set(JSON.parse(s)); } catch (e) {}
+  const save = () => { try { localStorage.setItem("oval-picks", JSON.stringify([...picks])); } catch (e) {} };
+  let pf = "all", ang = "all", onlyPicked = false;
+
+  const angleGroup = document.getElementById("angleGroup");
+  [{ key: "all", name: "All" }].concat(ANGLES).forEach((a) => {
+    const b = document.createElement("button");
+    b.className = "chipbtn"; b.id = "ang-" + a.key; b.dataset.ang = a.key;
+    b.textContent = a.key === "all" ? "All" : a.name.split(":")[0];
+    b.title = a.name; b.setAttribute("aria-pressed", a.key === "all" ? "true" : "false");
+    angleGroup.appendChild(b);
+  });
+
+  const grid = document.getElementById("grid");
+  ads.forEach((ad) => {
+    const c = document.createElement("article");
+    c.className = "card"; c.dataset.n = ad.n; c.dataset.pf = ad.size.p; c.dataset.ang = ad.angle.key;
+    c.innerHTML = `<div class="stage"><div class="frame" style="aspect-ratio:${ad.size.w}/${ad.size.h}"><div class="ad" style="width:${ad.size.w}px;height:${ad.size.h}px" role="img" aria-label="Ad ${ad.n}: ${ad.head.replace(/"/g, "")}, on ${IMGALT[ad.img]}">${adMarkup(ad)}</div></div></div>
+      <div class="meta">
+        <div class="metaTop"><span class="num">#${ad.n}</span><button class="pickbtn" id="pick-${ad.n}" aria-pressed="false">Pick</button></div>
+        <div class="tags"><span class="tag">${ad.size.p} · ${ad.size.n} · ${ad.size.w}×${ad.size.h}</span><span class="tag angle">${ad.angle.name}</span></div>
+        <dl class="spec">
+          <div><dt>Headline</dt><dd>${ad.head}</dd></div>
+          <div><dt>Primary text</dt><dd>${ad.prim}</dd></div>
+          <div><dt>Button</dt><dd>${ad.btn}</dd></div>
+          <div><dt>Audience</dt><dd>${ad.aud}</dd></div>
+        </dl>
+      </div>`;
+    grid.appendChild(c);
+  });
+
+  function fit() {
+    document.querySelectorAll(".card").forEach((c) => {
+      const stage = c.querySelector(".stage"), frame = c.querySelector(".frame"), ad = c.querySelector(".ad");
+      const w = +ad.style.width.replace("px", ""), h = +ad.style.height.replace("px", "");
+      const avail = stage.clientWidth - 28;
+      const maxH = 420;
+      let scale = Math.min(avail / w, maxH / h, 1.0 * (w < 400 ? 1 : 1));
+      if (w <= 336 && avail >= w) scale = Math.min(1, maxH / h);
+      frame.style.width = Math.round(w * scale) + "px";
+      frame.style.height = Math.round(h * scale) + "px";
+      ad.style.transform = `scale(${scale})`;
+    });
+  }
+
+  function render() {
+    let n = 0;
+    document.querySelectorAll(".card").forEach((c) => {
+      const num = +c.dataset.n, picked = picks.has(num);
+      c.classList.toggle("picked", picked);
+      const b = c.querySelector(".pickbtn"); b.setAttribute("aria-pressed", picked ? "true" : "false"); b.textContent = picked ? "Picked" : "Pick";
+      const show = (pf === "all" || c.dataset.pf === pf) && (ang === "all" || c.dataset.ang === ang) && (!onlyPicked || picked);
+      c.hidden = !show;
+      if (picked) n++;
+    });
+    document.getElementById("count").textContent = n;
+    fit();
+  }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest("button"); if (!t) return;
+    if (t.classList.contains("pickbtn")) { const n = +t.closest(".card").dataset.n; picks.has(n) ? picks.delete(n) : picks.add(n); save(); render(); }
+    else if (t.dataset.pf) { pf = t.dataset.pf; document.querySelectorAll("[data-pf].chipbtn").forEach((b) => b.setAttribute("aria-pressed", b === t ? "true" : "false")); render(); }
+    else if (t.dataset.ang) { ang = t.dataset.ang; angleGroup.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b === t ? "true" : "false")); render(); }
+    else if (t.id === "onlyPicked") { onlyPicked = !onlyPicked; t.setAttribute("aria-pressed", onlyPicked ? "true" : "false"); render(); }
+    else if (t.id === "copyBtn") {
+      const list = [...picks].sort((a, b) => a - b);
+      const status = document.getElementById("status"), fb = document.getElementById("copyFallback");
+      if (!list.length) { status.textContent = "Pick at least one ad first."; return; }
+      const text = "The Oval ad picks: " + list.map((n) => "#" + n).join(", ");
+      const fallback = () => { fb.hidden = false; fb.value = text; fb.focus(); fb.select(); status.textContent = "Copy the text below and send it back."; };
+      try { navigator.clipboard.writeText(text).then(() => { status.textContent = "Copied " + list.length + " picks. Paste them into a message to us."; fb.hidden = true; }, fallback); } catch (err) { fallback(); }
+    }
+  });
+  window.addEventListener("resize", fit);
+  render();
+})();
+</script>
+
+</body>
+</html>
