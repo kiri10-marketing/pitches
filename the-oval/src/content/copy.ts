@@ -327,7 +327,7 @@ export const finalCta = {
 export const footer = {
   developer: "Developer details to be confirmed", // PLACEHOLDER
   disclaimer:
-    "All images are artist's impressions, concept only and not consented. Plans, layouts, areas, specifications and home numbers are concept designs (Revision G) that have not yet been consented and may change without notice. This website does not form part of any offer or contract. Buyers should make their own enquiries and seek independent legal advice.",
+    "Confidential. This preview is provided to named recipients only and must not be copied, forwarded or used without written consent. All images are artist's impressions, concept only and not consented. Plans, layouts, areas, specifications and home numbers are concept designs (Revision G) that have not yet been consented and may change without notice. This website does not form part of any offer or contract. Buyers should make their own enquiries and seek independent legal advice.",
   copyright: "The Oval, 120 Main South Road",
   marketingLink: "Ad concepts and go-to-market plan",
 };
