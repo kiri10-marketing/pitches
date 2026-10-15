@@ -81,7 +81,7 @@ export default function Home() {
           <div className="relative z-10 mx-auto -mt-10 w-full max-w-7xl px-4 pb-12 sm:px-6 md:mt-0 md:pb-20 md:pt-32">
             <p className="eyebrow !text-amber">{hero.eyebrow}</p>
             <h1 className="mt-3 max-w-4xl text-[2.25rem] !text-white sm:text-6xl lg:text-7xl">
-              <span className="block">{hero.headlineName}</span>{hero.headlineLead} <span className="text-amber">{hero.headlineAccent}</span>
+              <span className="block text-amber">{hero.headlineName}</span>{hero.headlineLead} <span className="text-amber">{hero.headlineAccent}</span>
             </h1>
             <p className="mt-4 max-w-2xl text-lg font-medium text-white/90 sm:text-xl">{hero.subheader}</p>
             <ul className="mt-5 flex flex-wrap gap-2">
