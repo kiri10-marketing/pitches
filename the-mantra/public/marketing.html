@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>The Mantra Ad Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* A review board: sticky filters, ads at true proportions, then the go-to-market plan as a brief. */
+:root {
+  --bg: #f3eee4; --surface: #fbf8f2; --ink: #1d1e22; --muted: #4a4740; --line: #d9cfbf;
+  --olive: #1f2638; --bronze: #8a5a24; --pick: #2f5d3a; --chip: #e8e1d6;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #171512; --surface: #221f1b; --ink: #f1ece4; --muted: #c9bfb2; --line: #3a352e; --bronze: #c9a77d; --pick: #6fb07f; --chip: #2c2823; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #171512; --surface: #221f1b; --ink: #f1ece4; --muted: #c9bfb2; --line: #3a352e; --bronze: #c9a77d; --pick: #6fb07f; --chip: #2c2823; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: .06em; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.eyebrow { font-weight: 500; font-size: 13px; letter-spacing: .26em; text-transform: uppercase; color: var(--bronze); }
+header.top { padding-block: 48px 30px; display: grid; gap: 16px; text-align: center; justify-items: center; }
+header.top h1 { font-size: clamp(32px, 5vw, 54px); }
+header.top .lede { max-width: 70ch; color: var(--muted); font-size: 18px; }
+.jump { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+.jump a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--bronze); text-transform: uppercase; letter-spacing: .18em; font-size: 13px; padding-bottom: 3px; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-block: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding-block: 12px; }
+.group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.group > span { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; margin-right: 2px; }
+.chipbtn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 6px 12px; font: 500 14px var(--font-body); cursor: pointer; }
+.chipbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chipbtn:focus-visible, .pickbtn:focus-visible, .copy:focus-visible { outline: 2px solid var(--bronze); outline-offset: 2px; }
+.picks { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.count { font-variant-numeric: tabular-nums; font-weight: 600; }
+.copy { background: var(--ink); color: var(--bg); border: 0; padding: 10px 18px; font: 500 13px var(--font-body); letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
+.status { font-size: 13px; color: var(--muted); min-height: 1em; }
+#copyFallback { width: 100%; font: 13px var(--font-body); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; padding-block: 26px 40px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card.picked { border-color: var(--pick); box-shadow: 0 0 0 2px var(--pick); }
+.stage { background: var(--chip); padding: 14px; display: flex; justify-content: center; align-items: center; min-height: 120px; }
+.frame { position: relative; overflow: hidden; box-shadow: 0 6px 20px -8px rgba(0,0,0,.35); max-width: 100%; }
+.meta { padding: 14px 16px 16px; display: grid; gap: 8px; min-width: 0; }
+.metaTop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.num { font-family: var(--font-display); font-size: 24px; font-variant-numeric: tabular-nums; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 500; background: var(--chip); padding: 2px 8px; color: var(--ink); }
+.tag.angle { background: color-mix(in srgb, var(--bronze) 18%, var(--surface)); }
+dl.spec { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+dl.spec div { display: grid; gap: 1px; }
+dl.spec dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+dl.spec dd { margin: 0; overflow-wrap: anywhere; }
+.pickbtn { justify-self: start; border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 6px 16px; font: 500 13px var(--font-body); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+.card.picked .pickbtn { background: var(--pick); border-color: var(--pick); color: #fff; }
+
+/* The ads: fixed brand colours, they are artwork not page chrome */
+.ad { position: absolute; top: 0; left: 0; transform-origin: top left; font-family: "Jost", Arial, sans-serif; color: #fff; background: #1d1e22; overflow: hidden; }
+.ad img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ad .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(22,20,17,.88) 0%, rgba(22,20,17,.4) 40%, rgba(22,20,17,0) 64%); }
+.ad .shadeTop { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(22,20,17,.6) 0%, rgba(22,20,17,0) 30%); }
+.ad .brand { font-family: "Cormorant Garamond", serif; font-weight: 400; text-transform: uppercase; letter-spacing: .3em; }
+.ad .h { font-family: "Cormorant Garamond", serif; font-weight: 400; text-transform: uppercase; letter-spacing: .05em; line-height: 1.08; }
+.ad .btn { display: inline-flex; align-items: center; justify-content: center; background: #f1ece4; color: #1d1e22; font-weight: 500; text-transform: uppercase; letter-spacing: .2em; white-space: nowrap; }
+.ad .fine { color: rgba(255,255,255,.85); letter-spacing: .14em; text-transform: uppercase; }
+.ad .agent { display: flex; align-items: center; }
+.ad .agent img { border-radius: 50%; object-fit: cover; border: 2px solid rgba(241,236,228,.9); }
+
+/* Plan */
+.plan { padding-block: 44px 70px; border-top: 1px solid var(--line); display: grid; gap: 46px; }
+.plan h2 { font-size: clamp(28px, 4vw, 42px); }
+.plan section { display: grid; gap: 16px; }
+.plan h3 { font-size: 24px; }
+.plan .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); padding: 20px; display: grid; gap: 8px; min-width: 0; }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.note { color: var(--muted); font-size: 15px; max-width: 78ch; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; background: var(--chip); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.flow .step { background: var(--surface); border: 1px solid var(--line); padding: 14px; display: grid; gap: 4px; }
+.flow .step b { font-family: var(--font-display); font-weight: 500; font-size: 20px; text-transform: uppercase; letter-spacing: .05em; }
+.flow .step small { color: var(--bronze); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; }
+.mock { display: grid; gap: 10px; margin: 0; min-width: 0; }
+.mock img { width: 100%; height: auto; border: 1px solid var(--line); display: block; }
+.mock figcaption { font-size: 15px; color: var(--muted); }
+.mock figcaption b { color: var(--ink); }
+.mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+.mock.wide { grid-column: 1 / -1; }
+footer.end { padding-block: 24px 50px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+@media (max-width: 640px) { .picks { margin-left: 0; width: 100%; } }
+@media (max-width: 900px) { .bar { position: static; } }
+@media (max-width: 520px) { .flow { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">The Mantra · 26–28 Whitmore Street · Marketing with Angela Webb, Bayleys</p>
+    <h1>100 ad concepts and a go-to-market plan</h1>
+    <p class="lede">Static lead-generation ads for Meta and Google, built from the site's renders, typography and palette. Every ad sends people to "Register interest". Tap <b>Pick</b> on the ones you like, then <b>Copy my picks</b> and send the numbers back. The finished ads will be made in Higgsfield at exact sizes.</p>
+    <nav class="jump" aria-label="Jump to"><a href="/">Back to the website</a><a href="#ads">Ad concepts</a><a href="#plan">Go-to-market plan</a><a href="#traditional">Billboards and print</a></nav>
+  </header>
+</div>
+
+<div class="bar" id="ads">
+  <div class="wrap">
+    <div class="group" role="group" aria-label="Platform"><span>Platform</span>
+      <button class="chipbtn" data-pf="all" aria-pressed="true">All</button>
+      <button class="chipbtn" data-pf="Meta" aria-pressed="false">Meta</button>
+      <button class="chipbtn" data-pf="Google" aria-pressed="false">Google</button>
+    </div>
+    <div class="group" role="group" aria-label="Angle" id="angleGroup"><span>Angle</span></div>
+    <div class="group" role="group" aria-label="Show"><span>Show</span>
+      <button class="chipbtn" id="onlyPicked" aria-pressed="false">Picked only</button>
+    </div>
+    <div class="picks">
+      <span><span class="count" id="count">0</span> picked</span>
+      <button class="copy" id="copyBtn">Copy my picks</button>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <textarea id="copyFallback" rows="2" hidden aria-label="Your picks, ready to copy"></textarea>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="wrap">
+<article class="plan" id="plan">
+  <header style="display:grid;gap:10px">
+    <p class="eyebrow">Go-to-market plan</p>
+    <h2>Selling seventeen garden homes with Angela Webb</h2>
+    <p class="note">The Mantra sells a feeling before a floor plan: stillness, good neighbours and a garden at the door. The campaign builds a waiting list of qualified buyers who see plans and pricing privately before public release, with a natural first audience in Christchurch's meditation and wellbeing community. The concept is not yet consented, so every piece is labelled as an artist's impression and concept design. Figures marked "estimate" are starting assumptions to test.</p>
+  </header>
+
+  <section>
+    <h3>Perfect customer</h3>
+    <div class="two">
+      <div class="box"><p class="eyebrow">Primary</p><h3>Calm-seeking downsizers</h3>
+        <p>Owners aged 55 to 78 in larger homes in St Albans, Merivale, Mairehau, Richmond and Papanui, often long-time meditators or yoga practitioners, with equity and grown children.</p>
+        <ul><li><b>Trigger:</b> the house and garden are too much, but they still want a garden and people around them.</li><li><b>Wants:</b> quiet, sun, a small productive garden, neighbours who share their values, close to town.</li><li><b>Objections:</b> stairs in three-level homes (answered by the two-level homes and the Eastern House), buying off the plans before consent.</li></ul></div>
+      <div class="box"><p class="eyebrow">Primary</p><h3>Wellbeing-minded professionals</h3>
+        <p>Singles and couples aged 30 to 55 who meditate, practise yoga or follow a slow-living lifestyle, working in the central city or from home.</p>
+        <ul><li><b>Trigger:</b> leaving a rental, wanting a first home with a community, or moving back to Christchurch.</li><li><b>Wants:</b> a two-bedroom townhouse, bike storage, EV charging, a quiet place to sit.</li><li><b>Objections:</b> price per square metre and timing.</li></ul></div>
+      <div class="box"><p class="eyebrow">Secondary</p><h3>Young families</h3>
+        <p>Families with one or two children who want the three-bedroom homes around the commons, a car-free path and a safe shared garden.</p>
+        <ul><li><b>Objections:</b> school zones and space; answered with the commons, garden and nearby schools.</li></ul></div>
+      <div class="box"><p class="eyebrow">Secondary</p><h3>Meditation community networks</h3>
+        <p>People connected through local meditation centres, retreats and wellbeing groups, who may buy together as friends and neighbours.</p>
+        <ul><li><b>Objections:</b> wanting to buy near friends; answered with group previews and first choice of neighbouring homes.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Channels and targeting</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Channel</th><th scope="col">Targeting</th><th scope="col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><b>Meta</b> (Instagram and Facebook)</td><td>Christchurch, Selwyn and Waimakariri. Interests: meditation, mindfulness, yoga, wellbeing retreats, community gardens, slow living, solar and EVs. Lookalikes from registrations once there are about 50. Retarget site visitors and viewers of the day-to-night film.</td><td>Desire and reach</td></tr>
+        <tr><td><b>Google Search</b></td><td>"townhouses for sale Christchurch", "new townhouses St Albans", "Edgeware townhouse", "three bedroom townhouse Christchurch", "eco townhouse Christchurch", plus Bayleys and Angela Webb brand terms.</td><td>Highest-intent buyers</td></tr>
+        <tr><td><b>Google Display and Demand Gen</b></td><td>In-market for residential property in Canterbury; YouTube with the day-to-night film.</td><td>Retargeting and reach</td></tr>
+        <tr><td><b>Bayleys channels</b></td><td>Angela's buyer and investor database, Bayleys.co.nz project listing and Bayleys social channels.</td><td>Fastest qualified registrations</td></tr>
+        <tr><td><b>Portals</b></td><td>realestate.co.nz and Trade Me Property project listings linking to the site.</td><td>Credibility and search traffic</td></tr>
+        <tr><td><b>Community partners</b></td><td>Local meditation centres, yoga studios, wellbeing cafés and community gardens: noticeboards, newsletters, a garden morning preview with tea.</td><td>Word of mouth among like-minded buyers</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Meta may require housing ads to run under its Housing special ad category, which limits age and postcode targeting. If so, lean on creative, interest-led lookalikes and retargeting.</p>
+  </section>
+
+  <section>
+    <h3>Funnel</h3>
+    <div class="flow">
+      <div class="step"><small>Step 1</small><b>Ad</b><p>One feeling: stillness, a garden and good neighbours.</p></div>
+      <div class="step"><small>Step 2</small><b>Website</b><p>Opens on the village turning from day to night.</p></div>
+      <div class="step"><small>Step 3</small><b>Register</b><p>Name, contact, home type and budget band.</p></div>
+      <div class="step"><small>Step 4</small><b>Personal call</b><p>Angela calls within the hour during business hours.</p></div>
+      <div class="step"><small>Step 5</small><b>Garden preview</b><p>Plans, pricing and the brochure, then a relaxed one-to-one meeting.</p></div>
+      <div class="step"><small>Step 6</small><b>Retarget</b><p>Visitors who didn't register see community and evening ads for 30 days.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Launch timeline</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">When</th><th scope="col">What happens</th></tr></thead>
+      <tbody>
+        <tr><td class="n">Week 0</td><td>Site live with a lead webhook to Angela's CRM. Pixel, Conversions API, Google tag and GA4 tested with a real registration. Preview to Angela's database and community partners.</td></tr>
+        <tr><td class="n">Week 1</td><td>Test 12 to 15 picked ads on Instagram and Facebook plus Google Search, spending evenly.</td></tr>
+        <tr><td class="n">Weeks 2 to 4</td><td>Keep the best three angles, cut the rest, add YouTube and Demand Gen with the film.</td></tr>
+        <tr><td class="n">Month 2 onward</td><td>Lookalikes, retargeting, a garden morning preview, press and magazine placements.</td></tr>
+        <tr><td class="n">Consent granted</td><td>Registered buyers choose first, by appointment, before any public release.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h3>Budget and targets</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Item</th><th scope="col">Starting point (estimate)</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly digital budget</td><td class="n">NZ$4,000: Meta $2,000, Google Search $1,200, YouTube, Display and retargeting $800</td></tr>
+        <tr><td>Cost per registration</td><td class="n">Aim for NZ$35 to $90</td></tr>
+        <tr><td>Landing page conversion rate</td><td class="n">Aim for 4 to 8% of visitors</td></tr>
+        <tr><td>Cost per qualified buyer (finance-ready, budget band fits)</td><td class="n">Aim for under NZ$400</td></tr>
+        <tr><td>Register goal before release</td><td class="n">120+ qualified registrations for 17 homes</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Replace these estimates with real figures after the first two weeks.</p>
+  </section>
+
+  <section>
+    <h3>Tracking</h3>
+    <ul>
+      <li><b>Meta Pixel and Conversions API:</b> a "Lead" event on successful registration, browser and server, deduplicated.</li>
+      <li><b>Google Ads conversion tag and GA4:</b> a "generate_lead" event with home type and budget band as parameters.</li>
+      <li><b>UTM tags</b> on every ad, so each registration shows its platform, angle and ad number.</li>
+      <li><b>Weekly report:</b> spend, registrations, cost per registration, budget bands and the best ads.</li>
+    </ul>
+  </section>
+
+  <section id="traditional">
+    <h3>Traditional media: billboards, print and outdoor</h3>
+    <p class="note">For seventeen homes the traditional mix should be warm and local: one or two outdoor sites on the routes north-east buyers use, a few print insertions, community noticeboards and beautiful site hoarding on Whitmore Street. Every piece carries Angela, one call to action and the site address. The mock-ups below are flat artwork concepts in simple settings for discussion, not booked placements.</p>
+    <div class="mocks">
+      <figure class="mock wide"><img src="/media/mock-billboard.jpg" alt="Mock-up of a roadside billboard for The Mantra with Angela Webb of Bayleys" loading="lazy"><figcaption><b>Digital billboard.</b> A site on Bealey Avenue, Papanui Road or Fitzgerald Avenue, on the daily routes of north-east buyers.</figcaption></figure>
+      <figure class="mock"><img src="/media/mock-newspaper.jpg" alt="Mock-up of a full-page newspaper property advertisement for The Mantra" loading="lazy"><figcaption><b>The Press, weekend property</b>: a full page with Angela's direct number.</figcaption></figure>
+      <figure class="mock"><img src="/media/mock-magazine.jpg" alt="Mock-up of a full-page magazine advertisement for The Mantra" loading="lazy"><figcaption><b>Lifestyle magazine full page</b>, for example Avenues or Bayleys Residential. The web address is a placeholder until the domain is chosen.</figcaption></figure>
+      <figure class="mock wide"><img src="/media/mock-bus-shelter.jpg" alt="Mock-up of a backlit bus shelter poster for The Mantra" loading="lazy"><figcaption><b>Street poster.</b> Backlit panels in St Albans, Merivale, Richmond and the central city.</figcaption></figure>
+    </div>
+
+    <h3>Booking a Christchurch billboard</h3>
+    <div class="flow">
+      <div class="step"><small>Step 1</small><b>Brief suppliers</b><p>Ask the main outdoor companies (such as JCDecaux, oOh!media and LUMO Digital Outdoor) for premium sites and rates.</p></div>
+      <div class="step"><small>Step 2</small><b>Choose sites</b><p>Routes buyers use daily: Bealey Avenue, Papanui Road, Fitzgerald Avenue, Cranford Street and the central city.</p></div>
+      <div class="step"><small>Step 3</small><b>Book dates</b><p>Digital boards book in 1 to 2 week slots; printed boards usually 4 weeks or more.</p></div>
+      <div class="step"><small>Step 4</small><b>Supply artwork</b><p>The supplier's exact size. Seven words or fewer, plus Angela and the web address.</p></div>
+      <div class="step"><small>Step 5</small><b>Track</b><p>Watch direct visits and searches for "The Mantra Christchurch" during the run.</p></div>
+    </div>
+
+    <h3>Options, costs and lead times</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Medium</th><th scope="col">What you get</th><th scope="col">Indicative cost (NZD, estimate)</th><th scope="col">Lead time</th></tr></thead>
+      <tbody>
+        <tr><td><b>Digital billboard</b></td><td>A share of a rotating screen on a main road, 1 to 2 week slots</td><td class="n">$2,500 to $8,000 per site, 2 weeks</td><td>1 to 2 weeks</td></tr>
+        <tr><td><b>Printed billboard</b></td><td>One static board for the booking, plus print and install</td><td class="n">$4,000 to $12,000 per site, 4 weeks</td><td>3 to 4 weeks</td></tr>
+        <tr><td><b>Street posters</b></td><td>A package of backlit panels in chosen suburbs</td><td class="n">$3,000 to $8,000, 2 to 4 weeks</td><td>2 to 3 weeks</td></tr>
+        <tr><td><b>Newspaper property section</b></td><td>A full page in the weekend property pages</td><td class="n">$3,000 to $6,000 per insertion</td><td>About 1 week</td></tr>
+        <tr><td><b>Lifestyle magazine</b></td><td>A full page in a monthly Christchurch magazine</td><td class="n">$2,000 to $5,000 per issue</td><td>4 to 6 weeks</td></tr>
+        <tr><td><b>Direct mail</b></td><td>A heavy-stock card to about 3,000 homes in St Albans, Edgeware, Merivale and Richmond</td><td class="n">$2,500 to $5,000 incl. print</td><td>About 2 weeks</td></tr>
+        <tr><td><b>Site hoarding</b></td><td>A full-frontage fence wrap at 26–28 Whitmore Street</td><td class="n">$4,000 to $10,000</td><td>2 to 3 weeks, subject to council rules</td></tr>
+        <tr><td><b>Private launch evening</b></td><td>A garden morning preview with tea, renders, plans and Angela</td><td class="n">$3,000 to $8,000</td><td>3 to 4 weeks</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Rough planning estimates; suppliers don't publish NZ rate cards, so get written quotes before booking. A sensible first push is site hoarding, one digital billboard for 2 weeks, a full page in The Press, community noticeboards and a garden morning preview.</p>
+  </section>
+
+  <section>
+    <h3>Rules for every ad</h3>
+    <ul>
+      <li>Label renders as artist's impressions and plans as concept designs subject to consent, in line with the Fair Trading Act.</li>
+      <li>No prices, completion dates or wellbeing claims that can't be backed. Lifestyle images of people are illustrative and say so.</li>
+      <li>Include Bayleys branding and the licence line wherever the format has room.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<div class="wrap"><footer class="end">Prepared for The Mantra, 26–28 Whitmore Street, Edgeware, Christchurch. All images are artist's impressions and indicative only. Ads are concepts for selection, not final artwork.</footer></div>
+
+<script>
+(function () {
+  const SIZES = [
+    { p: "Meta", n: "Feed square", w: 1080, h: 1080 },
+    { p: "Meta", n: "Feed portrait", w: 1080, h: 1350 },
+    { p: "Meta", n: "Stories / Reels", w: 1080, h: 1920 },
+    { p: "Google", n: "Medium rectangle", w: 300, h: 250 },
+    { p: "Google", n: "PMax / Demand Gen landscape", w: 1200, h: 628 },
+    { p: "Meta", n: "Feed square", w: 1080, h: 1080 },
+    { p: "Meta", n: "Feed portrait", w: 1080, h: 1350 },
+    { p: "Google", n: "Large rectangle", w: 336, h: 280 },
+    { p: "Google", n: "Leaderboard", w: 728, h: 90 },
+    { p: "Google", n: "Half page", w: 300, h: 600 },
+    { p: "Google", n: "PMax / Demand Gen square", w: 1200, h: 1200 },
+    { p: "Meta", n: "Stories / Reels", w: 1080, h: 1920 },
+    { p: "Google", n: "Mobile banner", w: 320, h: 50 }
+  ];
+  const ANGLES = [
+    { key: "still", name: "Aspiration: come home to stillness",
+      heads: ["Come home to stillness", "A quieter way to live", "Where the day slows down", "Seventeen homes. One calm garden.", "Breathe out. You're home."],
+      short: "Come home to stillness",
+      prim: ["The Mantra: seventeen garden homes around a car-free green walk at 26–28 Whitmore Street, Edgeware. Register for a private preview with Angela Webb, Bayleys.", "Thick walls, deep window reveals and a garden at the door. Plans and pricing go to registered buyers first.", "A calm, connected village in the city. Register your interest privately."],
+      btn: ["Register interest", "Learn more", "Request preview"], imgs: ["aerial-day", "interior-stillness", "commons-couple"],
+      aud: "Christchurch adults 35 to 75; interests in meditation, mindfulness, yoga, wellbeing retreats and slow living" },
+    { key: "meditate", name: "Ritual: twenty minutes, twice a day",
+      heads: ["Twenty minutes, twice a day", "Made for a still mind", "Quiet mornings, by design", "A home that lets you settle", "Close your eyes. Hear the garden."],
+      short: "Made for a still mind",
+      prim: ["For many residents, the day begins and ends the same way: a comfortable chair, eyes closed, a few quiet minutes. The Mantra is designed to make that easy.", "Car-free paths, birdsong and deep reveals that hush the street. Seventeen homes at Whitmore Street.", "Meditate in the morning sun, then wander out to the commons. Register for The Mantra."],
+      btn: ["Register interest", "Discover more", "Learn more"], imgs: ["portrait-calm", "morning-circle", "interior-stillness"],
+      aud: "Meditation practitioners and wellbeing communities in Canterbury; interests in meditation, Ayurveda, yoga and personal growth" },
+    { key: "community", name: "Community: neighbours who become friends",
+      heads: ["Neighbours who become friends", "Know the people next door", "A village, not an apartment block", "Say hello on the green walk", "Grow food. Share a bench."],
+      short: "Neighbours who become friends",
+      prim: ["The Mantra is built around a shared green walk, a commons lawn and a garden for growing food together. Seventeen homes, one community.", "Pass fresh greens over the fence and share tea on the step. Register your interest with Angela Webb.", "A path where hellos turn into friendships. Register for plans and pricing."],
+      btn: ["Register interest", "See the gardens", "Learn more"], imgs: ["green-walk-neighbours", "garden-neighbours", "front-step-friends"],
+      aud: "Couples and singles aged 30 to 75 in Christchurch; interests in community gardens, co-housing and local food" },
+    { key: "evening", name: "Day into evening: the village after dusk",
+      heads: ["The village after dusk", "Warm windows. Quiet paths.", "A slow walk home", "Blue hour on the green walk", "Evenings, unhurried"],
+      short: "The village after dusk",
+      prim: ["As the light fades, warm windows glow along the green walk and low lights guide you home. See the film at The Mantra website.", "Arm in arm along a lit garden path. Seventeen homes at 26–28 Whitmore Street.", "Watch the village turn from day to night, then register your interest."],
+      btn: ["Watch the film", "Register interest", "Learn more"], imgs: ["aerial-twilight", "twilight-couple", "green-walk-twilight"],
+      aud: "Retargeting site visitors and video viewers; lookalikes of registrations" },
+    { key: "agent", name: "Trust: Angela Webb, Bayleys",
+      heads: ["Privately offered by Angela Webb", "Talk to Angela first", "Bayleys presents The Mantra", "A conversation, not a sales pitch", "Your private preview with Angela"],
+      short: "Angela Webb, Bayleys",
+      prim: ["Angela Webb, a Bayleys Top 10% salesperson for 2025/26 and member of the $300 Million Club, is taking private registrations for The Mantra.", "Call Angela on +64 27 349 1997 or register online for plans and pricing.", "Seventeen garden homes, offered privately by Bayleys Christchurch."],
+      btn: ["Contact Angela", "Register interest", "Learn more"], imgs: ["aerial-day", "commons", "west-coachhouse"],
+      aud: "Bayleys database lookalikes; Christchurch property-intent audiences; retargeting" },
+    { key: "homes", name: "Choice: four ways to live",
+      heads: ["Townhouse, family home or coachhouse", "Three levels or two. Your choice.", "A classical house, restored", "Room for family, close to town", "Four home types. One garden."],
+      short: "Four ways to live",
+      prim: ["Ten three-level townhouses, four two-level family homes, two coachhouses and a restored classical eastern house. Register for plans.", "Three-bedroom family homes around the commons, or two-bedroom townhouses on the green walk. Register your interest.", "The Eastern House: two classical levels with balcony and columns. One only."],
+      btn: ["See the homes", "Register interest", "Learn more"], imgs: ["three-level-homes", "two-level-homes", "eastern-house"],
+      aud: "Homeowners aged 45 to 78 downsizing in St Albans, Merivale, Richmond and Mairehau; first-home families with deposits" },
+    { key: "green", name: "Sustainability: solar, EV, bikes",
+      heads: ["Solar on every roof", "Charge the car. Ride the bike.", "Light on the land", "Rain garden, solar, cycle hub", "Lower bills, greener living"],
+      short: "Solar on every roof",
+      prim: ["Integrated rooftop solar, EV charging bays, a 41.8 m² secure cycle hub and a rain garden. Seventeen homes in Edgeware.", "Bike to Riverside Market in 13 minutes. Register for The Mantra.", "A garden village designed to tread lightly. Register your interest."],
+      btn: ["Register interest", "Learn more", "Get the brochure"], imgs: ["ev-arrival", "three-level-homes", "productive-garden"],
+      aud: "Christchurch adults 28 to 65; interests in solar power, EVs, cycling and sustainable living" },
+    { key: "design", name: "Design: cream plaster and slate",
+      heads: ["Cream plaster, slate and light", "Classical calm, built new", "Tall windows. Deep reveals.", "A heritage palette for today", "Quiet architecture in Edgeware"],
+      short: "Cream plaster and slate",
+      prim: ["Calm cream wall planes, hipped slate roofs and tall windows with deep reveals. Seventeen homes at Whitmore Street.", "Buff masonry, dark metalwork and planting at every threshold. Register for the design brochure.", "Request the brochure for The Mantra: homes, gardens and the site plan."],
+      btn: ["Get the brochure", "Register interest", "Learn more"], imgs: ["green-walk-day", "two-level-homes", "east-coachhouse"],
+      aud: "Architecture and interiors enthusiasts aged 40 to 70 in Canterbury; interests in heritage homes and design magazines" }
+  ];
+  const IMGALT = {};
+
+  const ads = [];
+  for (let i = 0; i < 100; i++) {
+    const a = ANGLES[i % 8], s = SIZES[i % 13], r = Math.floor(i / 8);
+    ads.push({ n: i + 1, angle: a, size: s, head: a.heads[r % 5], prim: a.prim[r % 3], btn: a.btn[r % 3], img: a.imgs[r % 3], aud: a.aud });
+  }
+
+  const face = (size) => `<span class="agent"><img src="/media/angela-webb.jpg" alt="" style="width:${size}px;height:${size}px"></span>`;
+  function adMarkup(ad) {
+    const { w, h } = ad.size, ratio = w / h, img = "/media/" + ad.img + ".jpg";
+    if (h <= 90) { // banners
+      const small = h <= 50;
+      return `<img class="bg" src="${img}" alt="" style="width:${small ? 64 : 180}px;left:0;right:auto">
+        <div style="position:absolute;inset:0 0 0 ${small ? 64 : 180}px;background:#1d1e22;display:flex;align-items:center;justify-content:space-between;gap:${small ? 6 : 16}px;padding:0 ${small ? 8 : 18}px">
+          ${small ? "" : face(56)}
+          <div style="min-width:0;flex:1"><div class="brand" style="font-size:${small ? 10 : 14}px;color:#e0b877">THE MANTRA${small ? "" : " · ANGELA WEBB, BAYLEYS"}</div><div class="h" style="font-size:${small ? 14 : 26}px">${ad.angle.short}</div></div>
+          <span class="btn" style="font-size:${small ? 8 : 13}px;padding:${small ? "6px 8px" : "12px 18px"}">${ad.btn}</span></div>`;
+    }
+    const credit = (fsz) => `<span class="fine" style="font-size:${fsz}px;color:#fff">Angela Webb · Bayleys</span>`;
+    if (ratio > 1.4) { // landscape
+      return `<img class="bg" src="${img}" alt=""><div class="shadeTop"></div><div class="shade"></div>
+        <div class="brand" style="position:absolute;top:34px;left:0;right:0;text-align:center;font-size:34px">The Mantra</div>
+        <div style="position:absolute;left:56px;right:56px;bottom:44px;display:flex;justify-content:space-between;align-items:flex-end;gap:30px">
+          <div style="display:grid;gap:18px;max-width:700px"><div class="h" style="font-size:58px">${ad.head}</div>
+          <div class="fine" style="font-size:15px">26–28 Whitmore Street · Artist's impression</div></div>
+          <div style="display:grid;gap:16px;justify-items:end"><div style="display:flex;align-items:center;gap:14px">${face(70)}${credit(18)}</div><span class="btn" style="font-size:20px;padding:18px 32px">${ad.btn}</span></div></div>`;
+    }
+    const sm = w <= 336, tall = h / w > 1.6, tiny = sm && h < 400;
+    const pad = sm ? 14 : 72, hs = sm ? (h >= 600 ? 32 : 22) : (h >= 1900 ? 104 : 88), bs = sm ? 10 : 26, bp = sm ? "8px 12px" : "24px 44px", br = sm ? 15 : 40, fs = sm ? 8 : 18;
+    const big = ad.angle.key === "agent";
+    const faceSize = sm ? (big ? 44 : 30) : (big ? 160 : 96);
+    return `<img class="bg" src="${img}" alt="" style="object-position:${tall ? "55% 50%" : "50% 50%"}"><div class="shadeTop"></div><div class="shade"></div>
+      <div class="brand" style="position:absolute;top:${pad}px;left:0;right:0;text-align:center;font-size:${br}px">The Mantra</div>
+      <div style="position:absolute;left:${pad}px;right:${pad}px;bottom:${tall && !sm ? 260 : pad}px;display:grid;gap:${sm ? 8 : 30}px;text-align:center;justify-items:center">
+        ${tiny ? "" : `<div class="fine" style="font-size:${sm ? 8 : 20}px">Whitmore Street · Edgeware</div>`}
+        <div class="h" style="font-size:${hs}px">${ad.head}</div>
+        <div><span class="btn" style="font-size:${bs}px;padding:${bp}">${ad.btn}</span></div>
+        <div style="display:flex;align-items:center;gap:${sm ? 6 : 18}px">${face(faceSize)}${credit(sm ? (big ? 10 : 9) : (big ? 28 : 22))}</div>
+        <div class="fine" style="font-size:${fs}px;opacity:.85">${tiny ? "Artist's impression" : "Artist's impression · Concept design · Licensed REAA 2008"}</div>
+      </div>`;
+  }
+
+  let picks = new Set();
+  try { const s = localStorage.getItem("mantra-picks"); if (s) picks = new Set(JSON.parse(s)); } catch (e) {}
+  const save = () => { try { localStorage.setItem("mantra-picks", JSON.stringify([...picks])); } catch (e) {} };
+  let pf = "all", ang = "all", onlyPicked = false;
+
+  const angleGroup = document.getElementById("angleGroup");
+  [{ key: "all", name: "All" }].concat(ANGLES).forEach((a) => {
+    const b = document.createElement("button");
+    b.className = "chipbtn"; b.dataset.ang = a.key;
+    b.textContent = a.key === "all" ? "All" : a.name.split(":")[0];
+    b.title = a.name; b.setAttribute("aria-pressed", a.key === "all" ? "true" : "false");
+    angleGroup.appendChild(b);
+  });
+
+  const grid = document.getElementById("grid");
+  ads.forEach((ad) => {
+    const c = document.createElement("article");
+    c.className = "card"; c.dataset.n = ad.n; c.dataset.pf = ad.size.p; c.dataset.ang = ad.angle.key;
+    c.innerHTML = `<div class="stage"><div class="frame" style="aspect-ratio:${ad.size.w}/${ad.size.h}"><div class="ad" style="width:${ad.size.w}px;height:${ad.size.h}px" role="img" aria-label="Ad ${ad.n}: ${ad.head.replace(/"/g, "")}, on ${IMGALT[ad.img]}">${adMarkup(ad)}</div></div></div>
+      <div class="meta">
+        <div class="metaTop"><span class="num">No. ${ad.n}</span><button class="pickbtn" aria-pressed="false">Pick</button></div>
+        <div class="tags"><span class="tag">${ad.size.p} · ${ad.size.n} · ${ad.size.w}×${ad.size.h}</span><span class="tag angle">${ad.angle.name}</span></div>
+        <dl class="spec">
+          <div><dt>Headline</dt><dd>${ad.head}</dd></div>
+          <div><dt>Primary text</dt><dd>${ad.prim}</dd></div>
+          <div><dt>Button</dt><dd>${ad.btn}</dd></div>
+          <div><dt>Audience</dt><dd>${ad.aud}</dd></div>
+        </dl>
+      </div>`;
+    grid.appendChild(c);
+  });
+
+  function fit() {
+    document.querySelectorAll(".card").forEach((c) => {
+      if (c.hidden) return;
+      const stage = c.querySelector(".stage"), frame = c.querySelector(".frame"), ad = c.querySelector(".ad");
+      const w = +ad.style.width.replace("px", ""), h = +ad.style.height.replace("px", "");
+      const avail = stage.clientWidth - 28, maxH = 420;
+      let scale = Math.min(avail / w, maxH / h, 1);
+      frame.style.width = Math.round(w * scale) + "px";
+      frame.style.height = Math.round(h * scale) + "px";
+      ad.style.transform = `scale(${scale})`;
+    });
+  }
+
+  function render() {
+    let n = 0;
+    document.querySelectorAll(".card").forEach((c) => {
+      const num = +c.dataset.n, picked = picks.has(num);
+      c.classList.toggle("picked", picked);
+      const b = c.querySelector(".pickbtn"); b.setAttribute("aria-pressed", picked ? "true" : "false"); b.textContent = picked ? "Picked" : "Pick";
+      c.hidden = !((pf === "all" || c.dataset.pf === pf) && (ang === "all" || c.dataset.ang === ang) && (!onlyPicked || picked));
+      if (picked) n++;
+    });
+    document.getElementById("count").textContent = n;
+    fit();
+  }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest("button"); if (!t) return;
+    if (t.classList.contains("pickbtn")) { const n = +t.closest(".card").dataset.n; picks.has(n) ? picks.delete(n) : picks.add(n); save(); render(); }
+    else if (t.dataset.pf) { pf = t.dataset.pf; document.querySelectorAll("[data-pf].chipbtn").forEach((b) => b.setAttribute("aria-pressed", b === t ? "true" : "false")); render(); }
+    else if (t.dataset.ang) { ang = t.dataset.ang; angleGroup.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b === t ? "true" : "false")); render(); }
+    else if (t.id === "onlyPicked") { onlyPicked = !onlyPicked; t.setAttribute("aria-pressed", onlyPicked ? "true" : "false"); render(); }
+    else if (t.id === "copyBtn") {
+      const list = [...picks].sort((a, b) => a - b);
+      const status = document.getElementById("status"), fb = document.getElementById("copyFallback");
+      if (!list.length) { status.textContent = "Pick at least one ad first."; return; }
+      const text = "The Mantra ad picks: " + list.map((n) => "#" + n).join(", ");
+      const fallback = () => { fb.hidden = false; fb.value = text; fb.focus(); fb.select(); status.textContent = "Copy the text below and send it back."; };
+      try { navigator.clipboard.writeText(text).then(() => { status.textContent = "Copied " + list.length + " picks. Paste them into a message to us."; fb.hidden = true; }, fallback); } catch (err) { fallback(); }
+    }
+  });
+  window.addEventListener("resize", fit);
+  render();
+})();
+</script>
+</body>
+</html>
