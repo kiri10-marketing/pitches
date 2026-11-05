@@ -4,7 +4,7 @@ Pitch websites, one folder per pitch. Each folder is a standalone Next.js app.
 
 | Folder | Style | Live link |
 |---|---|---|
-| _none yet_ | | |
+| [the-mantra](the-mantra) | Luxury (as The Rise) | https://pitch-the-mantra.vercel.app |
 
 - Each folder deploys to its own Vercel project, `pitch-<folder>`, live at `https://pitch-<folder>.vercel.app`.
 - Pitch sites are noindex until the job is won.
