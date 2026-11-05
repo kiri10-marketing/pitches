@@ -163,8 +163,8 @@ export const gardens = {
     { name: "Rain garden", detail: "A low planted basin that gathers and slows stormwater" },
     { name: "Cycle hub", detail: "41.8 m² of secure, shared bike storage" },
   ],
-  image: "/media/garden-neighbours.jpg",
-  imageAlt: "Artist's impression of two neighbours sharing freshly picked greens in the productive garden",
+  image: "/media/productive-garden.jpg",
+  imageAlt: "Artist's impression of the raised vegetable beds in the productive garden between the northern homes",
 };
 
 export const dayNight = {
