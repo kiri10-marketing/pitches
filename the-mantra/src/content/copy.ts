@@ -10,7 +10,6 @@ export const site = {
   description:
     "Seventeen calm garden homes around a shared green walk, commons and productive garden at 26–28 Whitmore Street, Edgeware, Christchurch. Marketed by Angela Webb, Bayleys.",
   developer: "Aventa, development and project management", // from the R06 render pack
-  weatherLabel: "Christchurch",
 };
 
 export const nav = {
