@@ -91,7 +91,7 @@ export function HeroDemo() {
       <p className="sr-only">{copy.demo.alt}</p>
 
       {/* The laptop */}
-      <div className="stage3d mx-auto" style={{ width: "min(92vw, 760px, max(300px, calc((100svh - 30rem) * 1.6)))" }} aria-hidden="true">
+      <div className="stage3d mx-auto" style={{ width: "min(92vw, 760px, max(300px, calc((100svh - 32.5rem) * 1.6)))" }} aria-hidden="true">
         <div key={spin} className={`laptop relative ${spin ? "spin" : ""}`}>
           <div className="relative">
             <div className="lid rounded-[2.6%/4.2%] bg-ink p-[1.6%] shadow-[0_40px_80px_-30px_rgba(11,27,51,.45)]">
@@ -116,8 +116,8 @@ export function HeroDemo() {
       </div>
 
       {/* The timeline, along the bottom of the banner */}
-      <div className="mx-auto mt-[clamp(3rem,9vw,5rem)] max-w-5xl px-4 sm:px-6">
-        <ol className="grid grid-cols-4 gap-1.5 sm:gap-3">
+      <div className="mx-auto mt-[clamp(3rem,9vw,5rem)] max-w-5xl px-3 sm:px-6">
+        <ol className="grid grid-cols-4 gap-1.5 rounded-[22px] bg-white/90 p-3 shadow-[0_8px_30px_-12px_rgba(11,27,51,.35)] backdrop-blur sm:gap-3 sm:p-5">
           {stages.map((s, i) => {
             const n = i + 1;
             return (
@@ -146,7 +146,7 @@ export function HeroDemo() {
               }
               setPlaying((p) => !p);
             }}
-            className="flex min-h-11 items-center gap-2 text-sm font-semibold text-muted hover:text-ink"
+            className="flex min-h-11 items-center gap-2 rounded-full bg-white/90 px-4 text-sm font-semibold text-ink shadow-[0_4px_16px_-8px_rgba(11,27,51,.4)] backdrop-blur hover:text-blue"
             aria-label={playing ? "Pause the demo" : "Play the demo"}
           >
             <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" fill="currentColor">

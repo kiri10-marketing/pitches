@@ -4,8 +4,8 @@ export const copy = {
   brand: "BuildMap",
   hero: {
     eyebrow: "The future of property development is here",
-    headline: "Map out your journey to success.",
-    headline2: "Build your way to brilliance.",
+    headline: "From a blank site.",
+    headline2: "To a sight to behold.",
     subheader: "Type in an address. BuildMap takes it from concept to consents, construction and completion.",
     cta: "Start with an address",
     cta2: "See what you get",

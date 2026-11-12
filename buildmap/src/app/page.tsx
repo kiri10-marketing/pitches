@@ -8,7 +8,13 @@ export default function Home() {
   return (
     <main>
       {/* The banner: the product demo fills it, with the timeline along the bottom */}
-      <header className="flex min-h-[100svh] flex-col overflow-hidden bg-gradient-to-b from-paper via-paper to-blue-soft">
+      <header className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-paper">
+        {/* A Canterbury Plains backdrop: an empty paddock under the Southern Alps. Washed pale at the top so the words stay easy to read. */}
+        <div className="absolute inset-0 -z-10" aria-hidden="true">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/hero-landscape.webp" alt="" fetchPriority="high" className="h-full w-full object-cover object-[50%_72%]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper/80 via-[38%] to-paper/0 to-[72%]" />
+        </div>
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#" aria-label="BuildMap home">
             <Logo size={34} />
