@@ -3,16 +3,16 @@
 export const brand = {
   idea: "One clear route from an address to a finished, sold development. Calm, minimal and blue.",
   meaning: [
-    { part: "Contour lines", means: "The lay of the land. Every site has a shape, and we read it before anything is drawn." },
-    { part: "The blue route", means: "Your path from the address at the edge of the map to the finished project." },
-    { part: "The summit marker", means: "Completion: built, marketed and ready for sale." },
-    { part: "The north tick", means: "Direction. Experienced people pointing the way, the way a compass does." },
+    { part: "Three layers", means: "The three levels of report, stacked like the layers of a GIS map: basic, technical and the full development plan." },
+    { part: "The roof", means: "The finished product: a home, built and ready for sale. It sits on top of the layers because it is built on them." },
+    { part: "The arrow tip", means: "Direction. The roof points up like an arrowhead: experienced people showing the way forward." },
+    { part: "Two shades of blue", means: "The two sides of BuildMap: powered by data, guided by authority." },
   ],
-  files: ["buildmap-logo.svg", "buildmap-logo-reversed.svg", "buildmap-mark.svg", "buildmap-mark-reversed.svg", "buildmap-mark-small.svg", "buildmap-favicon.svg"],
+  files: ["buildmap-logo.svg", "buildmap-logo-reversed.svg", "buildmap-logo-stacked.svg", "buildmap-mark.svg", "buildmap-mark-reversed.svg", "buildmap-logo-navy.svg", "buildmap-logo-white.svg", "buildmap-app-icon.svg"],
   colours: [
     { name: "Navy ink", hex: "#0B1B33", use: "Text, dark panels, the mark" },
-    { name: "BuildMap blue", hex: "#1257D6", use: "The route, buttons, links" },
-    { name: "Sky", hex: "#7FB0FF", use: "Blue on navy" },
+    { name: "BuildMap blue", hex: "#1257D6", use: "Top layer, buttons, links" },
+    { name: "Sky", hex: "#7FB0FF", use: "Light side of the roof, blue on navy" },
     { name: "Mist", hex: "#F3F6FB", use: "Tiles and panels" },
     { name: "Paper", hex: "#FCFCFD", use: "Page ground" },
   ],

@@ -18,7 +18,7 @@ export default function BrandSheet() {
     <main className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <header className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <p className="eyebrow">Brand sheet · v2 · November 2026</p>
+          <p className="eyebrow">Brand sheet · v3 · November 2026</p>
           <h1 className="mt-4 text-5xl sm:text-6xl">BuildMap</h1>
           <p className="mt-3 max-w-xl text-xl text-muted">{brand.idea}</p>
         </div>
@@ -65,7 +65,7 @@ export default function BrandSheet() {
               <a className="underline decoration-blue underline-offset-4" href={`/brand/${f}`}>{f}</a>
             </span>
           ))}
-          . Use the simplified mark below 48 px. Keep clear space of half the mark's width around the logo.
+          . Use the one-colour navy or white versions where colour is not available. Keep clear space of half the mark's width around the logo.
         </p>
       </section>
 
