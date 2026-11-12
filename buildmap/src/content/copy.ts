@@ -18,9 +18,9 @@ export const copy = {
     { href: "#how", label: "Reports and prices" },
   ],
   demo: {
-    address: "24 Example Street, Christchurch",
+    address: "123 The Terrace Street, Christchurch",
     placeholder: "Enter a site address",
-    alt: "Product demo: a sample address is typed on a laptop. The laptop spins and shows a new screen for each of four stages: concept, consents, construction and completion.",
+    alt: "Product demo: a sample address is typed on a laptop. The laptop spins and the concept plans arrive, page by page. It spins again for consents and construction, and finishes on the live project website built from those plans.",
     stages: [
       { name: "Concept", time: "Mostly automated" },
       { name: "Consents", time: "Within 24 hours" },
@@ -30,6 +30,8 @@ export const copy = {
     // What the laptop shows at each stage. Sample content only, not a real site.
     screens: {
       sample: "Sample",
+      plans: { file: "Concept plans.pdf", pages: 24, of: "of", ready: "Plans ready" },
+      site: { label: "Live project website" },
       ask: "Where is the site?",
       concept: {
         title: "What you can build",

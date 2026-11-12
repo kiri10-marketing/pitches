@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import geo from "@/lib/mark.json";
 import { copy } from "@/content/copy";
 import { Mark } from "@/components/Mark";
 
 // The header product demo. A sample address is typed on a laptop; the laptop spins and a new screen
-// arrives for each stage: concept, consents, construction, completion. The timeline runs along the bottom.
+// arrives for each stage. Concept shows real concept plans arriving page by page; completion plays a
+// recording of the real project website built from them. The timeline runs along the bottom.
 const ADDRESS = copy.demo.address;
 const TYPE_MS = 42;
-const STAGE_MS = 2500;
+const STAGE_MS = [0, 4300, 2100, 2100, 8600]; // how long each stage stays up
+const PLAN_PAGES = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/demo/plan-${n}.webp`);
+const PAGE_NO = [1, 3, 5, 6, 13, 14, 19, 20]; // the page of the report each image is
+const PAGE_MS = 480;
 const SPIN_MS = 700;
 const KEYS = 4 * 13;
 const u = (n: number) => `${(n * 1.2).toFixed(2)}cqw`; // sizes scale with the laptop screen
@@ -57,10 +60,10 @@ export function HeroDemo() {
       wait = 450;
       next = () => go(1);
     } else if (stage < 4) {
-      wait = STAGE_MS;
+      wait = STAGE_MS[stage];
       next = () => go(stage + 1);
     } else {
-      wait = STAGE_MS + 1600;
+      wait = STAGE_MS[4];
       next = () => {
         setChars(0);
         go(0);
@@ -161,8 +164,55 @@ function Tick({ size = 2.2 }: { size?: number }) {
   );
 }
 
+// The concept plans, arriving one page at a time like a report being opened.
+function Plans() {
+  const s = copy.demo.screens.plans;
+  const [page, setPage] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = window.setInterval(() => setPage((p) => Math.min(p + 1, PLAN_PAGES.length - 1)), PAGE_MS);
+    return () => window.clearInterval(t);
+  }, []);
+  const last = page === PLAN_PAGES.length - 1;
+  return (
+    <div className="absolute inset-0 flex bg-field">
+      {/* Page thumbnails */}
+      <div className="flex flex-col overflow-hidden border-r border-line bg-white" style={{ width: "13%", padding: u(0.8), gap: u(0.6) }}>
+        {PLAN_PAGES.slice(0, 6).map((src, i) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img key={src} src={src} alt="" className="block w-full border transition-opacity duration-200" style={{ borderColor: i === Math.min(page, 5) ? "#1257D6" : "#E2E7EF", borderWidth: u(0.18), opacity: i <= page ? 1 : 0.15 }} />
+        ))}
+      </div>
+      {/* The open page */}
+      <div className="relative flex-1">
+        <div className="flex items-center justify-between text-muted" style={{ padding: `${u(0.7)} ${u(1.6)}`, fontSize: u(1.45) }}>
+          <span className="font-semibold text-ink">{s.file}</span>
+          <span className="flex items-center" style={{ gap: u(1) }}>
+            {last && <span className="pop rounded-full bg-blue font-semibold text-white" style={{ padding: `${u(0.25)} ${u(1.1)}` }}>{s.ready}</span>}
+            {PAGE_NO[page]} {s.of} {s.pages}
+          </span>
+        </div>
+        <div className="absolute inset-x-0 bottom-0 flex items-center justify-center" style={{ top: u(3.6), padding: `0 ${u(1.6)} ${u(1.4)}` }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img key={page} src={PLAN_PAGES[page]} alt="" className="page-in block max-h-full max-w-full bg-white shadow-[0_6px_24px_-8px_rgba(11,27,51,.35)]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Screen({ shown, chars }: { shown: number; chars: number }) {
   const s = copy.demo.screens;
+  const video = useRef<HTMLVideoElement>(null);
+  // The website recording stays loaded and restarts each time the completion screen arrives.
+  useEffect(() => {
+    const v = video.current;
+    if (!v) return;
+    if (shown === 4 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      v.currentTime = 0;
+      v.play().catch(() => {});
+    } else v.pause();
+  }, [shown]);
   const name = shown > 0 ? copy.demo.stages[shown - 1].name : null;
   return (
     <div className="absolute inset-0 flex flex-col text-ink">
@@ -182,7 +232,8 @@ function Screen({ shown, chars }: { shown: number; chars: number }) {
         </span>
       </div>
 
-      <div key={shown} className="relative flex-1" style={{ padding: u(3) }}>
+      <div className="relative flex-1">
+      <div key={shown} className="absolute inset-0" style={{ padding: u(3) }}>
         {shown === 0 && (
           <div className="flex h-full flex-col items-center justify-center text-center">
             <p className="font-semibold tracking-[-0.035em]" style={{ fontSize: u(4.6), lineHeight: 1.05 }}>{s.ask}</p>
@@ -200,34 +251,7 @@ function Screen({ shown, chars }: { shown: number; chars: number }) {
           </div>
         )}
 
-        {shown === 1 && (
-          <div className="grid h-full grid-cols-[1.25fr_1fr]" style={{ gap: u(2.4) }}>
-            <div className="pop relative overflow-hidden bg-paper-2" style={{ borderRadius: u(2) }}>
-              <svg viewBox="0 0 120 96" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
-                <g fill="none" stroke="#0B1B33" strokeOpacity=".16" strokeWidth=".6" transform="translate(-6 -2)">
-                  {geo.paths.map((d, i) => (
-                    <path key={i} d={d} />
-                  ))}
-                </g>
-                <path d="M48 34l30-6 8 26-31 9Z" fill="#1257D6" fillOpacity=".14" stroke="#1257D6" strokeWidth="1.2" pathLength={1} className="draw" />
-                <circle cx="66" cy="46" r="3.2" fill="#1257D6" />
-                <circle cx="66" cy="46" r="1.2" fill="#fff" />
-              </svg>
-            </div>
-            <div className="flex flex-col justify-center" style={{ gap: u(1.5) }}>
-              <p className="font-semibold tracking-[-0.03em]" style={{ fontSize: u(3.3), lineHeight: 1.1 }}>{s.concept.title}</p>
-              {s.concept.cards.map((c, i) => (
-                <div key={c.k} className="pop flex items-center bg-paper-2" style={{ animationDelay: `${0.25 + i * 0.3}s`, gap: u(1.4), padding: `${u(1.3)} ${u(1.6)}`, borderRadius: u(1.6) }}>
-                  <Tick />
-                  <span style={{ lineHeight: 1.2 }}>
-                    <span className="block text-muted" style={{ fontSize: u(1.55) }}>{c.k}</span>
-                    <span className="block font-semibold" style={{ fontSize: u(2.05) }}>{c.v}</span>
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {shown === 1 && <Plans />}
 
         {shown === 2 && (
           <div className="flex h-full flex-col justify-center">
@@ -275,52 +299,19 @@ function Screen({ shown, chars }: { shown: number; chars: number }) {
           </div>
         )}
 
-        {shown === 4 && (
-          <div className="flex h-full flex-col justify-center">
-            <p className="font-semibold tracking-[-0.03em]" style={{ fontSize: u(3.3) }}>{s.completion.title}</p>
-            <div className="grid grid-cols-[1.5fr_1fr_1fr]" style={{ gap: u(2), marginTop: u(1.8) }}>
-              {/* Website */}
-              <div className="pop overflow-hidden border border-line bg-white" style={{ borderRadius: u(1.6), animationDelay: ".1s" }}>
-                <div className="flex bg-paper-2" style={{ gap: u(0.6), padding: u(0.9) }}>
-                  {[0, 1, 2].map((d) => (
-                    <span key={d} className="rounded-full bg-line" style={{ width: u(1), height: u(1) }} />
-                  ))}
-                </div>
-                <div className="relative bg-ink" style={{ height: u(13) }}>
-                  <svg viewBox="0 0 100 50" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMax slice">
-                    <path d="M0 50V34l16-6v22ZM22 50V18l26-8 26 8v32ZM80 50V30l20-5v25Z" fill="#14294A" />
-                    {[24, 32, 40].map((y) => [29, 38, 47, 56, 65].map((x) => <rect key={`${x}${y}`} x={x - 2} y={y} width="4" height="5" fill="#7FB0FF" />))}
-                  </svg>
-                </div>
-                <div className="flex items-center justify-between" style={{ padding: u(1.2), fontSize: u(1.55) }}>
-                  <span className="font-semibold">{s.completion.assets[0]}</span>
-                  <span className="rounded-full bg-blue text-white" style={{ padding: `${u(0.3)} ${u(1.1)}` }}>{s.completion.cta}</span>
-                </div>
-              </div>
-              {/* Brochure */}
-              <div className="pop flex flex-col bg-paper-2" style={{ borderRadius: u(1.6), padding: u(1.4), animationDelay: ".4s" }}>
-                <div className="relative flex-1">
-                  <span className="absolute inset-y-0 left-[18%] w-[62%] rotate-6 border border-line bg-white" style={{ borderRadius: u(0.6) }} />
-                  <span className="absolute inset-y-0 left-[12%] flex w-[62%] -rotate-3 flex-col border border-line bg-white" style={{ borderRadius: u(0.6), padding: u(1), gap: u(0.7) }}>
-                    <span className="block flex-1 bg-ink" style={{ borderRadius: u(0.4) }} />
-                    <span className="block w-4/5 bg-line" style={{ height: u(0.7) }} />
-                    <span className="block w-3/5 bg-line" style={{ height: u(0.7) }} />
-                  </span>
-                </div>
-                <span className="font-semibold" style={{ fontSize: u(1.55), marginTop: u(1.2) }}>{s.completion.assets[1]}</span>
-              </div>
-              {/* Marketing assets */}
-              <div className="pop flex flex-col bg-paper-2" style={{ borderRadius: u(1.6), padding: u(1.4), animationDelay: ".7s" }}>
-                <div className="grid flex-1 grid-cols-2" style={{ gap: u(0.8) }}>
-                  {["bg-blue", "bg-ink", "bg-blue-light", "bg-blue"].map((c, i) => (
-                    <span key={i} className={`block ${c}`} style={{ borderRadius: u(0.8), opacity: i === 3 ? 0.35 : 1 }} />
-                  ))}
-                </div>
-                <span className="font-semibold" style={{ fontSize: u(1.55), marginTop: u(1.2) }}>{s.completion.assets[2]}</span>
-              </div>
-            </div>
-          </div>
-        )}
+      </div>
+        {/* The real project website, recorded. Kept mounted so it plays the moment the screen arrives. */}
+        <div className={`absolute inset-0 bg-ink ${shown === 4 ? "" : "invisible"}`}>
+          <video ref={video} src="/demo/site.mp4" poster="/demo/site-poster.jpg" muted playsInline preload="auto" className="h-full w-full object-cover object-top" />
+          <span className="absolute rounded-full bg-white/90 font-semibold text-ink" style={{ left: u(1.2), bottom: u(1.2), padding: `${u(0.35)} ${u(1.2)}`, fontSize: u(1.4) }}>{s.site.label}</span>
+        </div>
+        {/* Load the plan pages ahead of time so they appear instantly. */}
+        <div hidden>
+          {PLAN_PAGES.map((src) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={src} src={src} alt="" />
+          ))}
+        </div>
       </div>
     </div>
   );
