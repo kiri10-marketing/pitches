@@ -60,7 +60,7 @@ const seed = {
   meta: { title: [name, site.suburb || site.city].filter(Boolean).join(" | "), description: c.summary },
   hero: {
     eyebrow: [site.suburb, site.city].filter(Boolean).join(", "),
-    headline: w.headline || TODO("hero headline, Kiri"),
+    headline: w.headline || TODO("hero headline, Ant"),
     subheader: c.summary,
     image: hero?.file,
     primaryAction: w.primary_action || "Register interest",

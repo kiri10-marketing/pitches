@@ -10,7 +10,7 @@ Generated from BuildMap package `BM-20261008-275-montreal` (Level 1 08 Oct 2026 
 - **Levels issued:** 1
 
 ## Sections
-1. Hero: Christchurch Central City, Christchurch · [PLACEHOLDER: hero headline, Kiri]
+1. Hero: Christchurch Central City, Christchurch · [PLACEHOLDER: hero headline, Ant]
 2. Facts: 6 residences · 2 to 3 bedrooms · 6 levels · Up to 8 car parks
 3. Intro and architecture: 5 key points; materials Red brick, Bronze window frames, Clear glass balustrades, Cedar accents, Stone-toned paving
 4. Residences: Ground garden (1), Upper full-floor (5)
@@ -23,7 +23,7 @@ Generated from BuildMap package `BM-20261008-275-montreal` (Level 1 08 Oct 2026 
 - Never present these open items as resolved: Survey and title; Planning and heritage; Parking; Fire and access; Engineering
 
 ## Placeholders to fill
-- [PLACEHOLDER: hero headline, Kiri]
+- [PLACEHOLDER: hero headline, Ant]
 - [PLACEHOLDER: agent name]
 - [PLACEHOLDER: phone]
 - [PLACEHOLDER: email]

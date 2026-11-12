@@ -13,9 +13,12 @@ export async function POST(req: Request) {
   }
   const missing = (["address", "name", "email", "clientType", "levels"] as const).filter((k) => !String(body[k] ?? "").trim());
   if (missing.length) return NextResponse.json({ error: `Please fill in: ${missing.join(", ")}` }, { status: 400 });
-  if (!["1", "1,2", "1,2,3"].includes(String(body.levels))) return NextResponse.json({ error: "Pick a level." }, { status: 400 });
+  // "package" = all three levels plus the website and marketing.
+  const choice = String(body.levels);
+  if (!["1", "1,2", "1,2,3", "package"].includes(choice)) return NextResponse.json({ error: "Pick a BuildMap option." }, { status: 400 });
+  const pkgChoice = choice === "package";
 
-  const { pkg, ok, errors } = buildJob({ ...(body as Order), website: body.website !== false });
+  const { pkg, ok, errors } = buildJob({ ...(body as Order), levels: pkgChoice ? "1,2,3" : choice, website: pkgChoice });
   if (!ok) return NextResponse.json({ error: "Some details don't look right.", details: errors }, { status: 400 });
 
   const hook = process.env.ORDER_WEBHOOK_URL;

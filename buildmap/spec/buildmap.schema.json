@@ -66,7 +66,7 @@
 
     "website": {
       "type": "object",
-      "description": "Optional overrides from Kiri or the client. Anything missing becomes a marked placeholder on the site.",
+      "description": "Optional overrides from Ant or the client. Anything missing becomes a marked placeholder on the site.",
       "properties": {
         "style": { "enum": ["standard", "luxury", "sitely"] },
         "development_name": { "type": "string" },

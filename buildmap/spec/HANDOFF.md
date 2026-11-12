@@ -33,7 +33,7 @@ BM-20261008-275-montreal/
 | `site` | Automatic site record (Level 0), corrected by Paul's agent | Straight after the order; Paul's agent fixes anything wrong and adds a source |
 | `level1` | Paul's agent | Status `in-progress`, then `issued` when Paul signs it off |
 | `level2`, `level3` | Paul's agent | Same, if ordered |
-| `website` | Kiri (or the client) | Optional: style, development name, headline, agents, prices |
+| `website` | Ant (or the client) | Optional: style, development name, headline, agents, prices |
 
 A level only counts once its `status` is `issued`. **The website is built as soon as Level 1 is issued**, and rebuilt when Level 2 or 3 is issued.
 

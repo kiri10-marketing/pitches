@@ -21,7 +21,7 @@ export function OrderForm() {
       const r = await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, website: data.website === "on" }),
+        body: JSON.stringify(data),
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || "Something went wrong.");
@@ -81,21 +81,21 @@ export function OrderForm() {
       </fieldset>
 
       <fieldset className="mt-10">
-        <legend className="text-xl font-bold text-navy">How far do you want to go?</legend>
+        <legend className="text-xl font-bold text-navy">Choose your BuildMap</legend>
         <div className="mt-4 space-y-3">
           {f.levels.map((l, i) => (
             <label key={l.value} className="flex cursor-pointer gap-4 rounded-2xl border border-line p-4 has-[:checked]:border-blue has-[:checked]:bg-sky/40">
-              <input type="radio" name="levels" value={l.value} defaultChecked={i === 0} className="mt-1.5 h-5 w-5 accent-[#2f6db3]" />
-              <span>
-                <span className="block font-semibold">{l.label}</span>
+              <input type="radio" name="levels" value={l.value} defaultChecked={i === 0} className="mt-1.5 h-5 w-5 shrink-0 accent-[#2f6db3]" />
+              <span className="flex-1">
+                <span className="flex flex-wrap items-baseline justify-between gap-x-4">
+                  <span className="font-semibold">{l.label}</span>
+                  <span className="font-[family-name:var(--font-head)] font-extrabold text-navy">{l.price}</span>
+                </span>
                 <span className="block text-base text-muted">{l.note}</span>
               </span>
             </label>
           ))}
-          <label className="flex cursor-pointer items-center gap-3 pt-2">
-            <input type="checkbox" name="website" defaultChecked className="h-5 w-5 accent-[#2f6db3]" />
-            <span>Build the sale-ready website from the reports</span>
-          </label>
+          <p className="hint">{f.pricesNote}</p>
         </div>
       </fieldset>
 
