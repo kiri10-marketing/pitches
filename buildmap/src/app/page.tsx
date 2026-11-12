@@ -4,7 +4,7 @@ import { HeroDemo } from "@/components/HeroDemo";
 import { Logo, Mark } from "@/components/Mark";
 
 export default function Home() {
-  const { hero, steps, proof, who, manifesto, how, pitch, assets } = copy;
+  const { hero, steps, proof, story, who, manifesto, how, pitch, assets } = copy;
   return (
     <main>
       {/* The banner: the product demo fills it, with the timeline along the bottom */}
@@ -71,21 +71,45 @@ export default function Home() {
         </ul>
       </section>
 
-      {/* Who is behind it */}
+      {/* Powered by data, guided by authority */}
+      <section id="trust" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow">{proof.eyebrow}</p>
+          <h2 className="mt-3 text-4xl sm:text-6xl">
+            Powered by data. <span className="text-blue">Guided by authority.</span>
+          </h2>
+          <p className="mt-5 text-lg text-muted">{proof.intro}</p>
+        </div>
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          {proof.sides.map((side, i) => (
+            <div key={side.name} className={i === 0 ? "tile p-8 sm:p-10" : "rounded-[28px] bg-ink p-8 text-white sm:p-10"}>
+              <h3 className="text-3xl">{side.name}</h3>
+              <ul className="mt-6 space-y-4">
+                {side.points.map((pt) => (
+                  <li key={pt} className="flex gap-3 text-lg">
+                    <span className={`mt-[0.55em] h-2 w-2 shrink-0 rounded-full ${i === 0 ? "bg-blue" : "bg-blue-light"}`} aria-hidden="true" />
+                    <span className={i === 0 ? "" : "text-white/90"}>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <p className="mx-auto mt-10 max-w-3xl text-center text-xl text-muted">{proof.statement}</p>
+      </section>
+
+      {/* Why we built it */}
       <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-        <div className="tile grid gap-10 p-8 sm:p-14 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.4fr] lg:gap-16">
           <div>
-            <p className="eyebrow">{proof.eyebrow}</p>
-            <p className="mt-4 text-[1.9rem] font-semibold leading-[1.12] tracking-[-0.03em] sm:text-[2.6rem]">{proof.statement}</p>
+            <p className="eyebrow">{story.eyebrow}</p>
+            <h2 className="mt-3 text-4xl sm:text-5xl">{story.title}</h2>
           </div>
-          <dl className="self-center divide-y divide-line">
-            {proof.points.map((p) => (
-              <div key={p.big} className="flex items-baseline justify-between gap-6 py-4">
-                <dt className="text-3xl font-semibold tracking-[-0.03em]">{p.big}</dt>
-                <dd className="text-right text-base text-muted">{p.small}</dd>
-              </div>
+          <div className="space-y-5 text-xl leading-relaxed">
+            {story.paras.map((t) => (
+              <p key={t}>{t}</p>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
@@ -107,8 +131,9 @@ export default function Home() {
       <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
         <figure className="rounded-[28px] bg-ink px-6 py-20 text-center text-white sm:px-16 sm:py-24">
           <Mark size={56} tone="paper" className="mx-auto" />
-          <blockquote className="mx-auto mt-8 max-w-4xl text-[1.7rem] font-semibold leading-[1.18] tracking-[-0.03em] sm:text-[2.5rem]">{manifesto.quote}</blockquote>
+          <blockquote className="mx-auto mt-8 max-w-4xl text-[1.7rem] font-semibold leading-[1.18] tracking-[-0.03em] sm:text-[2.5rem]">“{manifesto.quote}”</blockquote>
           <figcaption className="mt-7 text-lg text-blue-light">{manifesto.sign}</figcaption>
+          <p className="mx-auto mt-10 max-w-2xl border-t border-white/15 pt-8 text-lg text-white/75">{manifesto.follow}</p>
         </figure>
       </section>
 

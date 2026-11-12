@@ -13,6 +13,7 @@ export const copy = {
   },
   nav: [
     { href: "#assets", label: "What you get" },
+    { href: "#trust", label: "Data and authority" },
     { href: "#who", label: "Who it's for" },
     { href: "#how", label: "Reports and prices" },
   ],
@@ -80,12 +81,35 @@ export const copy = {
     ],
   },
   proof: {
-    eyebrow: "Who is behind it",
+    eyebrow: "How it works",
+    title: "Powered by data. Guided by authority.",
+    intro: "The data does the heavy lifting. Experienced people decide what it means for your site.",
+    sides: [
+      {
+        name: "Powered by data",
+        points: [
+          "Zoning, hazards and site records pulled for your address",
+          "The floor plan library of Figure & Ground, one of New Zealand's largest architecture firms",
+          "Checked with our consulting partners, so the data and advice are as accurate as possible",
+        ],
+      },
+      {
+        name: "Guided by authority",
+        points: [
+          "Developed by a team of experienced property developers",
+          "Construction professionals who have built hundreds of homes",
+          "Decades of domain experience behind every report",
+        ],
+      },
+    ],
     statement: "A product made by property developers, for future property developers, agents, landowners and builders.",
-    points: [
-      { big: "Decades", small: "of domain experience" },
-      { big: "Hundreds", small: "of homes built" },
-      { big: "One address", small: "is all we need to begin" },
+  },
+  story: {
+    eyebrow: "Why we built it",
+    title: "Born out of frustration.",
+    paras: [
+      "Due diligence and planning cost a lot of money and took a lot of time. So we set out to build a product that cuts both.",
+      "We hope to inspire the next generation of property developers, and to give the development-curious the confidence to take the next step and create their own beautiful buildings in New Zealand.",
     ],
   },
   journey: {
@@ -110,9 +134,9 @@ export const copy = {
     ],
   },
   manifesto: {
-    eyebrow: "Why BuildMap",
-    quote: "Combining modern-day technology with intense industry experience, we are looking to pioneer the next wave of successful development in New Zealand and further afield.",
-    sign: "The BuildMap founders",
+    quote: "New Zealand has a wealth of incredible builders, but only a small number of developers. My hope is that BuildMap lets those who have sat on the sidelines take the plunge and create their vision.",
+    sign: "Ant, BuildMap co-founder",
+    follow: "Combining modern-day technology with intense industry experience, we are looking to pioneer the next wave of successful development in New Zealand and further afield.",
   },
   how: {
     eyebrow: "Reports and prices",
