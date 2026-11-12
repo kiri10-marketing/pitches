@@ -1,13 +1,13 @@
 # Website brief: The Rise
 
-Generated from BuildMap package `BM-20261008-275-montreal` (Level 1 08 Oct 2026 updated concept). Build it with the website-generator skill; all copy goes into `src/content/copy.ts` from `copy-seed.json`.
+Generated from BuildMap package `BM-20261008-275-montreal` (development plan 08 Oct 2026 updated concept). Build it with the website-generator skill; all copy goes into `src/content/copy.ts` from `copy-seed.json`.
 
 - **Style:** luxury build (set in the package)
 - **Live link:** https://pitch-the-rise.vercel.app
 - **Client:** developer, goal sell-off-plan
 - **Primary action:** Register interest
-- **Hero image:** level-1/images/01-exterior-west.jpg (Updated exterior, approved brick character)
-- **Levels issued:** 1
+- **Hero image:** level-3/images/01-exterior-west.jpg (Updated exterior, approved brick character)
+- **Levels issued:** 1, 3
 
 ## Sections
 1. Hero: Christchurch Central City, Christchurch · [PLACEHOLDER: hero headline, Ant]
@@ -20,6 +20,7 @@ Generated from BuildMap package `BM-20261008-275-montreal` (Level 1 08 Oct 2026 
 
 ## Must carry
 - Concept design, not for consent or construction. Renders are artist's impressions. Areas are gross design zones, not net saleable areas.
+- Level 1 hazards (not selling points; don't contradict them): Heritage: Residential Heritage Area, contributory existing house (high); Title and site area (medium); Flood and geotechnical (unknown)
 - Never present these open items as resolved: Survey and title; Planning and heritage; Parking; Fire and access; Engineering
 
 ## Placeholders to fill

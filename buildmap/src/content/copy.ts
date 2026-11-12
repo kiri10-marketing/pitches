@@ -6,25 +6,24 @@ export const copy = {
     eyebrow: "For landowners, developers and agents",
     headline: "From an address to a sale-ready website.",
     subheader:
-      "Give us a site address. A construction manager with 10+ years on New Zealand projects maps what it can become, how it gets built, and launches it with a website ready to sell.",
+      "Give us a site address. Find out what you can build within the zoning and what to watch for, then go as far as you need: full due diligence, a development plan, or a website and marketing ready to sell.",
     cta: "Start with an address",
-    ticks: ["Concept plans and renders", "Technical and build reports", "A live website for the project"],
+    ticks: ["Site check from $99", "Due diligence in 24 hours", "Sale-ready in 5 working days"],
   },
   steps: [
-    { n: "0", title: "Site record", body: "We pull the title, zone, overlays, land area and nearby sales from the address. Automatic." },
-    { n: "1", title: "Level 1: Concept", body: "What the site can hold: layout, residences, floor plans, renders, area schedule and the checks still open." },
-    { n: "2", title: "Level 2: Technical", body: "Planning rules checked, specification, engineering inputs and the risks that matter for consent." },
-    { n: "3", title: "Level 3: Construction plan", body: "Programme, staging, cost plan and procurement: the plan a builder or lender can work from." },
-    { n: "W", title: "Website and marketing", body: "Built from the reports and live on its own link, with a brochure and ad concepts. Moves to your domain when you're ready." },
+    { n: "1", title: "Basic report", time: "$99", body: "A short-form due diligence accelerator: what you can do on the site within the zoning, and the hazards to be aware of." },
+    { n: "2", title: "Technical report", time: "$499 · within 24 hours", body: "Almost everything you need in your due diligence period to make a decision on the site." },
+    { n: "3", title: "Full development plan", time: "Within 48 hours", body: "The concept, programme, staging and costs: the plan a builder, partner or lender can work from." },
+    { n: "4", title: "Full package", time: "Within 5 working days", body: "The development plan plus a sale-ready website, all marketing assets, strategy and feasibility." },
   ],
   form: {
     title: "Start a BuildMap",
-    intro: "Only the address and your contact details are needed. Everything else helps us get it right first time.",
+    intro: "All we need is the address and your contact details.",
     levels: [
-      { value: "1", label: "Basic report", price: "$99", note: "Level 1 concept: what the site can hold, with plans, renders and an area schedule." },
-      { value: "1,2", label: "Technical report", price: "$499", note: "Level 2: planning rules checked, specification, engineering inputs and risks. Includes the basic report." },
-      { value: "1,2,3", label: "Full development plan", price: "Price on application", note: "Level 3: programme, staging, cost plan and procurement. Build-ready." },
-      { value: "package", label: "Full package", price: "Price on application", note: "All three levels through to a sale-ready website, brochure and marketing." },
+      { value: "1", label: "Basic report", price: "$99", note: "What you can do on the site within the zoning, and the hazards to be aware of. A short-form due diligence accelerator." },
+      { value: "1,2", label: "Technical report", price: "$499", note: "Almost everything you need for your due diligence period to make a decision. Returned within 24 hours of order." },
+      { value: "1,2,3", label: "Full development plan", price: "Price on application", note: "Concept, programme, staging and costs. Returned within 48 hours of order." },
+      { value: "package", label: "Full package", price: "Price on application", note: "Sale-ready website, all marketing assets, strategy and feasibility. Within 5 working days." },
     ],
     pricesNote: "Prices in NZD. Price on application: we confirm the price with you before any work starts.",
     clientTypes: [
@@ -49,10 +48,10 @@ export const copy = {
     title: "Your BuildMap has started",
     next: [
       "We pull the site record for the address.",
-      "Paul reviews the site and starts Level 1. We'll email you if anything is missing.",
-      "You get each report as it's signed off. With the full package, your website is then built from them and you get the link to review.",
+      "Your report is prepared and checked. We'll email you if anything is missing.",
+      "You get each report as it's signed off. With the full package, your website and marketing follow.",
     ],
   },
   disclaimer:
-    "BuildMap reports are concept and planning advice prepared by a construction manager. They are not a consent, engineering design or registered valuation. Renders are artist's impressions.",
+    "BuildMap reports are desktop planning and development advice prepared with a construction manager. They are not a LIM, a consent, engineering design, legal advice or a registered valuation. Renders are artist's impressions.",
 } as const;

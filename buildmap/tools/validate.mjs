@@ -25,7 +25,8 @@ const problems = (ajv.errors || []).map((e) => `${e.instancePath || "/"} ${e.mes
 const warnings = [];
 
 // Contract rules the schema can't express.
-const l1 = pkg.level1;
+// The development plan (Level 3) carries the concept, residences and images the website needs.
+const l1 = pkg.level3;
 if (l1?.status === "issued") {
   const ids = new Set((l1.residences || []).map((r) => r.id));
   for (const img of l1.images || [])
@@ -39,7 +40,7 @@ for (const p of pkg.website?.prices || [])
   if (l1 && !(l1.residences || []).some((r) => r.id === p.residence_id)) problems.push(`price for unknown residence ${p.residence_id}`);
 
 if (!process.argv.includes("--no-files")) {
-  const files = [l1?.report_pdf, pkg.level2?.report_pdf, pkg.level3?.report_pdf, ...(l1?.images || []).map((i) => i.file)].filter(Boolean);
+  const files = [pkg.level1?.report_pdf, pkg.level2?.report_pdf, l1?.report_pdf, ...(l1?.images || []).map((i) => i.file)].filter(Boolean);
   for (const f of files) if (!fs.existsSync(path.join(root, f))) problems.push(`missing file ${f}`);
 }
 
@@ -51,4 +52,4 @@ if (!ok || problems.length) {
   console.log(`NOT READY: ${problems.length} problem(s)`);
   process.exit(1);
 }
-console.log(l1?.status === "issued" ? "READY: the website can be built from this package" : "VALID: waiting for Level 1 to be issued");
+console.log(l1?.status === "issued" ? "READY: the website can be built from this package" : "VALID: the website needs Level 3 (the development plan) to be issued");

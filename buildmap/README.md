@@ -5,8 +5,8 @@ From an address to a sale-ready website. This folder holds the first pieces of t
 | Path | What it is |
 | --- | --- |
 | `spec/HANDOFF.md` | The hand-off contract between Paul's agent (Levels 1 to 3) and the website builder, in plain words |
-| `spec/buildmap.schema.json` | The same contract as a JSON Schema (`buildmap.json`, v0.1) |
-| `examples/275-montreal/` | The contract filled in from the 08 Oct 2026 Level 1 report for 275 Montreal Street, plus the generated website brief |
+| `spec/buildmap.schema.json` | The same contract as a JSON Schema (`buildmap.json`, v0.2) |
+| `examples/275-montreal/` | The contract filled in from the 08 Oct 2026 concept report for 275 Montreal Street, plus the generated website brief |
 | `tools/validate.mjs` | Checks a job package: `node tools/validate.mjs <job folder>` |
 | `tools/to-site-brief.mjs` | Turns a package into `site-brief.md` and `copy-seed.json` for the website-generator skill |
 | `src/` | The BuildMap order page (Next.js): address in, job file out |

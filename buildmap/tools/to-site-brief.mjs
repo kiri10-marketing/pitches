@@ -12,9 +12,11 @@ if (!arg) {
 const file = fs.statSync(arg).isDirectory() ? path.join(arg, "buildmap.json") : arg;
 const out = process.argv[3] || path.dirname(file);
 const pkg = JSON.parse(fs.readFileSync(file, "utf8"));
-const { job, site, level1: l1 = {}, level2: l2 = {}, level3: l3 = {}, website: w = {} } = pkg;
+// l1 here is the development plan (Level 3): it carries the concept, residences and images.
+const { job, site, level1: check = {}, level2: l2 = {}, level3: l1 = {}, website: w = {} } = pkg;
+const l3 = l1;
 if (l1.status !== "issued") {
-  console.error("Level 1 is not issued yet; nothing to build.");
+  console.error("Level 3 (the development plan) is not issued yet; nothing to build.");
   process.exit(1);
 }
 const TODO = (s) => `[PLACEHOLDER: ${s}]`;
@@ -54,7 +56,7 @@ const facts = [
 ].filter(Boolean);
 
 const seed = {
-  source: { job: job.id, level1: l1.revision || l1.issued_on, generated: new Date().toISOString() },
+  source: { job: job.id, level3: l1.revision || l1.issued_on, generated: new Date().toISOString() },
   style,
   slug: job.slug,
   meta: { title: [name, site.suburb || site.city].filter(Boolean).join(" | "), description: c.summary },
@@ -93,7 +95,8 @@ const seed = {
   targetCompletion: l3.status === "issued" ? l3.target_completion : undefined,
   location: { address: site.address, nearby: site.nearby || [] },
   agents: w.agents?.length ? w.agents : [{ name: TODO("agent name"), phone: TODO("phone"), email: TODO("email") }],
-  disclaimers: [l1.disclaimer, l2.status === "issued" && l2.disclaimer, l3.status === "issued" && l3.disclaimer].filter(Boolean),
+  disclaimers: [l1.disclaimer, l2.status === "issued" && l2.disclaimer].filter(Boolean),
+  hazards: (check.status === "issued" ? check.hazards || [] : []).map((h) => `${h.hazard} (${h.level})`),
 };
 
 const placeholders = [...new Set(JSON.stringify(seed).match(/\[PLACEHOLDER: [^\]]+\]/g) || [])];
@@ -112,7 +115,7 @@ const sections = [
 
 const md = `# Website brief: ${name}
 
-Generated from BuildMap package \`${job.id}\` (Level 1 ${l1.revision || l1.issued_on}). Build it with the website-generator skill; all copy goes into \`src/content/copy.ts\` from \`copy-seed.json\`.
+Generated from BuildMap package \`${job.id}\` (development plan ${l1.revision || l1.issued_on}). Build it with the website-generator skill; all copy goes into \`src/content/copy.ts\` from \`copy-seed.json\`.
 
 - **Style:** ${style} build${w.style ? " (set in the package)" : ` (picked from the concept: ${c.typology}, ${c.positioning || "no positioning"})`}
 - **Live link:** https://pitch-${job.slug || "<slug>"}.vercel.app
@@ -126,6 +129,7 @@ ${sections.map((s, i) => `${i + 1}. ${s}`).join("\n")}
 
 ## Must carry
 ${seed.disclaimers.map((d) => `- ${d}`).join("\n")}
+- Level 1 hazards (not selling points; don't contradict them): ${seed.hazards.join("; ") || "none listed"}
 - Never present these open items as resolved: ${(l1.open_items || []).map((o) => o.topic).join("; ") || "none listed"}
 
 ## Placeholders to fill

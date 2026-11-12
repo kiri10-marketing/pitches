@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   if (!["1", "1,2", "1,2,3", "package"].includes(choice)) return NextResponse.json({ error: "Pick a BuildMap option." }, { status: 400 });
   const pkgChoice = choice === "package";
 
-  const { pkg, ok, errors } = buildJob({ ...(body as Order), levels: pkgChoice ? "1,2,3" : choice, website: pkgChoice });
+  const { pkg, ok, errors } = buildJob({ ...(body as Order), levels: pkgChoice ? "1,2,3" : choice, website: pkgChoice, package: pkgChoice });
   if (!ok) return NextResponse.json({ error: "Some details don't look right.", details: errors }, { status: 400 });
 
   const hook = process.env.ORDER_WEBHOOK_URL;

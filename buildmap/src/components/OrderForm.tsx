@@ -67,15 +67,7 @@ export function OrderForm() {
           <div className="sm:col-span-2">
             <label className="label" htmlFor="address">Site address</label>
             <input id="address" name="address" className="field" required autoComplete="street-address" placeholder="e.g. 275 Montreal Street, Central City, Christchurch" />
-            <p className="hint">Street, suburb, city. We pull the title and zone from this.</p>
-          </div>
-          <div>
-            <label className="label" htmlFor="landArea">Land area (m²), if known</label>
-            <input id="landArea" name="landArea" className="field" inputMode="decimal" />
-          </div>
-          <div>
-            <label className="label" htmlFor="zone">Zone, if known</label>
-            <input id="zone" name="zone" className="field" placeholder="e.g. Medium Density Residential" />
+            <p className="hint">Street, suburb, city. We look up the title, zone and hazards from this.</p>
           </div>
         </div>
       </fieldset>

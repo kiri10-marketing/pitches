@@ -15,8 +15,7 @@ export type Order = {
   email: string;
   phone?: string;
   brief?: string;
-  landArea?: string;
-  zone?: string;
+  package?: boolean;
 };
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
@@ -36,9 +35,8 @@ export function buildJob(o: Order, now = new Date()) {
   const slug = slugFromAddress(o.address);
   const ymd = now.toISOString().slice(0, 10).replace(/-/g, "");
   const parts = o.address.split(",").map((s) => s.trim()).filter(Boolean);
-  const area = Number(String(o.landArea || "").replace(/[^0-9.]/g, ""));
   const pkg = {
-    buildmap_version: "0.1",
+    buildmap_version: "0.2",
     job: {
       id: `BM-${ymd}-${slug}`,
       slug,
@@ -46,6 +44,7 @@ export function buildJob(o: Order, now = new Date()) {
       ordered_at: now.toISOString(),
       levels_ordered: o.levels.split(",").map(Number),
       website: o.website,
+      package: Boolean(o.package),
       client: {
         type: o.clientType,
         name: o.name.trim(),
@@ -60,8 +59,6 @@ export function buildJob(o: Order, now = new Date()) {
       address: parts[0] || o.address.trim(),
       ...(parts.length > 1 ? { suburb: parts[1] } : {}),
       ...(parts.length > 2 ? { city: parts[2] } : {}),
-      ...(area > 0 ? { land_area_m2: area } : {}),
-      ...(o.zone ? { zone: o.zone.trim() } : {}),
       sources: [{ name: "Client order form", checked_on: now.toISOString().slice(0, 10) }],
     },
     level1: { status: "not-started" },

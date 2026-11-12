@@ -45,14 +45,15 @@ export default function Home() {
 
       <section id="how" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
         <p className="eyebrow text-blue">How it works</p>
-        <h2 className="mt-3 text-4xl font-extrabold text-navy">One address, all the way to a site that sells.</h2>
-        <ol className="mt-10 grid gap-5 md:grid-cols-5">
+        <h2 className="mt-3 text-4xl font-extrabold text-navy">One address. Go as far as you need.</h2>
+        <ol className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((s) => (
             <li key={s.n} className="rounded-3xl border border-line bg-white p-6 shadow-sm">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-navy font-[family-name:var(--font-head)] text-lg font-extrabold text-amber">
                 {s.n}
               </span>
               <h3 className="mt-4 text-xl font-bold text-navy">{s.title}</h3>
+              <p className="mt-1 text-base font-semibold text-blue">{s.time}</p>
               <p className="mt-2 text-base text-muted">{s.body}</p>
             </li>
           ))}

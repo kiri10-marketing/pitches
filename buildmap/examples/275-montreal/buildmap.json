@@ -1,12 +1,14 @@
 {
-  "buildmap_version": "0.1",
+  "buildmap_version": "0.2",
   "job": {
     "id": "BM-20261008-275-montreal",
     "slug": "the-rise",
     "address": "275 Montreal Street, Christchurch Central City, Christchurch",
     "ordered_at": "2026-10-01T00:00:00Z",
     "levels_ordered": [
-      1
+      1,
+      2,
+      3
     ],
     "website": true,
     "client": {
@@ -15,7 +17,8 @@
       "email": "placeholder@example.com"
     },
     "goal": "sell-off-plan",
-    "brief": "Example re-created from the 08 Oct 2026 Level 1 report so Paul can see the contract filled in."
+    "brief": "Example re-created from the 08 Oct 2026 concept report so Paul can see the contract filled in. Level 1 and Level 3 are filled from that report; Level 2 is not.",
+    "package": true
   },
   "site": {
     "address": "275 Montreal Street",
@@ -44,11 +47,70 @@
   "level1": {
     "status": "issued",
     "issued_on": "2026-10-08",
+    "prepared_by": "Paul",
+    "contact_email": "paul@aventa.co.nz",
+    "disclaimer": "Desktop review only. Not a LIM, a zoning certificate or a consent opinion. Confirm with the council and your advisers before relying on it.",
+    "summary": "A narrow central-city site in the High Density Residential zone. Multi-level apartments are plausible, with about 22 m used as the height screening figure, but the site sits in a Residential Heritage Area with a contributory house, so demolition and redevelopment approval cannot be assumed.",
+    "zoning": {
+      "zone": "High Density Residential (HRZ), central city",
+      "plan": "Christchurch District Plan",
+      "what_you_can_do": [
+        {
+          "option": "Multi-level apartment building, around six levels",
+          "pathway": "unknown",
+          "indicative_yield": "About six residences on the Concept M footprint",
+          "note": "Pathway depends on heritage, height in relation to boundary and shading assessments."
+        }
+      ],
+      "key_rules": [
+        {
+          "rule": "Height screening figure",
+          "value": "22 m (desktop study)"
+        },
+        {
+          "rule": "Site coverage screen",
+          "value": "50%"
+        },
+        {
+          "rule": "Landscaping target",
+          "value": "20%"
+        }
+      ]
+    },
+    "hazards": [
+      {
+        "hazard": "Heritage: Residential Heritage Area, contributory existing house",
+        "level": "high",
+        "what_it_means": "Demolition and new building need heritage assessment; approval is not assumed."
+      },
+      {
+        "hazard": "Title and site area",
+        "level": "medium",
+        "what_it_means": "Reported 514 m2 against a mapped 525.6 m2. Needs survey before setbacks are relied on."
+      },
+      {
+        "hazard": "Flood and geotechnical",
+        "level": "unknown",
+        "what_it_means": "Not assessed in the source report. Geotechnical and flood advice required."
+      }
+    ],
+    "next_steps": [
+      "Order title and survey",
+      "Heritage and planning advice",
+      "Geotechnical and flood advice"
+    ]
+  },
+  "level2": {
+    "status": "not-started"
+  },
+  "level3": {
+    "status": "issued",
+    "issued_on": "2026-10-08",
     "revision": "08 Oct 2026 updated concept",
     "prepared_by": "Paul",
-    "contact_email": "paul@propertychch.com",
+    "contact_email": "paul@aventa.co.nz",
     "disclaimer": "Concept design, not for consent or construction. Renders are artist's impressions. Areas are gross design zones, not net saleable areas.",
-    "report_pdf": "level-1/report.pdf",
+    "report_pdf": "level-3/report.pdf",
     "concept": {
       "working_name": "275 Montreal Street",
       "summary": "Six residences on a narrow central-city site: a ground-floor garden apartment beside a residents' wellness suite, and five full-floor three-bedroom homes above it. The approved red-brick character, Concept M footprint and original lift and stair core are retained.",
@@ -203,20 +265,20 @@
     ],
     "images": [
       {
-        "file": "level-1/images/01-exterior-west.jpg",
+        "file": "level-3/images/01-exterior-west.jpg",
         "kind": "render-exterior",
         "title": "Updated exterior, approved brick character",
         "hero_candidate": true,
         "time_of_day": "day"
       },
       {
-        "file": "level-1/images/02-site-plan.png",
+        "file": "level-3/images/02-site-plan.png",
         "kind": "site-plan",
         "title": "Bulk and location, four stackers",
         "artists_impression": false
       },
       {
-        "file": "level-1/images/03-plan-ground.png",
+        "file": "level-3/images/03-plan-ground.png",
         "kind": "floor-plan",
         "title": "Ground: garden residence and wellness",
         "residence_ids": [
@@ -225,12 +287,12 @@
         "artists_impression": false
       },
       {
-        "file": "level-1/images/04-wellness-lounge.jpg",
+        "file": "level-3/images/04-wellness-lounge.jpg",
         "kind": "render-interior",
         "title": "Ground wellness, view west to the spa courtyard"
       },
       {
-        "file": "level-1/images/05-plan-upper.png",
+        "file": "level-3/images/05-plan-upper.png",
         "kind": "floor-plan",
         "title": "Levels 1 to 5: full-floor residence",
         "residence_ids": [
@@ -243,17 +305,17 @@
         "artists_impression": false
       },
       {
-        "file": "level-1/images/08-east-arrival.jpg",
+        "file": "level-3/images/08-east-arrival.jpg",
         "kind": "render-exterior",
         "title": "East arrival and stacker court"
       },
       {
-        "file": "level-1/images/12-east-elevation.jpg",
+        "file": "level-3/images/12-east-elevation.jpg",
         "kind": "render-exterior",
         "title": "Upper residence, east elevation"
       },
       {
-        "file": "level-1/images/14-penthouse-balcony.jpg",
+        "file": "level-3/images/14-penthouse-balcony.jpg",
         "kind": "render-exterior",
         "title": "Penthouse, open west balcony",
         "residence_ids": [
@@ -263,7 +325,7 @@
         "time_of_day": "dusk"
       },
       {
-        "file": "level-1/images/15-penthouse-living.jpg",
+        "file": "level-3/images/15-penthouse-living.jpg",
         "kind": "render-interior",
         "title": "Penthouse, living to the west",
         "residence_ids": [
@@ -271,17 +333,17 @@
         ]
       },
       {
-        "file": "level-1/images/17-wellness-spa-garden.jpg",
+        "file": "level-3/images/17-wellness-spa-garden.jpg",
         "kind": "render-exterior",
         "title": "Residents' lounge and spa garden"
       },
       {
-        "file": "level-1/images/18-sauna.jpg",
+        "file": "level-3/images/18-sauna.jpg",
         "kind": "render-interior",
         "title": "Residents' sauna"
       },
       {
-        "file": "level-1/images/19-section.png",
+        "file": "level-3/images/19-section.png",
         "kind": "section",
         "title": "Building section, six occupied levels",
         "artists_impression": false
@@ -315,12 +377,6 @@
         "note": "Structure, geotechnical and flood advice required."
       }
     ]
-  },
-  "level2": {
-    "status": "not-started"
-  },
-  "level3": {
-    "status": "not-started"
   },
   "website": {
     "style": "luxury",
