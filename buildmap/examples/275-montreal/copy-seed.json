@@ -2,7 +2,7 @@
   "source": {
     "job": "BM-20261008-275-montreal",
     "level3": "08 Oct 2026 updated concept",
-    "generated": "2026-11-12T18:07:52.638Z"
+    "generated": "2026-11-12T18:19:11.369Z"
   },
   "style": "luxury",
   "slug": "the-rise",
@@ -227,6 +227,8 @@
     "address": "275 Montreal Street",
     "nearby": []
   },
+  "brand": null,
+  "leadEmail": null,
   "agents": [
     {
       "name": "[PLACEHOLDER: agent name]",

@@ -1,0 +1,10 @@
+{
+  "_note": "Test run, 13 Nov 2026: Firecrawl 'branding' format on harcourts.net/nz, mapped into website.brand. One call, about 1 credit. A person checks it before a site goes live.",
+  "source_url": "https://www.harcourts.net/nz",
+  "name": "Harcourts",
+  "logo": "https://resources.cloudhi.io/images/logo/harcourts-international-logo.svg",
+  "colors": { "primary": "#00ADEF", "secondary": "#001F49", "accent": "#00ADEF", "background": "#FFFFFF", "text": "#001F49" },
+  "fonts": { "heading": "Source Sans Pro", "body": "Source Sans Pro" },
+  "confidence": 0.91,
+  "confirmed_by_client": false
+}

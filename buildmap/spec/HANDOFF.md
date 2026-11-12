@@ -31,7 +31,7 @@ BM-20261008-275-montreal/
 | `site` | Automatic site record (Level 0), corrected by Paul's agent | Straight after the order; Paul's agent fixes anything wrong and adds a source |
 | `level1` | Paul's agent (mostly automated) | Status `in-progress`, then `issued` |
 | `level2`, `level3` | Paul's agent | Same, if ordered; `issued` when Paul signs it off |
-| `website` | Ant (or the client) | Optional: style, development name, headline, agents, prices |
+| `website` | Order form, then Ant (or the client) | `lead_email` (where site enquiries go: the client's existing address), `brand` (colours, fonts and logo pulled from the client's own website), plus optional style, development name, headline, agents, prices |
 
 A level only counts once its `status` is `issued`. **The website and marketing are built once Level 3 (the development plan) is issued**, because that level carries the concept, residences and images.
 

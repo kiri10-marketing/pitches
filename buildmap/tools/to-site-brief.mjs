@@ -94,6 +94,8 @@ const seed = {
   timeline: (l3.status === "issued" ? l3.programme || [] : []).filter((p) => p.public !== false),
   targetCompletion: l3.status === "issued" ? l3.target_completion : undefined,
   location: { address: site.address, nearby: site.nearby || [] },
+  brand: w.brand || null,
+  leadEmail: w.lead_email || null,
   agents: w.agents?.length ? w.agents : [{ name: TODO("agent name"), phone: TODO("phone"), email: TODO("email") }],
   disclaimers: [l1.disclaimer, l2.status === "issued" && l2.disclaimer].filter(Boolean),
   hazards: (check.status === "issued" ? check.hazards || [] : []).map((h) => `${h.hazard} (${h.level})`),
@@ -122,6 +124,8 @@ Generated from BuildMap package \`${job.id}\` (development plan ${l1.revision ||
 - **Client:** ${job.client.type}, goal ${job.goal || "not given"}
 - **Primary action:** ${seed.hero.primaryAction}
 - **Hero image:** ${hero ? `${hero.file} (${hero.title})` : TODO("hero image")}
+- **Branding:** ${w.brand?.colors ? `client's own (${w.brand.name || w.brand.source_url}): primary ${w.brand.colors.primary || "?"}, fonts ${w.brand.fonts?.heading || "?"}${w.brand.confirmed_by_client ? "" : "; NOT yet confirmed by the client"}` : w.brand?.source_url ? `pull from ${w.brand.source_url} with Firecrawl (branding format) before building` : "BuildMap default for the style"}
+- **Enquiries go to:** ${w.lead_email || TODO("enquiry email")}
 - **Levels issued:** ${issued.join(", ") || "none"}
 
 ## Sections

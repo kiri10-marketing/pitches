@@ -21,7 +21,7 @@ export function OrderForm() {
       const r = await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, account: data.account === "on" }),
       });
       const j = await r.json();
       if (!r.ok) throw new Error(j.error || "Something went wrong.");
@@ -81,12 +81,28 @@ export function OrderForm() {
               <span className="flex-1">
                 <span className="flex flex-wrap items-baseline justify-between gap-x-4">
                   <span className="font-semibold">{l.label}</span>
-                  <span className="font-[family-name:var(--font-head)] font-extrabold text-navy">{l.price}</span>
+                  <span className="flex items-baseline gap-2 font-[family-name:var(--font-head)] font-extrabold text-navy">
+                    {"badge" in l && <span className="rounded-full bg-amber px-3 py-0.5 text-sm font-bold text-[#1f1503]">{l.badge}</span>}
+                    {"was" in l && (
+                      <s className="font-semibold text-muted">
+                        <span className="sr-only">Usually </span>
+                        {l.was}
+                      </s>
+                    )}
+                    <span>{l.price}</span>
+                  </span>
                 </span>
                 <span className="block text-base text-muted">{l.note}</span>
               </span>
             </label>
           ))}
+          <label className="flex cursor-pointer gap-3 rounded-2xl bg-paper p-4">
+            <input type="checkbox" name="account" defaultChecked className="mt-1 h-5 w-5 shrink-0 accent-[#2f6db3]" />
+            <span>
+              <span className="block font-semibold">{f.account.label}</span>
+              <span className="block text-base text-muted">{f.account.hint}</span>
+            </span>
+          </label>
           <p className="hint">{f.pricesNote}</p>
         </div>
       </fieldset>
@@ -126,6 +142,11 @@ export function OrderForm() {
           <div>
             <label className="label" htmlFor="phone">Phone</label>
             <input id="phone" name="phone" type="tel" className="field" autoComplete="tel" />
+          </div>
+          <div className="sm:col-span-2">
+            <label className="label" htmlFor="websiteUrl">{f.website.label}</label>
+            <input id="websiteUrl" name="websiteUrl" className="field" inputMode="url" autoComplete="url" placeholder="e.g. youragency.co.nz" />
+            <p className="hint">{f.website.hint}</p>
           </div>
           <div className="sm:col-span-2">
             <label className="label" htmlFor="brief">Anything we should know?</label>

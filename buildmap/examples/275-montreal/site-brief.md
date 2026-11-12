@@ -7,6 +7,8 @@ Generated from BuildMap package `BM-20261008-275-montreal` (development plan 08 
 - **Client:** developer, goal sell-off-plan
 - **Primary action:** Register interest
 - **Hero image:** level-3/images/01-exterior-west.jpg (Updated exterior, approved brick character)
+- **Branding:** BuildMap default for the style
+- **Enquiries go to:** [PLACEHOLDER: enquiry email]
 - **Levels issued:** 1, 3
 
 ## Sections

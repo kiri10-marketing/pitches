@@ -16,6 +16,8 @@ export type Order = {
   phone?: string;
   brief?: string;
   package?: boolean;
+  account?: boolean;
+  websiteUrl?: string;
 };
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
@@ -35,6 +37,8 @@ export function buildJob(o: Order, now = new Date()) {
   const slug = slugFromAddress(o.address);
   const ymd = now.toISOString().slice(0, 10).replace(/-/g, "");
   const parts = o.address.split(",").map((s) => s.trim()).filter(Boolean);
+  const rawSite = (o.websiteUrl || "").trim();
+  const site = rawSite ? (/^https?:\/\//i.test(rawSite) ? rawSite : `https://${rawSite}`) : "";
   const pkg = {
     buildmap_version: "0.2",
     job: {
@@ -45,6 +49,7 @@ export function buildJob(o: Order, now = new Date()) {
       levels_ordered: o.levels.split(",").map(Number),
       website: o.website,
       package: Boolean(o.package),
+      account_requested: Boolean(o.account),
       client: {
         type: o.clientType,
         name: o.name.trim(),
@@ -60,6 +65,11 @@ export function buildJob(o: Order, now = new Date()) {
       ...(parts.length > 1 ? { suburb: parts[1] } : {}),
       ...(parts.length > 2 ? { city: parts[2] } : {}),
       sources: [{ name: "Client order form", checked_on: now.toISOString().slice(0, 10) }],
+    },
+    // Enquiries from the project website go to the client's existing email; branding is pulled from their site.
+    website: {
+      lead_email: o.email.trim(),
+      ...(site ? { brand: { source_url: site } } : {}),
     },
     level1: { status: "not-started" },
     level2: { status: "not-started" },
