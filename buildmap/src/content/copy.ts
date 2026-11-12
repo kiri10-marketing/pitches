@@ -12,6 +12,7 @@ export const copy = {
     ticks: ["First site check on us", "Due diligence in 24 hours", "Sale-ready in 5 working days"],
   },
   nav: [
+    { href: "#inside", label: "Inside a report" },
     { href: "#assets", label: "What you get" },
     { href: "#trust", label: "Data and authority" },
     { href: "#who", label: "Who it's for" },
@@ -20,7 +21,7 @@ export const copy = {
   demo: {
     address: "123 The Terrace Street, Christchurch",
     placeholder: "Enter a site address",
-    alt: "Product demo: a sample address is typed on a laptop. The laptop spins and the concept plans arrive, page by page. It spins again for consents and construction, and finishes on the live project website built from those plans.",
+    alt: "Product demo: a sample address is typed on a laptop. The laptop spins and the concept plans arrive, page by page. It spins again for consents and construction, then a short timer runs while the plans become a project website. The website scrolls through, followed by the sales brochure and ad concepts made for it.",
     stages: [
       { name: "Concept", time: "Mostly automated" },
       { name: "Consents", time: "Within 24 hours" },
@@ -32,6 +33,8 @@ export const copy = {
       sample: "Sample",
       plans: { file: "Concept plans.pdf", pages: 24, of: "of", ready: "Plans ready" },
       site: { label: "Live project website" },
+      build: { title: "Building your website", steps: ["Plans", "Words", "Images"] },
+      assets: { title: "And everything to market it", brochure: "Sales brochure", ads: "Ad concepts" },
       ask: "Where is the site?",
       concept: {
         title: "What you can build",
@@ -71,6 +74,20 @@ export const copy = {
   pitch: {
     line1: "What used to cost tens of thousands of dollars and take months",
     line2: "is now just a few days away, at a fraction of the cost.",
+  },
+  // Snippets from a real BuildMap concept report, with the address changed.
+  teaser: {
+    eyebrow: "A look inside",
+    title: "See what lands in your inbox.",
+    intro: "These are pages from a real BuildMap concept report. The address has been changed.",
+    items: [
+      { img: "plan", w: 1490, h: 670, name: "Floor plans", body: "Furnished plans for every level, with room sizes." },
+      { img: "render", w: 1045, h: 696, name: "Concept renders", body: "What it could look like on the street." },
+      { img: "section", w: 760, h: 790, name: "Building section", body: "Each level and its height, floor by floor." },
+      { img: "schedule", w: 1720, h: 510, name: "Area schedule", body: "Areas level by level, added up for you." },
+    ],
+    locked: { img: "checks", w: 1740, h: 450, name: "Planning and design checks", body: "What to watch for, and what still needs checking.", more: "This report runs to 24 pages.", cta: "Get one for your site" },
+    note: "Concept design, not for consent or construction. Renders are artist's impressions.",
   },
   assets: {
     eyebrow: "What you get",

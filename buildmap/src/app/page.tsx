@@ -54,6 +54,42 @@ export default function Home() {
       </section>
 
       {/* What you get */}
+      <section id="inside" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow">{copy.teaser.eyebrow}</p>
+          <h2 className="mt-3 text-4xl sm:text-5xl">{copy.teaser.title}</h2>
+          <p className="mt-5 text-lg text-muted">{copy.teaser.intro}</p>
+        </div>
+        <ul className="mt-12 grid gap-4 md:grid-cols-6">
+          {copy.teaser.items.map((t, i) => (
+            <li key={t.img} className={`tile flex flex-col p-5 sm:p-6 ${i === 0 || i === 3 ? "md:col-span-4" : "md:col-span-2"}`}>
+              <div className="flex flex-1 items-center justify-center overflow-hidden rounded-2xl border border-line bg-white p-3">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/demo/teaser-${t.img}.webp`} alt={`Sample ${t.name.toLowerCase()} from a BuildMap report`} width={t.w} height={t.h} loading="lazy" className="h-auto max-h-80 w-full object-contain" />
+              </div>
+              <h3 className="mt-5 text-xl">{t.name}</h3>
+              <p className="mt-1 text-base text-muted">{t.body}</p>
+            </li>
+          ))}
+          <li className="tile relative overflow-hidden p-5 sm:p-6 md:col-span-6">
+            <div className="grid items-center gap-6 md:grid-cols-[1.5fr_1fr]">
+              <div className="relative max-h-56 overflow-hidden rounded-2xl border border-line bg-white p-3" aria-hidden="true">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={`/demo/teaser-${copy.teaser.locked.img}.webp`} alt="" width={copy.teaser.locked.w} height={copy.teaser.locked.h} loading="lazy" className="h-auto w-full" />
+                <span className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-white via-white/85 to-transparent" />
+              </div>
+              <div>
+                <h3 className="text-xl">{copy.teaser.locked.name}</h3>
+                <p className="mt-1 text-base text-muted">{copy.teaser.locked.body}</p>
+                <p className="mt-4 text-base font-semibold">{copy.teaser.locked.more}</p>
+                <a href="#start" className="btn btn-blue mt-4">{copy.teaser.locked.cta}</a>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <p className="mt-4 text-center text-sm text-muted">{copy.teaser.note}</p>
+      </section>
+
       <section id="assets" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow">{assets.eyebrow}</p>
@@ -177,7 +213,9 @@ export default function Home() {
 }
 
 // Small drawings for the three things you get: website, brochure, marketing assets.
+// Real examples from one BuildMap project (address changed): its website, brochure and ads.
 function AssetArt({ i }: { i: number }) {
+  /* eslint-disable @next/next/no-img-element */
   if (i === 0)
     return (
       <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(11,27,51,.07)]" aria-hidden="true">
@@ -186,33 +224,22 @@ function AssetArt({ i }: { i: number }) {
             <span key={d} className="h-2 w-2 rounded-full bg-line" />
           ))}
         </div>
-        <svg viewBox="0 0 100 46" className="block w-full bg-ink">
-          <path d="M0 46V32l16-6v20ZM22 46V16l26-8 26 8v30ZM80 46V28l20-5v23Z" fill="#14294A" />
-          {[22, 29, 36].map((y) => [29, 38, 47, 56, 65].map((x) => <rect key={`${x}${y}`} x={x - 2} y={y} width="4" height="4.5" fill="#7FB0FF" />))}
-        </svg>
-        <div className="flex items-center justify-between p-3">
-          <span className="h-2 w-24 rounded-full bg-line" />
-          <span className="h-6 w-20 rounded-full bg-blue" />
-        </div>
+        <img src="/demo/site-poster.jpg" alt="" width={1120} height={700} loading="lazy" className="block h-[9.6rem] w-full object-cover object-top" />
       </div>
     );
   if (i === 1)
     return (
       <div className="relative h-[11.5rem]" aria-hidden="true">
-        <span className="absolute inset-y-2 left-[30%] w-[44%] rotate-6 rounded-lg bg-white shadow-[0_2px_12px_rgba(11,27,51,.07)]" />
-        <span className="absolute inset-y-2 left-[22%] flex w-[44%] -rotate-3 flex-col gap-2 rounded-lg bg-white p-3 shadow-[0_2px_12px_rgba(11,27,51,.1)]">
-          <span className="block flex-1 rounded bg-ink" />
-          <span className="block h-2 w-4/5 rounded-full bg-line" />
-          <span className="block h-2 w-3/5 rounded-full bg-line" />
-        </span>
+        <img src="/demo/brochure-2.webp" alt="" loading="lazy" className="absolute left-[18%] top-3 w-[72%] rotate-3 rounded-sm shadow-[0_2px_12px_rgba(11,27,51,.12)]" />
+        <img src="/demo/brochure-1.webp" alt="" loading="lazy" className="absolute left-[8%] top-6 w-[72%] -rotate-2 rounded-sm shadow-[0_4px_16px_rgba(11,27,51,.18)]" />
       </div>
     );
   return (
-    <div className="grid h-[11.5rem] grid-cols-3 grid-rows-2 gap-2.5" aria-hidden="true">
-      <span className="row-span-2 rounded-xl bg-blue" />
-      <span className="rounded-xl bg-ink" />
-      <span className="rounded-xl bg-blue-light" />
-      <span className="col-span-2 rounded-xl bg-white shadow-[0_2px_12px_rgba(11,27,51,.07)]" />
+    <div className="grid h-[11.5rem] grid-cols-3 gap-2.5" aria-hidden="true">
+      {[2, 1, 3].map((n) => (
+        <img key={n} src={`/demo/ad-${n}.webp`} alt="" loading="lazy" className="h-[11.5rem] w-full rounded-xl object-cover object-top" />
+      ))}
     </div>
   );
+  /* eslint-enable @next/next/no-img-element */
 }

@@ -9,10 +9,16 @@ import { Mark } from "@/components/Mark";
 // recording of the real project website built from them. The timeline runs along the bottom.
 const ADDRESS = copy.demo.address;
 const TYPE_MS = 42;
-const STAGE_MS = [0, 4300, 2100, 2100, 8600]; // how long each stage stays up
-const PLAN_PAGES = [1, 2, 3, 4, 5, 6, 7, 8].map((n) => `/demo/plan-${n}.webp`);
-const PAGE_NO = [1, 3, 5, 6, 13, 14, 19, 20]; // the page of the report each image is
-const PAGE_MS = 480;
+// Completion has three beats: a short build timer, the website (the main event), then the marketing assets.
+const BUILD_MS = 2600;
+const SITE_MS = 17400; // the length of the website recording
+const ASSETS_MS = 5200;
+const PLAN_PAGES = [1, 3, 4, 6, 7].map((n) => `/demo/plan-${n}.webp`); // the most visual pages only
+const PAGE_NO = [1, 5, 6, 14, 19]; // the page of the report each image is
+const PAGE_MS = 1250;
+const STAGE_MS = [0, PLAN_PAGES.length * PAGE_MS + 900, 2300, 2300, BUILD_MS + SITE_MS + ASSETS_MS]; // how long each stage stays up
+const BROCHURE = [1, 2, 3].map((n) => `/demo/brochure-${n}.webp`);
+const ADS = [1, 2, 3, 4].map((n) => `/demo/ad-${n}.webp`);
 const SPIN_MS = 700;
 const KEYS = 4 * 13;
 const u = (n: number) => `${(n * 1.2).toFixed(2)}cqw`; // sizes scale with the laptop screen
@@ -178,9 +184,9 @@ function Plans() {
     <div className="absolute inset-0 flex bg-field">
       {/* Page thumbnails */}
       <div className="flex flex-col overflow-hidden border-r border-line bg-white" style={{ width: "13%", padding: u(0.8), gap: u(0.6) }}>
-        {PLAN_PAGES.slice(0, 6).map((src, i) => (
+        {PLAN_PAGES.map((src, i) => (
           // eslint-disable-next-line @next/next/no-img-element
-          <img key={src} src={src} alt="" className="block w-full border transition-opacity duration-200" style={{ borderColor: i === Math.min(page, 5) ? "#1257D6" : "#E2E7EF", borderWidth: u(0.18), opacity: i <= page ? 1 : 0.15 }} />
+          <img key={src} src={src} alt="" className="block w-full border transition-opacity duration-200" style={{ borderColor: i === page ? "#1257D6" : "#E2E7EF", borderWidth: u(0.18), opacity: i <= page ? 1 : 0.15 }} />
         ))}
       </div>
       {/* The open page */}
@@ -204,14 +210,26 @@ function Plans() {
 function Screen({ shown, chars }: { shown: number; chars: number }) {
   const s = copy.demo.screens;
   const video = useRef<HTMLVideoElement>(null);
-  // The website recording stays loaded and restarts each time the completion screen arrives.
+  const [beat, setBeat] = useState(1); // completion: 0 = build timer, 1 = website, 2 = marketing assets
+  // The website recording stays loaded. It starts when the build timer finishes, then hands over to the assets.
   useEffect(() => {
     const v = video.current;
-    if (!v) return;
-    if (shown === 4 && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      v.currentTime = 0;
-      v.play().catch(() => {});
-    } else v.pause();
+    if (shown !== 4 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      v?.pause();
+      setBeat(1);
+      return;
+    }
+    setBeat(0);
+    if (v) v.currentTime = 0;
+    const a = window.setTimeout(() => {
+      setBeat(1);
+      v?.play().catch(() => {});
+    }, BUILD_MS);
+    const b = window.setTimeout(() => setBeat(2), BUILD_MS + SITE_MS);
+    return () => {
+      window.clearTimeout(a);
+      window.clearTimeout(b);
+    };
   }, [shown]);
   const name = shown > 0 ? copy.demo.stages[shown - 1].name : null;
   return (
@@ -300,14 +318,59 @@ function Screen({ shown, chars }: { shown: number; chars: number }) {
         )}
 
       </div>
-        {/* The real project website, recorded. Kept mounted so it plays the moment the screen arrives. */}
-        <div className={`absolute inset-0 bg-ink ${shown === 4 ? "" : "invisible"}`}>
+        {/* The real project website, recorded. Kept mounted so it plays the moment its turn comes. */}
+        <div className={`absolute inset-0 bg-ink ${shown === 4 && beat === 1 ? "" : "invisible"}`}>
           <video ref={video} src="/demo/site.mp4" poster="/demo/site-poster.jpg" muted playsInline preload="auto" className="h-full w-full object-cover object-top" />
           <span className="absolute rounded-full bg-white/90 font-semibold text-ink" style={{ left: u(1.2), bottom: u(1.2), padding: `${u(0.35)} ${u(1.2)}`, fontSize: u(1.4) }}>{s.site.label}</span>
         </div>
+
+        {/* A short timer while the plans become a website */}
+        {shown === 4 && beat === 0 && (
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-white text-center">
+            <svg viewBox="0 0 44 44" style={{ width: u(13), height: u(13) }} className="-rotate-90">
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#E2E7EF" strokeWidth="3" />
+              <circle cx="22" cy="22" r="19" fill="none" stroke="#1257D6" strokeWidth="3" strokeLinecap="round" pathLength={1} className="ring-fill" style={{ animationDuration: `${BUILD_MS - 250}ms` }} />
+            </svg>
+            <p className="font-semibold tracking-[-0.03em]" style={{ fontSize: u(3.3), marginTop: u(2) }}>{s.build.title}</p>
+            <p className="flex text-muted" style={{ fontSize: u(1.7), marginTop: u(0.8), gap: u(1.6) }}>
+              {s.build.steps.map((t, i) => (
+                <span key={t} className="pop flex items-center" style={{ gap: u(0.6), animationDelay: `${0.3 + i * 0.6}s` }}>
+                  <Tick size={1.7} />
+                  {t}
+                </span>
+              ))}
+            </p>
+          </div>
+        )}
+
+        {/* The marketing assets that come with it: brochure pages and ads */}
+        {shown === 4 && beat === 2 && (
+          <div className="absolute inset-0 flex flex-col bg-paper-2" style={{ padding: `${u(1.8)} ${u(2.4)}` }}>
+            <p className="font-semibold tracking-[-0.03em]" style={{ fontSize: u(2.7) }}>{s.assets.title}</p>
+            <div className="grid min-h-0 flex-1 grid-cols-[1.25fr_1fr]" style={{ gap: u(2.2), marginTop: u(1.2) }}>
+              <div className="relative min-h-0">
+                <p className="text-muted" style={{ fontSize: u(1.45) }}>{s.assets.brochure}</p>
+                {BROCHURE.map((src, i) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={src} src={src} alt="" className="pop absolute block bg-white shadow-[0_6px_20px_-8px_rgba(11,27,51,.4)]" style={{ width: "74%", left: `${i * 13}%`, top: `${14 + i * 15}%`, animationDelay: `${0.15 + i * 0.3}s` }} />
+                ))}
+              </div>
+              <div className="flex min-h-0 flex-col">
+                <p className="text-muted" style={{ fontSize: u(1.45) }}>{s.assets.ads}</p>
+                <div className="grid min-h-0 flex-1 grid-cols-2 items-start" style={{ gap: u(1), marginTop: u(0.8) }}>
+                  {ADS.map((src, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={src} src={src} alt="" className="pop block max-h-full w-full object-cover object-top shadow-[0_4px_14px_-6px_rgba(11,27,51,.4)]" style={{ aspectRatio: "1", animationDelay: `${0.9 + i * 0.25}s` }} />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Load the plan pages ahead of time so they appear instantly. */}
         <div hidden>
-          {PLAN_PAGES.map((src) => (
+          {[...PLAN_PAGES, ...BROCHURE, ...ADS].map((src) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img key={src} src={src} alt="" />
           ))}
