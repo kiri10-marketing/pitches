@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0e2a47;
+  --color-navy-2: #16385c;
+  --color-blue: #2f6db3;
+  --color-sky: #cfe0f2;
+  --color-amber: #f0a830;
+  --color-amber-dark: #a96d0c;
+  --color-paper: #f7f8fa;
+  --color-ink: #13202e;
+  --color-muted: #475565;
+  --color-line: #d5dce5;
+  --font-head: var(--font-schibsted), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3 { font-family: var(--font-head); letter-spacing: -0.02em; line-height: 1.1; }
+}
+
+@layer components {
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; border-radius: 999px; font-weight: 700; min-height: 56px; padding: .85rem 1.8rem; transition: background .15s, transform .15s; }
+  .btn-amber { background: var(--color-amber); color: #1f1503; }
+  .btn-amber:hover { background: #e2971b; }
+  .btn-amber:disabled { opacity: .6; cursor: wait; }
+  .btn-line { border: 2px solid currentColor; }
+  .btn:active { transform: translateY(1px); }
+  .field { display: block; width: 100%; border: 1.5px solid var(--color-line); background: #fff; border-radius: .75rem; padding: .8rem 1rem; font-size: 1rem; color: var(--color-ink); min-height: 52px; }
+  .field:focus { outline: 3px solid color-mix(in srgb, var(--color-blue) 35%, transparent); border-color: var(--color-blue); }
+  .label { display: block; font-weight: 600; font-size: 1rem; margin-bottom: .35rem; }
+  .hint { font-size: .9rem; color: var(--color-muted); margin-top: .3rem; }
+  .eyebrow { text-transform: uppercase; letter-spacing: .14em; font-size: .85rem; font-weight: 700; }
+  .grid-bg { background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 32px 32px; }
+}

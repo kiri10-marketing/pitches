@@ -1,0 +1,330 @@
+{
+  "buildmap_version": "0.1",
+  "job": {
+    "id": "BM-20261008-275-montreal",
+    "slug": "the-rise",
+    "address": "275 Montreal Street, Christchurch Central City, Christchurch",
+    "ordered_at": "2026-10-01T00:00:00Z",
+    "levels_ordered": [
+      1
+    ],
+    "website": true,
+    "client": {
+      "type": "developer",
+      "name": "PLACEHOLDER client name",
+      "email": "placeholder@example.com"
+    },
+    "goal": "sell-off-plan",
+    "brief": "Example re-created from the 08 Oct 2026 Level 1 report so Paul can see the contract filled in."
+  },
+  "site": {
+    "address": "275 Montreal Street",
+    "suburb": "Christchurch Central City",
+    "city": "Christchurch",
+    "region": "Canterbury",
+    "land_area_m2": 514,
+    "land_area_note": "Prior report says 514 m2; mapped area 525.6 m2. Unresolved until survey.",
+    "zone": "High Density Residential (HRZ), central city",
+    "overlays": [
+      "Residential Heritage Area (contributory existing house)",
+      "Urban intensification area"
+    ],
+    "existing_buildings": "Existing contributory house (heritage area). Demolition approval not assumed.",
+    "sources": [
+      {
+        "name": "Prior supplied concept report"
+      },
+      {
+        "name": "CCC Urban intensification areas",
+        "url": "https://ccc.govt.nz/consents-and-licences/resource-consents/resource-consent-activities/residential-and-housing/urban-intensification-areas",
+        "checked_on": "2026-10-08"
+      }
+    ]
+  },
+  "level1": {
+    "status": "issued",
+    "issued_on": "2026-10-08",
+    "revision": "08 Oct 2026 updated concept",
+    "prepared_by": "Paul",
+    "contact_email": "paul@propertychch.com",
+    "disclaimer": "Concept design, not for consent or construction. Renders are artist's impressions. Areas are gross design zones, not net saleable areas.",
+    "report_pdf": "level-1/report.pdf",
+    "concept": {
+      "working_name": "275 Montreal Street",
+      "summary": "Six residences on a narrow central-city site: a ground-floor garden apartment beside a residents' wellness suite, and five full-floor three-bedroom homes above it. The approved red-brick character, Concept M footprint and original lift and stair core are retained.",
+      "typology": "apartments",
+      "positioning": "prestige",
+      "storeys": 6,
+      "key_points": [
+        "Six residences, one per upper floor",
+        "Full-floor penthouse with an open west balcony",
+        "Ground-floor sauna, spa garden, gym and lounge",
+        "10 x 3 m west balcony on every upper floor",
+        "Four car stacker positions, up to eight spaces (to be confirmed)"
+      ],
+      "architecture": "Red brick, dark framed glazing, pale balcony edges and restrained cedar accents.",
+      "materials": [
+        "Red brick",
+        "Bronze window frames",
+        "Clear glass balustrades",
+        "Cedar accents",
+        "Stone-toned paving"
+      ]
+    },
+    "residences": [
+      {
+        "id": "apt-01",
+        "name": "Garden Residence",
+        "type_group": "Ground garden",
+        "level": "Ground",
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "floor_area_m2": 74.2,
+        "floor_area_basis": "gross",
+        "outdoor_area_m2": 33.6,
+        "outdoor_type": "Private west garden and terrace",
+        "features": [
+          "Private garden",
+          "West living",
+          "Storage"
+        ]
+      },
+      {
+        "id": "apt-02",
+        "name": "Residence 02",
+        "type_group": "Upper full-floor",
+        "level": "Level 1",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "floor_area_m2": 144.4,
+        "floor_area_basis": "gross",
+        "outdoor_area_m2": 30,
+        "outdoor_type": "West balcony, 10 x 3 m, covered by the balcony above",
+        "features": [
+          "One residence per floor",
+          "Master with ensuite and walk-in robe",
+          "North-south island kitchen with pantry",
+          "Private lift lobby"
+        ]
+      },
+      {
+        "id": "apt-03",
+        "name": "Residence 03",
+        "type_group": "Upper full-floor",
+        "level": "Level 2",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "floor_area_m2": 144.4,
+        "floor_area_basis": "gross",
+        "outdoor_area_m2": 30,
+        "outdoor_type": "West balcony, 10 x 3 m, covered by the balcony above",
+        "features": [
+          "One residence per floor",
+          "Master with ensuite and walk-in robe",
+          "North-south island kitchen with pantry",
+          "Private lift lobby"
+        ]
+      },
+      {
+        "id": "apt-04",
+        "name": "Residence 04",
+        "type_group": "Upper full-floor",
+        "level": "Level 3",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "floor_area_m2": 144.4,
+        "floor_area_basis": "gross",
+        "outdoor_area_m2": 30,
+        "outdoor_type": "West balcony, 10 x 3 m, covered by the balcony above",
+        "features": [
+          "One residence per floor",
+          "Master with ensuite and walk-in robe",
+          "North-south island kitchen with pantry",
+          "Private lift lobby"
+        ]
+      },
+      {
+        "id": "apt-05",
+        "name": "Residence 05",
+        "type_group": "Upper full-floor",
+        "level": "Level 4",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "floor_area_m2": 144.4,
+        "floor_area_basis": "gross",
+        "outdoor_area_m2": 30,
+        "outdoor_type": "West balcony, 10 x 3 m, covered by the balcony above",
+        "features": [
+          "One residence per floor",
+          "Master with ensuite and walk-in robe",
+          "North-south island kitchen with pantry",
+          "Private lift lobby"
+        ]
+      },
+      {
+        "id": "apt-06",
+        "name": "Penthouse",
+        "type_group": "Upper full-floor",
+        "level": "Level 5",
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "floor_area_m2": 144.4,
+        "floor_area_basis": "gross",
+        "outdoor_area_m2": 30,
+        "outdoor_type": "West balcony, 10 x 3 m, open to the sky",
+        "features": [
+          "One residence per floor",
+          "Master with ensuite and walk-in robe",
+          "North-south island kitchen with pantry",
+          "Private lift lobby"
+        ]
+      }
+    ],
+    "totals": {
+      "residences": 6,
+      "gross_floor_area_m2": 1082.4,
+      "site_coverage_pct": 40.9,
+      "car_parks": 8,
+      "car_parks_note": "Four stacker positions with two cars each; eight-space capacity not yet proven."
+    },
+    "amenities": [
+      {
+        "name": "Sauna",
+        "description": "Cedar-lined, northeast ground wing, 2.6 x 2.6 m gross."
+      },
+      {
+        "name": "Spa garden",
+        "description": "Communal courtyard with a 2.4 x 2.4 m concept spa, separate from the private garden."
+      },
+      {
+        "name": "Gym and garden lounge",
+        "description": "West-facing, opening to the spa courtyard; separate residents' entrance."
+      }
+    ],
+    "images": [
+      {
+        "file": "level-1/images/01-exterior-west.jpg",
+        "kind": "render-exterior",
+        "title": "Updated exterior, approved brick character",
+        "hero_candidate": true,
+        "time_of_day": "day"
+      },
+      {
+        "file": "level-1/images/02-site-plan.png",
+        "kind": "site-plan",
+        "title": "Bulk and location, four stackers",
+        "artists_impression": false
+      },
+      {
+        "file": "level-1/images/03-plan-ground.png",
+        "kind": "floor-plan",
+        "title": "Ground: garden residence and wellness",
+        "residence_ids": [
+          "apt-01"
+        ],
+        "artists_impression": false
+      },
+      {
+        "file": "level-1/images/04-wellness-lounge.jpg",
+        "kind": "render-interior",
+        "title": "Ground wellness, view west to the spa courtyard"
+      },
+      {
+        "file": "level-1/images/05-plan-upper.png",
+        "kind": "floor-plan",
+        "title": "Levels 1 to 5: full-floor residence",
+        "residence_ids": [
+          "apt-02",
+          "apt-03",
+          "apt-04",
+          "apt-05",
+          "apt-06"
+        ],
+        "artists_impression": false
+      },
+      {
+        "file": "level-1/images/08-east-arrival.jpg",
+        "kind": "render-exterior",
+        "title": "East arrival and stacker court"
+      },
+      {
+        "file": "level-1/images/12-east-elevation.jpg",
+        "kind": "render-exterior",
+        "title": "Upper residence, east elevation"
+      },
+      {
+        "file": "level-1/images/14-penthouse-balcony.jpg",
+        "kind": "render-exterior",
+        "title": "Penthouse, open west balcony",
+        "residence_ids": [
+          "apt-06"
+        ],
+        "hero_candidate": true,
+        "time_of_day": "dusk"
+      },
+      {
+        "file": "level-1/images/15-penthouse-living.jpg",
+        "kind": "render-interior",
+        "title": "Penthouse, living to the west",
+        "residence_ids": [
+          "apt-06"
+        ]
+      },
+      {
+        "file": "level-1/images/17-wellness-spa-garden.jpg",
+        "kind": "render-exterior",
+        "title": "Residents' lounge and spa garden"
+      },
+      {
+        "file": "level-1/images/18-sauna.jpg",
+        "kind": "render-interior",
+        "title": "Residents' sauna"
+      },
+      {
+        "file": "level-1/images/19-section.png",
+        "kind": "section",
+        "title": "Building section, six occupied levels",
+        "artists_impression": false
+      }
+    ],
+    "comparables": [
+      {
+        "name": "Brooksfield, 305 Montreal Street",
+        "summary": "Six apartments and a cafe over three storeys on a ~650 m2 corner site, with one top-floor penthouse. Design benchmark, not a valuation."
+      }
+    ],
+    "open_items": [
+      {
+        "topic": "Survey and title",
+        "note": "Reconcile 514 m2 with mapped 525.6 m2."
+      },
+      {
+        "topic": "Planning and heritage",
+        "note": "District Plan height, recession planes, heritage effects and demolition approval not assessed."
+      },
+      {
+        "topic": "Parking",
+        "note": "Stacker supplier fit, vehicle tracking and accessible parking unresolved."
+      },
+      {
+        "topic": "Fire and access",
+        "note": "Six-residence escape strategy and single-stair suitability to confirm."
+      },
+      {
+        "topic": "Engineering",
+        "note": "Structure, geotechnical and flood advice required."
+      }
+    ]
+  },
+  "level2": {
+    "status": "not-started"
+  },
+  "level3": {
+    "status": "not-started"
+  },
+  "website": {
+    "style": "luxury",
+    "development_name": "The Rise",
+    "primary_action": "Register interest"
+  }
+}

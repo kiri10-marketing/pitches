@@ -1,0 +1,240 @@
+{
+  "source": {
+    "job": "BM-20261008-275-montreal",
+    "level1": "08 Oct 2026 updated concept",
+    "generated": "2026-11-12T17:19:17.156Z"
+  },
+  "style": "luxury",
+  "slug": "the-rise",
+  "meta": {
+    "title": "The Rise | Christchurch Central City",
+    "description": "Six residences on a narrow central-city site: a ground-floor garden apartment beside a residents' wellness suite, and five full-floor three-bedroom homes above it. The approved red-brick character, Concept M footprint and original lift and stair core are retained."
+  },
+  "hero": {
+    "eyebrow": "Christchurch Central City, Christchurch",
+    "headline": "[PLACEHOLDER: hero headline, Kiri]",
+    "subheader": "Six residences on a narrow central-city site: a ground-floor garden apartment beside a residents' wellness suite, and five full-floor three-bedroom homes above it. The approved red-brick character, Concept M footprint and original lift and stair core are retained.",
+    "image": "level-1/images/01-exterior-west.jpg",
+    "primaryAction": "Register interest"
+  },
+  "facts": [
+    {
+      "value": "6",
+      "label": "residences"
+    },
+    {
+      "value": "2 to 3",
+      "label": "bedrooms"
+    },
+    {
+      "value": "6",
+      "label": "levels"
+    },
+    {
+      "value": "Up to 8",
+      "label": "car parks"
+    }
+  ],
+  "intro": {
+    "points": [
+      "Six residences, one per upper floor",
+      "Full-floor penthouse with an open west balcony",
+      "Ground-floor sauna, spa garden, gym and lounge",
+      "10 x 3 m west balcony on every upper floor",
+      "Four car stacker positions, up to eight spaces (to be confirmed)"
+    ],
+    "architecture": "Red brick, dark framed glazing, pale balcony edges and restrained cedar accents.",
+    "materials": [
+      "Red brick",
+      "Bronze window frames",
+      "Clear glass balustrades",
+      "Cedar accents",
+      "Stone-toned paving"
+    ]
+  },
+  "residences": [
+    {
+      "group": "Ground garden",
+      "plans": [
+        "level-1/images/03-plan-ground.png"
+      ],
+      "items": [
+        {
+          "id": "apt-01",
+          "name": "Garden Residence",
+          "level": "Ground",
+          "bedrooms": 2,
+          "bathrooms": 1,
+          "area": "74.2 m² gross",
+          "outdoor": "33.6 m² Private west garden and terrace",
+          "features": [
+            "Private garden",
+            "West living",
+            "Storage"
+          ],
+          "price": "Price on application"
+        }
+      ]
+    },
+    {
+      "group": "Upper full-floor",
+      "plans": [
+        "level-1/images/05-plan-upper.png"
+      ],
+      "items": [
+        {
+          "id": "apt-02",
+          "name": "Residence 02",
+          "level": "Level 1",
+          "bedrooms": 3,
+          "bathrooms": 2,
+          "area": "144.4 m² gross",
+          "outdoor": "30 m² West balcony, 10 x 3 m, covered by the balcony above",
+          "features": [
+            "One residence per floor",
+            "Master with ensuite and walk-in robe",
+            "North-south island kitchen with pantry",
+            "Private lift lobby"
+          ],
+          "price": "Price on application"
+        },
+        {
+          "id": "apt-03",
+          "name": "Residence 03",
+          "level": "Level 2",
+          "bedrooms": 3,
+          "bathrooms": 2,
+          "area": "144.4 m² gross",
+          "outdoor": "30 m² West balcony, 10 x 3 m, covered by the balcony above",
+          "features": [
+            "One residence per floor",
+            "Master with ensuite and walk-in robe",
+            "North-south island kitchen with pantry",
+            "Private lift lobby"
+          ],
+          "price": "Price on application"
+        },
+        {
+          "id": "apt-04",
+          "name": "Residence 04",
+          "level": "Level 3",
+          "bedrooms": 3,
+          "bathrooms": 2,
+          "area": "144.4 m² gross",
+          "outdoor": "30 m² West balcony, 10 x 3 m, covered by the balcony above",
+          "features": [
+            "One residence per floor",
+            "Master with ensuite and walk-in robe",
+            "North-south island kitchen with pantry",
+            "Private lift lobby"
+          ],
+          "price": "Price on application"
+        },
+        {
+          "id": "apt-05",
+          "name": "Residence 05",
+          "level": "Level 4",
+          "bedrooms": 3,
+          "bathrooms": 2,
+          "area": "144.4 m² gross",
+          "outdoor": "30 m² West balcony, 10 x 3 m, covered by the balcony above",
+          "features": [
+            "One residence per floor",
+            "Master with ensuite and walk-in robe",
+            "North-south island kitchen with pantry",
+            "Private lift lobby"
+          ],
+          "price": "Price on application"
+        },
+        {
+          "id": "apt-06",
+          "name": "Penthouse",
+          "level": "Level 5",
+          "bedrooms": 3,
+          "bathrooms": 2,
+          "area": "144.4 m² gross",
+          "outdoor": "30 m² West balcony, 10 x 3 m, open to the sky",
+          "features": [
+            "One residence per floor",
+            "Master with ensuite and walk-in robe",
+            "North-south island kitchen with pantry",
+            "Private lift lobby"
+          ],
+          "price": "Price on application"
+        }
+      ]
+    }
+  ],
+  "amenities": [
+    {
+      "name": "Sauna",
+      "description": "Cedar-lined, northeast ground wing, 2.6 x 2.6 m gross."
+    },
+    {
+      "name": "Spa garden",
+      "description": "Communal courtyard with a 2.4 x 2.4 m concept spa, separate from the private garden."
+    },
+    {
+      "name": "Gym and garden lounge",
+      "description": "West-facing, opening to the spa courtyard; separate residents' entrance."
+    }
+  ],
+  "gallery": [
+    {
+      "file": "level-1/images/01-exterior-west.jpg",
+      "title": "Updated exterior, approved brick character",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/04-wellness-lounge.jpg",
+      "title": "Ground wellness, view west to the spa courtyard",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/08-east-arrival.jpg",
+      "title": "East arrival and stacker court",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/12-east-elevation.jpg",
+      "title": "Upper residence, east elevation",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/14-penthouse-balcony.jpg",
+      "title": "Penthouse, open west balcony",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/15-penthouse-living.jpg",
+      "title": "Penthouse, living to the west",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/17-wellness-spa-garden.jpg",
+      "title": "Residents' lounge and spa garden",
+      "artistsImpression": true
+    },
+    {
+      "file": "level-1/images/18-sauna.jpg",
+      "title": "Residents' sauna",
+      "artistsImpression": true
+    }
+  ],
+  "specification": [],
+  "timeline": [],
+  "location": {
+    "address": "275 Montreal Street",
+    "nearby": []
+  },
+  "agents": [
+    {
+      "name": "[PLACEHOLDER: agent name]",
+      "phone": "[PLACEHOLDER: phone]",
+      "email": "[PLACEHOLDER: email]"
+    }
+  ],
+  "disclaimers": [
+    "Concept design, not for consent or construction. Renders are artist's impressions. Areas are gross design zones, not net saleable areas."
+  ]
+}

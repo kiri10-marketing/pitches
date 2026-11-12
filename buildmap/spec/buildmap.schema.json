@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://buildmap.nz/schema/buildmap-0.1.json",
+  "title": "BuildMap job package",
+  "description": "The hand-off contract between Paul's agent (Levels 1-3) and the BuildMap website builder. One buildmap.json per job, at the root of the job folder. Levels are filled in as they are issued; a website can be built as soon as level1.status is 'issued'.",
+  "type": "object",
+  "required": ["buildmap_version", "job", "site"],
+  "properties": {
+    "buildmap_version": { "const": "0.1" },
+
+    "job": {
+      "type": "object",
+      "description": "Created by the BuildMap order form. Paul's agent never changes these fields.",
+      "required": ["id", "address", "client", "ordered_at", "levels_ordered"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^BM-[0-9]{8}-[a-z0-9-]+$", "description": "BM-<yyyymmdd>-<slug>, also the job folder name" },
+        "slug": { "type": "string", "pattern": "^[a-z0-9-]+$", "description": "Becomes the website folder and pitch-<slug>.vercel.app" },
+        "address": { "type": "string", "minLength": 5 },
+        "ordered_at": { "type": "string", "format": "date-time" },
+        "levels_ordered": { "type": "array", "items": { "enum": [1, 2, 3] }, "minItems": 1, "uniqueItems": true },
+        "website": { "type": "boolean", "default": true },
+        "client": {
+          "type": "object",
+          "required": ["type", "name", "email"],
+          "properties": {
+            "type": { "enum": ["landowner", "developer", "agent", "builder", "other"] },
+            "name": { "type": "string" },
+            "company": { "type": "string" },
+            "email": { "type": "string", "format": "email" },
+            "phone": { "type": "string" }
+          }
+        },
+        "goal": { "enum": ["sell-land", "sell-off-plan", "joint-venture", "develop-myself", "raise-finance", "not-sure"] },
+        "brief": { "type": "string", "description": "The client's own words: what they want, worries, must-haves" },
+        "uploads": { "type": "array", "items": { "$ref": "#/$defs/file" } }
+      }
+    },
+
+    "site": {
+      "type": "object",
+      "description": "Level 0: the automatic site record pulled from the address. Paul's agent may correct it and must say so in sources.",
+      "required": ["address"],
+      "properties": {
+        "address": { "type": "string" },
+        "suburb": { "type": "string" },
+        "city": { "type": "string" },
+        "region": { "type": "string" },
+        "legal_description": { "type": "string", "description": "e.g. Lot 2 DP 12345" },
+        "title_reference": { "type": "string" },
+        "land_area_m2": { "type": "number", "exclusiveMinimum": 0 },
+        "land_area_note": { "type": "string", "description": "e.g. title says 514, mapped 525.6: unresolved" },
+        "zone": { "type": "string" },
+        "overlays": { "type": "array", "items": { "type": "string" }, "description": "Heritage, flood, liquefaction, intensification areas" },
+        "existing_buildings": { "type": "string" },
+        "capital_value_nzd": { "type": "number" },
+        "lat": { "type": "number" },
+        "lng": { "type": "number" },
+        "nearby": { "type": "array", "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "kind": { "type": "string" }, "minutes": { "type": "number" }, "mode": { "enum": ["walk", "drive", "cycle"] } } } },
+        "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } }
+      }
+    },
+
+    "level1": { "$ref": "#/$defs/level1" },
+    "level2": { "$ref": "#/$defs/level2" },
+    "level3": { "$ref": "#/$defs/level3" },
+
+    "website": {
+      "type": "object",
+      "description": "Optional overrides from Kiri or the client. Anything missing becomes a marked placeholder on the site.",
+      "properties": {
+        "style": { "enum": ["standard", "luxury", "sitely"] },
+        "development_name": { "type": "string" },
+        "headline": { "type": "string" },
+        "primary_action": { "type": "string", "description": "e.g. Register interest" },
+        "agents": { "type": "array", "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "agency": { "type": "string" }, "phone": { "type": "string" }, "email": { "type": "string" }, "photo": { "type": "string" }, "licence_line": { "type": "string" } } } },
+        "prices": { "type": "array", "items": { "type": "object", "required": ["residence_id"], "properties": { "residence_id": { "type": "string" }, "price_nzd": { "type": "number" }, "label": { "type": "string" } } } },
+        "domain": { "type": "string" }
+      }
+    }
+  },
+
+  "$defs": {
+    "status": { "enum": ["not-started", "in-progress", "issued", "superseded"] },
+
+    "file": {
+      "type": "object",
+      "required": ["file"],
+      "properties": {
+        "file": { "type": "string", "description": "Path relative to the job folder, e.g. level-1/images/ext-west.jpg" },
+        "title": { "type": "string" }
+      }
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["name"],
+      "properties": { "name": { "type": "string" }, "url": { "type": "string" }, "checked_on": { "type": "string", "format": "date" }, "note": { "type": "string" } }
+    },
+
+    "image": {
+      "type": "object",
+      "required": ["file", "kind", "title"],
+      "properties": {
+        "file": { "type": "string", "pattern": "\\.(jpe?g|png|webp)$", "description": "Separate image file, at least 2000 px on the long side. Never only inside the PDF." },
+        "kind": { "enum": ["render-exterior", "render-interior", "render-aerial", "floor-plan", "site-plan", "section", "elevation", "photo", "map", "diagram"] },
+        "title": { "type": "string" },
+        "caption": { "type": "string" },
+        "residence_ids": { "type": "array", "items": { "type": "string" } },
+        "artists_impression": { "type": "boolean", "default": true },
+        "hero_candidate": { "type": "boolean", "default": false },
+        "time_of_day": { "enum": ["morning", "day", "dusk", "night"] }
+      }
+    },
+
+    "issue": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": { "$ref": "#/$defs/status" },
+        "issued_on": { "type": "string", "format": "date" },
+        "revision": { "type": "string", "description": "e.g. R06 or 08 Oct 2026" },
+        "prepared_by": { "type": "string" },
+        "contact_email": { "type": "string" },
+        "disclaimer": { "type": "string", "description": "Printed on the website wherever this level's content appears" },
+        "report_pdf": { "type": "string" },
+        "documents": { "type": "array", "items": { "$ref": "#/$defs/file" } }
+      }
+    },
+
+    "level1": {
+      "description": "Level 1: concept report. Enough to build the website.",
+      "allOf": [
+        { "$ref": "#/$defs/issue" },
+        {
+          "type": "object",
+          "if": { "properties": { "status": { "const": "issued" } } },
+          "then": { "required": ["concept", "residences", "images", "disclaimer"] },
+          "properties": {
+            "concept": {
+              "type": "object",
+              "required": ["summary", "typology"],
+              "properties": {
+                "working_name": { "type": "string" },
+                "summary": { "type": "string", "description": "2-4 plain sentences: what is proposed and why it suits the site" },
+                "typology": { "enum": ["subdivision", "townhouses", "terraces", "duplexes", "apartments", "mixed-use", "single-home", "other"] },
+                "positioning": { "enum": ["entry", "family", "mid", "prestige"] },
+                "storeys": { "type": "integer", "minimum": 1 },
+                "key_points": { "type": "array", "items": { "type": "string" }, "maxItems": 8 },
+                "architecture": { "type": "string" },
+                "materials": { "type": "array", "items": { "type": "string" } }
+              }
+            },
+            "residences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["id", "name", "bedrooms"],
+                "properties": {
+                  "id": { "type": "string", "description": "Stable id used by images and prices, e.g. apt-06" },
+                  "name": { "type": "string" },
+                  "type_group": { "type": "string", "description": "Residences with the same plan share this, e.g. 'Upper full-floor'" },
+                  "level": { "type": "string" },
+                  "bedrooms": { "type": "integer", "minimum": 0 },
+                  "bathrooms": { "type": "number", "minimum": 0 },
+                  "car_parks": { "type": "number", "minimum": 0 },
+                  "floor_area_m2": { "type": "number" },
+                  "floor_area_basis": { "enum": ["gross", "net", "saleable", "measured"] },
+                  "outdoor_area_m2": { "type": "number" },
+                  "outdoor_type": { "type": "string" },
+                  "land_area_m2": { "type": "number" },
+                  "features": { "type": "array", "items": { "type": "string" } },
+                  "indicative_price_nzd": { "type": "number", "description": "Only if Paul or the client supplies it; otherwise leave out" }
+                }
+              }
+            },
+            "totals": {
+              "type": "object",
+              "properties": {
+                "residences": { "type": "integer" },
+                "gross_floor_area_m2": { "type": "number" },
+                "site_coverage_pct": { "type": "number" },
+                "car_parks": { "type": "number" },
+                "car_parks_note": { "type": "string" }
+              }
+            },
+            "amenities": { "type": "array", "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "description": { "type": "string" } } } },
+            "images": { "type": "array", "items": { "$ref": "#/$defs/image" } },
+            "comparables": { "type": "array", "items": { "type": "object", "required": ["name", "summary"], "properties": { "name": { "type": "string" }, "summary": { "type": "string" }, "url": { "type": "string" } } } },
+            "open_items": { "type": "array", "description": "What is not yet checked: survey, consent, engineering. Never shown as a selling point.", "items": { "type": "object", "required": ["topic", "note"], "properties": { "topic": { "type": "string" }, "note": { "type": "string" } } } }
+          }
+        }
+      ]
+    },
+
+    "level2": {
+      "description": "Level 2: in-depth technical document. Feeds the specification and due-diligence parts of the site.",
+      "allOf": [
+        { "$ref": "#/$defs/issue" },
+        {
+          "type": "object",
+          "properties": {
+            "sections": { "type": "array", "items": { "type": "object", "required": ["title", "summary"], "properties": { "title": { "type": "string" }, "summary": { "type": "string" } } } },
+            "planning": {
+              "type": "object",
+              "properties": {
+                "pathway": { "type": "string", "description": "e.g. Restricted discretionary resource consent" },
+                "rules_checked": { "type": "array", "items": { "type": "object", "required": ["rule", "result"], "properties": { "rule": { "type": "string" }, "result": { "enum": ["complies", "minor-breach", "breach", "unknown"] }, "note": { "type": "string" } } } }
+              }
+            },
+            "specification": { "type": "array", "items": { "type": "object", "required": ["element", "spec"], "properties": { "element": { "type": "string" }, "spec": { "type": "string" }, "public": { "type": "boolean", "default": true } } } },
+            "engineering": { "type": "array", "items": { "type": "object", "required": ["discipline", "summary"], "properties": { "discipline": { "type": "string" }, "summary": { "type": "string" } } } },
+            "risks": { "type": "array", "items": { "type": "object", "required": ["risk", "rating"], "properties": { "risk": { "type": "string" }, "rating": { "enum": ["low", "medium", "high"] }, "mitigation": { "type": "string" } } } }
+          }
+        }
+      ]
+    },
+
+    "level3": {
+      "description": "Level 3: full construction plan. Feeds the timeline and the 'build-ready' story; detail stays in a gated download.",
+      "allOf": [
+        { "$ref": "#/$defs/issue" },
+        {
+          "type": "object",
+          "properties": {
+            "programme": { "type": "array", "items": { "type": "object", "required": ["stage", "start_week", "weeks"], "properties": { "stage": { "type": "string" }, "start_week": { "type": "integer", "minimum": 0 }, "weeks": { "type": "integer", "minimum": 1 }, "public": { "type": "boolean", "default": true } } } },
+            "target_completion": { "type": "string", "description": "e.g. Q4 2028" },
+            "cost_plan": {
+              "type": "object",
+              "properties": {
+                "total_nzd": { "type": "number" },
+                "per_m2_nzd": { "type": "number" },
+                "contingency_pct": { "type": "number" },
+                "basis": { "type": "string" },
+                "public": { "type": "boolean", "default": false }
+              }
+            },
+            "procurement": { "type": "string" },
+            "staging": { "type": "array", "items": { "type": "object", "required": ["name"], "properties": { "name": { "type": "string" }, "residence_ids": { "type": "array", "items": { "type": "string" } } } } }
+          }
+        }
+      ]
+    }
+  }
+}
