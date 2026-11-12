@@ -32,8 +32,8 @@ export default function Home() {
         </nav>
 
         <div className="mx-auto max-w-4xl px-4 pt-4 text-center sm:px-6 sm:pt-5">
-          <h1 className="text-[2.2rem] sm:text-5xl lg:text-[3.4rem]">
-            {hero.headline} <span className="text-blue sm:block">{hero.headline2}</span>
+          <h1 className="text-balance text-[2.2rem] sm:text-5xl lg:text-[3.4rem]">
+            {hero.headline} <span className="mt-1 block text-[0.62em] text-blue">{hero.headline2}</span>
           </h1>
           <p className="mx-auto mt-3 max-w-3xl text-lg text-muted">{hero.subheader}</p>
         </div>

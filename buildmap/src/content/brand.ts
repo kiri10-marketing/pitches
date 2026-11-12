@@ -22,7 +22,7 @@ export const brand = {
     { trait: "Assured", how: "We have built hundreds of homes. State things calmly and let the experience show. No hype, no exclamation marks." },
     { trait: "Measured", how: "Every figure has a source. If something is still to be checked, we say so and never present it as settled." },
   ],
-  lines: ["From a blank site. To a sight to behold.", "Powered by data. Guided by authority.", "Map out your journey to success.", "Build your way to brilliance.", "The future of property development is here.", "Address to completion."],
+  lines: ["Know what you can build before you buy.", "Powered by data. Guided by authority.", "From a blank site. To a sight to behold.", "Map out your journey to success.", "Build your way to brilliance.", "The future of property development is here.", "Address to completion."],
   avoid: [
     "Glows, neon, purple gradients and stock robots: the look of every AI product.",
     "Words like revolutionary, disrupt, supercharge or AI-powered as the headline.",
