@@ -21,7 +21,7 @@ export function Logo({ tone = "ink", size = 36 }: { tone?: "ink" | "paper"; size
     <span className="flex items-center gap-2">
       <Mark size={size} tone={tone} />
       <span className="font-semibold leading-none tracking-[-0.03em]" style={{ fontSize: size * 0.68 }}>
-        BuildMap
+        Build<span className={tone === "ink" ? "text-blue" : "text-blue-light"}>Map</span>
       </span>
     </span>
   );

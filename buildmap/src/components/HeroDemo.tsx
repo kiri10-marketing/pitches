@@ -172,7 +172,9 @@ function Screen({ shown, chars }: { shown: number; chars: number }) {
           <span style={{ width: u(3), height: u(3) }} className="block">
             <Mark size={24} simple className="h-full w-full" />
           </span>
-          BuildMap
+          <span>
+            Build<span className="text-blue">Map</span>
+          </span>
         </span>
         <span className="flex items-center text-muted" style={{ gap: u(1.2) }}>
           {name && <span className="truncate">{ADDRESS}</span>}

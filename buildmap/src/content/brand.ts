@@ -7,8 +7,9 @@ export const brand = {
     { part: "The roof", means: "The finished product: a home, built and ready for sale. It sits on top of the layers because it is built on them." },
     { part: "The arrow tip", means: "Direction. The roof points up like an arrowhead: experienced people showing the way forward." },
     { part: "Two shades of blue", means: "The two sides of BuildMap: powered by data, guided by authority." },
+    { part: "The name", means: "Build in navy, Map in blue. The blue ties Map to the map layers in the mark." },
   ],
-  files: ["buildmap-logo.svg", "buildmap-logo-reversed.svg", "buildmap-logo-stacked.svg", "buildmap-mark.svg", "buildmap-mark-reversed.svg", "buildmap-logo-navy.svg", "buildmap-logo-white.svg", "buildmap-app-icon.svg"],
+  files: ["buildmap-logo.svg", "buildmap-logo-reversed.svg", "buildmap-logo-stacked.svg", "buildmap-mark.svg", "buildmap-mark-reversed.svg", "buildmap-wordmark.svg", "buildmap-logo-navy.svg", "buildmap-logo-white.svg", "buildmap-app-icon.svg"],
   colours: [
     { name: "Navy ink", hex: "#0B1B33", use: "Text, dark panels, the mark" },
     { name: "BuildMap blue", hex: "#1257D6", use: "Top layer, buttons, links" },
