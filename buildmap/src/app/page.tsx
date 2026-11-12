@@ -51,6 +51,7 @@ export default function Home() {
             <li key={t}>{t}</li>
           ))}
         </ul>
+        <p className="mt-4 text-sm text-muted">{copy.conceptOnly.short}</p>
       </section>
 
       {/* What you get */}
@@ -174,6 +175,68 @@ export default function Home() {
       </section>
 
       {/* Reports and prices */}
+      <section id="compare" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="eyebrow">{copy.compare.eyebrow}</p>
+          <h2 className="mt-3 text-4xl sm:text-5xl">{copy.compare.title}</h2>
+          <p className="mt-5 text-lg text-muted">{copy.compare.intro}</p>
+        </div>
+        {/* Wide screens: a table */}
+        <div className="tile mt-12 hidden overflow-hidden p-2 md:block">
+          <table className="w-full border-separate border-spacing-0 text-left">
+            <caption className="sr-only">{copy.compare.intro}</caption>
+            <thead>
+              <tr>
+                <th scope="col" rowSpan={2} className="p-5 align-bottom text-base font-semibold text-muted">{copy.compare.cols.stage}</th>
+                <th scope="colgroup" colSpan={2} className="p-5 pb-1 text-xl font-semibold text-muted">{copy.compare.cols.usual}</th>
+                <th scope="colgroup" colSpan={2} className="rounded-t-[22px] bg-ink p-5 pb-1 text-xl font-semibold text-white">{copy.compare.cols.buildmap}</th>
+              </tr>
+              <tr className="text-sm font-semibold">
+                <th scope="col" className="px-5 pb-4 text-muted">{copy.compare.cols.cost}</th>
+                <th scope="col" className="px-5 pb-4 text-muted">{copy.compare.cols.time}</th>
+                <th scope="col" className="bg-ink px-5 pb-4 text-blue-light">{copy.compare.cols.cost}</th>
+                <th scope="col" className="bg-ink px-5 pb-4 text-blue-light">{copy.compare.cols.time}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {copy.compare.rows.map((r, i, all) => {
+                const last = i === all.length - 1;
+                return (
+                  <tr key={r.stage} className="text-lg">
+                    <th scope="row" className="border-t border-line p-5 text-xl font-semibold">{r.stage}</th>
+                    <td className="border-t border-line p-5 text-muted">{r.usual.cost}</td>
+                    <td className="whitespace-nowrap border-t border-line p-5 text-muted">{r.usual.time}</td>
+                    <td className={`border-t border-white/15 whitespace-nowrap bg-ink p-5 font-semibold text-white ${last ? "rounded-bl-[22px]" : ""}`}>{r.buildmap.cost}</td>
+                    <td className={`border-t border-white/15 whitespace-nowrap bg-ink p-5 font-semibold text-white ${last ? "rounded-br-[22px]" : ""}`}>{r.buildmap.time}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        {/* Phones: one card per stage */}
+        <ul className="mt-10 grid gap-4 md:hidden">
+          {copy.compare.rows.map((r) => (
+            <li key={r.stage} className="tile p-5">
+              <h3 className="text-xl">{r.stage}</h3>
+              <dl className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-2xl bg-white p-4">
+                  <dt className="text-sm font-semibold text-muted">{copy.compare.cols.usual}</dt>
+                  <dd className="mt-2 text-base text-muted">{r.usual.cost}</dd>
+                  <dd className="mt-1 text-base text-muted">{r.usual.time}</dd>
+                </div>
+                <div className="rounded-2xl bg-ink p-4 text-white">
+                  <dt className="text-sm font-semibold text-blue-light">{copy.compare.cols.buildmap}</dt>
+                  <dd className="mt-2 text-base font-semibold">{r.buildmap.cost}</dd>
+                  <dd className="mt-1 text-base font-semibold">{r.buildmap.time}</dd>
+                </div>
+              </dl>
+            </li>
+          ))}
+        </ul>
+        <p className="mx-auto mt-5 max-w-3xl text-center text-sm text-muted">{copy.compare.note}</p>
+      </section>
+
       <section id="how" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
         <p className="eyebrow">{how.eyebrow}</p>
         <h2 className="mt-3 text-4xl sm:text-5xl">{how.title}</h2>
@@ -187,6 +250,10 @@ export default function Home() {
             </li>
           ))}
         </ol>
+        <div className="mt-4 rounded-[28px] border border-line p-6 sm:p-7" role="note">
+          <p className="text-base font-semibold">{copy.conceptOnly.title}</p>
+          <p className="mt-1 max-w-4xl text-base text-muted">{copy.conceptOnly.body}</p>
+        </div>
       </section>
 
       <section id="start" className="bg-paper-2">
@@ -203,7 +270,8 @@ export default function Home() {
             <Logo size={30} />
           </div>
           <div className="max-w-2xl">
-            <p>{copy.disclaimer}</p>
+            <p className="font-semibold text-ink">{copy.conceptOnly.short}</p>
+            <p className="mt-2">{copy.disclaimer}</p>
             <p className="mt-3">© {copy.brand}, New Zealand</p>
           </div>
         </div>

@@ -13,9 +13,8 @@ export const copy = {
   },
   nav: [
     { href: "#inside", label: "Inside a report" },
-    { href: "#assets", label: "What you get" },
     { href: "#trust", label: "Data and authority" },
-    { href: "#who", label: "Who it's for" },
+    { href: "#compare", label: "Cost and time" },
     { href: "#how", label: "Reports and prices" },
   ],
   demo: {
@@ -87,7 +86,7 @@ export const copy = {
       { img: "schedule", w: 1720, h: 510, name: "Area schedule", body: "Areas level by level, added up for you." },
     ],
     locked: { img: "checks", w: 1740, h: 450, name: "Planning and design checks", body: "What to watch for, and what still needs checking.", more: "This report runs to 24 pages.", cta: "Get one for your site" },
-    note: "Concept design, not for consent or construction. Renders are artist's impressions.",
+    note: "Concept design, not for consent or construction. Any development still needs council consent. Renders are artist's impressions.",
   },
   assets: {
     eyebrow: "What you get",
@@ -157,6 +156,25 @@ export const copy = {
     sign: "Ant, BuildMap co-founder",
     follow: "Combining modern-day technology with intense industry experience, we are looking to pioneer the next wave of successful development in New Zealand and further afield.",
   },
+  // Cost and time, the usual way against BuildMap. The usual-way figures are Ant's and Paul's, from experience.
+  compare: {
+    eyebrow: "Cost and time",
+    title: "Months and tens of thousands, or days.",
+    intro: "What each stage usually costs and how long it takes, next to BuildMap.",
+    cols: { stage: "Stage", usual: "The usual way", buildmap: "With BuildMap", cost: "Cost", time: "Time" },
+    rows: [
+      { stage: "Due diligence", usual: { cost: "Thousands of dollars, across several consultants", time: "Weeks" }, buildmap: { cost: "$499", time: "Within 24 hours" } },
+      { stage: "Full development plan", usual: { cost: "Tens of thousands of dollars", time: "30 to 60 days" }, buildmap: { cost: "$2,499 plus GST", time: "Within 48 hours" } },
+      { stage: "Website and marketing concepts", usual: { cost: "Tens of thousands of dollars", time: "Up to 90 days" }, buildmap: { cost: "$4,999 plus GST", time: "Within 5 working days" } },
+    ],
+    note: "The usual-way figures are typical of what we have seen across our own projects and vary by site. BuildMap gets you to a decision sooner; it does not replace a survey, site investigations, legal advice or council consent.",
+  },
+  // Shown in several places so nobody mistakes a concept for an approval.
+  conceptOnly: {
+    title: "Concept only",
+    body: "Everything BuildMap produces is conceptual. Plans, yields, images, costs and timelines are a starting point, not an approval. Any development still needs resource consent and building consent from your council, and survey, engineering and legal advice before you commit.",
+    short: "Concept only. Subject to council consent, survey and professional advice.",
+  },
   how: {
     eyebrow: "Reports and prices",
     title: "Go as far as you need.",
@@ -164,8 +182,8 @@ export const copy = {
   steps: [
     { n: "1", title: "Basic report", time: "First one on us", body: "A short-form due diligence accelerator: what you can do on the site within the zoning, and the hazards to be aware of." },
     { n: "2", title: "Technical report", time: "$499 · within 24 hours", body: "Almost everything you need in your due diligence period to make a decision on the site." },
-    { n: "3", title: "Full development plan", time: "Within 48 hours", body: "The concept, programme, staging and costs: the plan a builder, partner or lender can work from." },
-    { n: "4", title: "Full package", time: "Within 5 working days", body: "The development plan plus a sale-ready website, all marketing assets, strategy and feasibility." },
+    { n: "3", title: "Full development plan", time: "$2,499 plus GST · within 48 hours", body: "The concept, programme, staging and costs: the plan a builder, partner or lender can work from." },
+    { n: "4", title: "Full package", time: "$4,999 plus GST · within 5 working days", body: "The development plan plus a sale-ready website, all marketing assets, strategy and feasibility." },
   ],
   form: {
     title: "Start a BuildMap",
@@ -173,10 +191,10 @@ export const copy = {
     levels: [
       { value: "1", label: "Basic report", price: "Free", was: "$99", badge: "First one's on us", note: "What you can do on the site within the zoning, and the hazards to be aware of. Free with a BuildMap account, then half price ($49.50) on every basic report after that." },
       { value: "1,2", label: "Technical report", price: "$499", note: "Almost everything you need for your due diligence period to make a decision. Returned within 24 hours of order." },
-      { value: "1,2,3", label: "Full development plan", price: "Price on application", note: "Concept, programme, staging and costs. Returned within 48 hours of order." },
-      { value: "package", label: "Full package", price: "Price on application", note: "Sale-ready website, all marketing assets, strategy and feasibility. Within 5 working days." },
+      { value: "1,2,3", label: "Full development plan", price: "$2,499 plus GST", note: "Concept, programme, staging and costs. Returned within 48 hours of order." },
+      { value: "package", label: "Full package", price: "$4,999 plus GST", note: "Sale-ready website, all marketing assets, strategy and feasibility. Within 5 working days." },
     ],
-    pricesNote: "Prices in NZD. Without an account, a basic report is $99. Price on application: we confirm the price with you before any work starts.",
+    pricesNote: "Prices in NZD. Without an account, a basic report is $99. Everything BuildMap produces is conceptual: any development still needs council consent and professional advice before you commit.",
     account: {
       label: "Create my free BuildMap account",
       hint: "Your first basic report is free and every one after is half price. Your reports are saved to your account. We'll email you a link to set your password.",
@@ -219,5 +237,5 @@ export const copy = {
     ],
   },
   disclaimer:
-    "BuildMap reports are desktop planning and development advice prepared with a construction manager. They are not a LIM, a consent, engineering design, legal advice or a registered valuation. Renders are artist's impressions.",
+    "BuildMap reports are conceptual desktop planning and development advice prepared with a construction manager. They are not a LIM, a resource or building consent, engineering design, legal advice or a registered valuation, and they do not guarantee that a council will approve any development. Yields, costs and timelines are indicative. Renders are artist's impressions.",
 } as const;
