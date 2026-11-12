@@ -163,7 +163,8 @@ export const copy = {
     intro: "What each stage usually costs and how long it takes, next to BuildMap.",
     cols: { stage: "Stage", usual: "The usual way", buildmap: "With BuildMap", cost: "Cost", time: "Time" },
     rows: [
-      { stage: "Due diligence", usual: { cost: "Thousands of dollars, across several consultants", time: "Weeks" }, buildmap: { cost: "$499", time: "Within 24 hours" } },
+      { stage: "Basic report", usual: { cost: "Up to $1,000", time: "Days of your due diligence period" }, buildmap: { cost: "First one free, then $99", time: "Mostly automated" } },
+      { stage: "Technical report", usual: { cost: "$1,500 or more", time: "Weeks, sometimes too long to make the call" }, buildmap: { cost: "$499", time: "Within 24 hours" } },
       { stage: "Full development plan", usual: { cost: "Tens of thousands of dollars", time: "30 to 60 days" }, buildmap: { cost: "$2,499 plus GST", time: "Within 48 hours" } },
       { stage: "Website and marketing concepts", usual: { cost: "Tens of thousands of dollars", time: "Up to 90 days" }, buildmap: { cost: "$4,999 plus GST", time: "Within 5 working days" } },
     ],

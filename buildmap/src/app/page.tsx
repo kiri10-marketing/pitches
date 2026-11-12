@@ -205,7 +205,7 @@ export default function Home() {
                   <tr key={r.stage} className="text-lg">
                     <th scope="row" className="border-t border-line p-5 text-xl font-semibold">{r.stage}</th>
                     <td className="border-t border-line p-5 text-muted">{r.usual.cost}</td>
-                    <td className="whitespace-nowrap border-t border-line p-5 text-muted">{r.usual.time}</td>
+                    <td className="border-t border-line p-5 text-muted">{r.usual.time}</td>
                     <td className={`border-t border-white/15 whitespace-nowrap bg-ink p-5 font-semibold text-white ${last ? "rounded-bl-[22px]" : ""}`}>{r.buildmap.cost}</td>
                     <td className={`border-t border-white/15 whitespace-nowrap bg-ink p-5 font-semibold text-white ${last ? "rounded-br-[22px]" : ""}`}>{r.buildmap.time}</td>
                   </tr>
