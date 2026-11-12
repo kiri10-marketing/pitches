@@ -4,8 +4,8 @@ export const copy = {
   brand: "BuildMap",
   hero: {
     eyebrow: "The future of property development is here",
-    headline: "Know what you can build before you buy.",
-    headline2: "Powered by data. Guided by authority.",
+    headline: "Map Your Vision. Build Your Dream.",
+    headline2: "",
     subheader: "Type in an address. BuildMap takes it from concept to consents, construction and completion.",
     cta: "Start with an address",
     cta2: "See what you get",
@@ -20,16 +20,17 @@ export const copy = {
   demo: {
     address: "123 The Terrace Street, Christchurch",
     placeholder: "Enter a site address",
-    alt: "Product demo: a sample address is typed on a laptop. The laptop spins and the concept plans arrive, page by page. It spins again for consents and construction, then a short timer runs while the plans become a project website. The website scrolls through, followed by the sales brochure and ad concepts made for it.",
+    alt: "Product demo: a sample address is typed into a search bar and the site is outlined on the land behind it. Concept plans fly out, page by page, followed by the consent checks and the build programme. A short timer runs while the plans become a project website, which scrolls through while its phone view, sales brochure and ad concepts land around it.",
     stages: [
-      { name: "Concept", time: "Mostly automated" },
-      { name: "Consents", time: "Within 24 hours" },
-      { name: "Construction", time: "Within 48 hours" },
-      { name: "Completion", time: "Within 5 working days" },
+      { name: "Concept", time: "Mostly automated", usual: "Days" },
+      { name: "Consents", time: "Within 24 hours", usual: "Weeks" },
+      { name: "Construction", time: "Within 48 hours", usual: "30 to 60 days" },
+      { name: "Completion", time: "Within 5 working days", usual: "Up to 90 days" },
     ],
     // What the laptop shows at each stage. Sample content only, not a real site.
     screens: {
       sample: "Sample",
+      found: "Site found",
       plans: { file: "Concept plans.pdf", pages: 24, of: "of", ready: "Plans ready" },
       site: { label: "Live project website" },
       build: { title: "Building your website", steps: ["Plans", "Words", "Images"] },
