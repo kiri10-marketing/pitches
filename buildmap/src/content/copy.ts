@@ -3,15 +3,75 @@
 export const copy = {
   brand: "BuildMap",
   hero: {
-    eyebrow: "For landowners, developers and agents",
-    headline: "From an address to a sale-ready website.",
+    eyebrow: "The future of property development is here",
+    headline: "Map out your journey to success.",
+    headline2: "Build your way to brilliance.",
     subheader:
-      "Give us a site address. Find out what you can build within the zoning and what to watch for, then go as far as you need: full due diligence, a development plan, or a website and marketing ready to sell.",
+      "Type in an address. BuildMap charts the way from concept to consents, construction and completion, with a sale-ready website at the summit.",
     cta: "Start with an address",
-    ticks: ["First site check free", "Due diligence in 24 hours", "Sale-ready in 5 working days"],
+    cta2: "See how it works",
+    ticks: ["First site check on us", "Due diligence in 24 hours", "Sale-ready in 5 working days"],
+  },
+  nav: [
+    { href: "#journey", label: "The journey" },
+    { href: "#who", label: "Who it's for" },
+    { href: "#how", label: "Reports and prices" },
+  ],
+  demo: {
+    sheet: "BuildMap · Sample journey",
+    address: "24 Example Street, Christchurch",
+    placeholder: "Enter a site address",
+    button: "Map it",
+    idle: "One address is all it takes to start.",
+    alt: "Product demo: a sample address is typed into the address box, then a route is drawn across a contour map through four stages: concept, consents, construction and completion.",
+    stages: [
+      { name: "Concept", title: "What can you build here?", lines: ["Zoning and rules checked", "Hazards flagged", "Options and yield set out"], product: "Basic report · mostly automated" },
+      { name: "Consents", title: "The pathway, mapped.", lines: ["Consent pathway identified", "Every rule checked against the plan", "Title, services and risks reviewed"], product: "Technical report · within 24 hours" },
+      { name: "Construction", title: "A plan a builder can work from.", lines: ["Concept, residences and renders", "Programme and staging", "Cost plan and procurement"], product: "Full development plan · within 48 hours" },
+      { name: "Completion", title: "Ready for sale.", lines: ["Project website in your branding", "Brochure, ads and strategy", "Enquiries straight to your inbox"], product: "Full package · within 5 working days" },
+    ],
+  },
+  proof: {
+    eyebrow: "Who is behind it",
+    statement: "A product made by property developers, for future property developers, agents, landowners and builders.",
+    points: [
+      { big: "Decades", small: "of domain experience" },
+      { big: "Hundreds", small: "of homes built" },
+      { big: "One address", small: "is all we need to begin" },
+    ],
+  },
+  journey: {
+    eyebrow: "The journey",
+    title: "Four stages. One map.",
+    intro: "Every development travels the same ground. BuildMap marks the route before you set out, so each decision is made with the next stage already in view.",
+    stages: [
+      { name: "Concept", body: "What the zoning allows on the site, the hazards to be aware of, and the options worth pursuing." },
+      { name: "Consents", body: "The consent pathway, each rule checked, and almost everything your due diligence period needs for a decision." },
+      { name: "Construction", body: "The concept, programme, staging and costs: a plan a builder, partner or lender can work from." },
+      { name: "Completion", body: "A website, marketing assets and strategy that take the project to market, ready for sale." },
+    ],
+  },
+  who: {
+    eyebrow: "Who it's for",
+    title: "Made for the people who make property happen.",
+    groups: [
+      { name: "Future developers", body: "Know what a site can carry, and what it will take, before you commit to it." },
+      { name: "Agents", body: "Walk into the appraisal with a plan for the site, and take the listing to market with a website ready to sell it." },
+      { name: "Landowners", body: "See what your land could become, and sell it with the plan attached." },
+      { name: "Builders", body: "Turn a client's address into a scheme you can programme, price and build." },
+    ],
+  },
+  manifesto: {
+    eyebrow: "Why BuildMap",
+    quote: "Combining modern-day technology with intense industry experience, we are looking to pioneer the next wave of successful development in New Zealand and further afield.",
+    sign: "The BuildMap founders",
+  },
+  how: {
+    eyebrow: "Reports and prices",
+    title: "Go as far as you need.",
   },
   steps: [
-    { n: "1", title: "Basic report", time: "First one free", body: "A short-form due diligence accelerator: what you can do on the site within the zoning, and the hazards to be aware of." },
+    { n: "1", title: "Basic report", time: "First one on us", body: "A short-form due diligence accelerator: what you can do on the site within the zoning, and the hazards to be aware of." },
     { n: "2", title: "Technical report", time: "$499 · within 24 hours", body: "Almost everything you need in your due diligence period to make a decision on the site." },
     { n: "3", title: "Full development plan", time: "Within 48 hours", body: "The concept, programme, staging and costs: the plan a builder, partner or lender can work from." },
     { n: "4", title: "Full package", time: "Within 5 working days", body: "The development plan plus a sale-ready website, all marketing assets, strategy and feasibility." },

@@ -9,7 +9,8 @@ From an address to a sale-ready website. This folder holds the first pieces of t
 | `examples/275-montreal/` | The contract filled in from the 08 Oct 2026 concept report for 275 Montreal Street, plus the generated website brief |
 | `tools/validate.mjs` | Checks a job package: `node tools/validate.mjs <job folder>` |
 | `tools/to-site-brief.mjs` | Turns a package into `site-brief.md` and `copy-seed.json` for the website-generator skill |
-| `src/` | The BuildMap order page (Next.js): address in, job file out |
+| `src/` | The BuildMap website (Next.js): brand, header product demo and the order form (address in, job file out) |
+| `src/app/brand/` | The brand sheet at `/brand`: logo, colour, type and voice. Logo files are in `public/brand/` (wordmark outlined, no fonts needed) |
 
 ## Order page
 
