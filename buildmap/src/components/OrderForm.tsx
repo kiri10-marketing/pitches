@@ -38,13 +38,13 @@ export function OrderForm() {
     const blob = `data:application/json;charset=utf-8,${encodeURIComponent(JSON.stringify(done, null, 2))}`;
     return (
       <div role="status">
-        <p className="eyebrow text-brass-dark">Job {done.job.id}</p>
-        <h2 className="mt-3 text-4xl font-normal text-ink">{copy.done.title}</h2>
+        <p className="eyebrow text-blue">Job {done.job.id}</p>
+        <h2 className="mt-3 text-4xl text-ink">{copy.done.title}</h2>
         <p className="mt-3 text-lg text-muted">{done.job.address}</p>
         <ol className="mt-8 space-y-4">
           {copy.done.next.map((t, i) => (
             <li key={t} className="flex gap-4">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink font-mono text-brass-light">{i + 1}</span>
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ink font-semibold text-white">{i + 1}</span>
               <span className="pt-1">{t}</span>
             </li>
           ))}
@@ -58,7 +58,7 @@ export function OrderForm() {
 
   return (
     <form onSubmit={submit} noValidate={false}>
-      <h2 className="text-4xl font-normal text-ink">{f.title}</h2>
+      <h2 className="text-4xl text-ink">{f.title}</h2>
       <p className="mt-3 text-lg text-muted">{f.intro}</p>
 
       <fieldset className="mt-10">
@@ -76,12 +76,12 @@ export function OrderForm() {
         <legend className="legend">Choose your BuildMap</legend>
         <div className="mt-4 space-y-3">
           {f.levels.map((l, i) => (
-            <label key={l.value} className="flex cursor-pointer gap-4 rounded-sm border border-line p-4 has-[:checked]:border-brass has-[:checked]:bg-paper-2">
-              <input type="radio" name="levels" value={l.value} defaultChecked={i === 0} className="mt-1.5 h-5 w-5 shrink-0 accent-[#7C5E2C]" />
+            <label key={l.value} className="flex cursor-pointer gap-4 rounded-2xl border border-line p-4 has-[:checked]:border-blue has-[:checked]:bg-blue-soft">
+              <input type="radio" name="levels" value={l.value} defaultChecked={i === 0} className="mt-1.5 h-5 w-5 shrink-0 accent-[#1257D6]" />
               <span className="flex-1">
                 <span className="flex flex-wrap items-baseline justify-between gap-x-4">
                   <span className="font-semibold">{l.label}</span>
-                  <span className="flex items-baseline gap-2 font-[family-name:var(--font-head)] font-normal text-ink">
+                  <span className="flex items-baseline gap-2 font-semibold text-ink">
                     {"badge" in l && <span className="tag">{l.badge}</span>}
                     {"was" in l && (
                       <s className="font-semibold text-muted">
@@ -96,8 +96,8 @@ export function OrderForm() {
               </span>
             </label>
           ))}
-          <label className="flex cursor-pointer gap-3 rounded-sm bg-paper-2 p-4">
-            <input type="checkbox" name="account" defaultChecked className="mt-1 h-5 w-5 shrink-0 accent-[#7C5E2C]" />
+          <label className="flex cursor-pointer gap-3 rounded-2xl bg-paper-2 p-4">
+            <input type="checkbox" name="account" defaultChecked className="mt-1 h-5 w-5 shrink-0 accent-[#1257D6]" />
             <span>
               <span className="block font-semibold">{f.account.label}</span>
               <span className="block text-base text-muted">{f.account.hint}</span>
@@ -156,11 +156,11 @@ export function OrderForm() {
       </fieldset>
 
       {error && (
-        <p role="alert" className="mt-6 rounded-sm bg-red-50 p-4 text-red-800">
+        <p role="alert" className="mt-6 rounded-2xl bg-red-50 p-4 text-red-800">
           {error}
         </p>
       )}
-      <button type="submit" className="btn btn-brass mt-8 w-full sm:w-auto" disabled={sending}>
+      <button type="submit" className="btn btn-blue mt-8 w-full sm:w-auto" disabled={sending}>
         {sending ? "Sending…" : f.submit}
       </button>
       <p className="hint mt-4">{f.privacy}</p>

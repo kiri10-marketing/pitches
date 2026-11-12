@@ -6,29 +6,77 @@ export const copy = {
     eyebrow: "The future of property development is here",
     headline: "Map out your journey to success.",
     headline2: "Build your way to brilliance.",
-    subheader:
-      "Type in an address. BuildMap charts the way from concept to consents, construction and completion, with a sale-ready website at the summit.",
+    subheader: "Type in an address. BuildMap takes it from concept to consents, construction and completion.",
     cta: "Start with an address",
-    cta2: "See how it works",
+    cta2: "See what you get",
     ticks: ["First site check on us", "Due diligence in 24 hours", "Sale-ready in 5 working days"],
   },
   nav: [
-    { href: "#journey", label: "The journey" },
+    { href: "#assets", label: "What you get" },
     { href: "#who", label: "Who it's for" },
     { href: "#how", label: "Reports and prices" },
   ],
   demo: {
-    sheet: "BuildMap · Sample journey",
     address: "24 Example Street, Christchurch",
     placeholder: "Enter a site address",
-    button: "Map it",
-    idle: "One address is all it takes to start.",
-    alt: "Product demo: a sample address is typed into the address box, then a route is drawn across a contour map through four stages: concept, consents, construction and completion.",
+    alt: "Product demo: a sample address is typed on a laptop. The laptop spins and shows a new screen for each of four stages: concept, consents, construction and completion.",
     stages: [
-      { name: "Concept", title: "What can you build here?", lines: ["Zoning and rules checked", "Hazards flagged", "Options and yield set out"], product: "Basic report · mostly automated" },
-      { name: "Consents", title: "The pathway, mapped.", lines: ["Consent pathway identified", "Every rule checked against the plan", "Title, services and risks reviewed"], product: "Technical report · within 24 hours" },
-      { name: "Construction", title: "A plan a builder can work from.", lines: ["Concept, residences and renders", "Programme and staging", "Cost plan and procurement"], product: "Full development plan · within 48 hours" },
-      { name: "Completion", title: "Ready for sale.", lines: ["Project website in your branding", "Brochure, ads and strategy", "Enquiries straight to your inbox"], product: "Full package · within 5 working days" },
+      { name: "Concept", time: "Mostly automated" },
+      { name: "Consents", time: "Within 24 hours" },
+      { name: "Construction", time: "Within 48 hours" },
+      { name: "Completion", time: "Within 5 working days" },
+    ],
+    // What the laptop shows at each stage. Sample content only, not a real site.
+    screens: {
+      sample: "Sample",
+      ask: "Where is the site?",
+      concept: {
+        title: "What you can build",
+        cards: [
+          { k: "Zoning", v: "Checked" },
+          { k: "Hazards", v: "Flagged" },
+          { k: "Options", v: "Set out" },
+        ],
+      },
+      consents: {
+        title: "Consent pathway",
+        result: "Pathway mapped",
+        rules: [
+          { k: "Height", v: "Complies", ok: true },
+          { k: "Site coverage", v: "Complies", ok: true },
+          { k: "Setbacks", v: "To check", ok: false },
+          { k: "Title and services", v: "Reviewed", ok: true },
+        ],
+      },
+      construction: {
+        title: "Programme",
+        rows: [
+          { k: "Design", from: 0, len: 30 },
+          { k: "Consent", from: 18, len: 30 },
+          { k: "Structure", from: 42, len: 36 },
+          { k: "Fit-out", from: 66, len: 34 },
+        ],
+        cards: ["Cost plan", "Staging", "Procurement"],
+      },
+      completion: {
+        title: "Ready for sale",
+        cta: "Enquire",
+        assets: ["Project website", "Sales brochure", "Marketing assets"],
+      },
+    },
+  },
+  pitch: {
+    line1: "What used to cost tens of thousands of dollars and take months",
+    line2: "is now just a few days away, at a fraction of the cost.",
+  },
+  assets: {
+    eyebrow: "What you get",
+    title: "Everything you need to sell it.",
+    intro: "The full package comes with all of your marketing assets, alongside the website and the full sales brochure.",
+    items: [
+      { name: "A project website", body: "Sale-ready and in your own branding, with enquiries sent straight to your existing inbox." },
+      { name: "The full sales brochure", body: "Residences, plans, renders and specification, ready to print or send." },
+      { name: "All of your marketing assets", body: "Ads, social posts and signage concepts, with the strategy and feasibility behind them." },
     ],
   },
   proof: {
