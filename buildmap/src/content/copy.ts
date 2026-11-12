@@ -181,6 +181,13 @@ export const copy = {
       { value: "raise-finance", label: "Raise finance" },
       { value: "not-sure", label: "Not sure yet" },
     ],
+    developmentTypeLabel: "What should we look at?",
+    developmentTypes: [
+      { value: "not-sure", label: "Not sure, show me the options" },
+      { value: "infill", label: "Homes on the site (terraces, townhouses, apartments)" },
+      { value: "subdivision", label: "Subdividing into sections" },
+      { value: "both", label: "Compare both" },
+    ],
     submit: "Send my address",
     privacy: "We use your details only for this BuildMap. Pitch websites stay hidden from Google until you say otherwise.",
   },

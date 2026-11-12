@@ -1,8 +1,23 @@
-# BuildMap hand-off contract (v0.2)
+# BuildMap hand-off contract (v0.3)
 
 This is what Paul's agent hands to the website builder for every job. Paul's agent keeps making its PDF exactly as now; it **also** writes one data file and saves the images separately. The website builder reads only this folder, so if the folder is right, the website builds without questions.
 
-The formal definition is [`buildmap.schema.json`](buildmap.schema.json). A filled-in example from the 275 Montreal concept report is in [`../examples/275-montreal/buildmap.json`](../examples/275-montreal/buildmap.json).
+The formal definition is [`buildmap.schema.json`](buildmap.schema.json). There are two filled-in examples: a single infill scheme from the 275 Montreal concept report ([`../examples/275-montreal/buildmap.json`](../examples/275-montreal/buildmap.json)) and a job with four alternatives, two infill and two subdivision, from the 9 Lowes Road hand-off ([`../examples/9-lowes-road/buildmap.json`](../examples/9-lowes-road/buildmap.json)).
+
+## 0. What changed in v0.3
+
+v0.3 comes from the answers Paul's agent gave on the Lowes Road job. Nothing from v0.2 was removed.
+
+1. **Options.** A job can hold several `options`, each typed `infill` (homes built on the site) or `subdivision` (vacant lots). They are mutually exclusive: nothing is ever added across options, and each carries its own totals, checks, open items and images.
+2. **Lots are not homes.** A subdivision option lists `lots` (area, how the area was measured, shape test, building test). A lot cannot carry bedrooms, bathrooms or a floor area. An infill option lists `homes`.
+3. **Allowance is not floor area.** Before a floor plan exists, a home carries `floor_area_allowance_m2` with `floor_area_status: "allowance"`. The website never shows an allowance as the size of a home.
+4. **A fit is not compliance.** Each check says whether it is `geometric` (the shape fits on the drawing) or a `full-assessment`, and how well it is evidenced. `minor-breach` is only used when a planner has said so.
+5. **Unknown is left out.** Unknown numbers are omitted, never written as 0. The schema rejects zero areas.
+6. **Issued means signed off.** A level only counts as issued when `signed_off_by` and `signed_off_on` are filled in with Paul's sign-off.
+7. **One option goes public.** `selection` records which option the website and marketing use, who chose it and when.
+8. **Private stays private.** An image with `public: false` is left out of the website, brochure, ads and downloads.
+9. **Four separate answers.** The checker reports separately whether the data is sound, whether levels are signed off, whether an option is selected, and whether anything blocks publication.
+10. **Development type on the order.** `job.development_type` (infill, subdivision, both, not-sure) comes from the order form.
 
 ## 1. The job folder
 
@@ -31,9 +46,11 @@ BM-20261008-275-montreal/
 | `site` | Automatic site record (Level 0), corrected by Paul's agent | Straight after the order; Paul's agent fixes anything wrong and adds a source |
 | `level1` | Paul's agent (mostly automated) | Status `in-progress`, then `issued` |
 | `level2`, `level3` | Paul's agent | Same, if ordered; `issued` when Paul signs it off |
+| `options`, `open_items`, `images` | Paul's agent | Whenever the report compares more than one way to develop the site |
+| `selection`, `signed_off_by`, `signed_off_on` | Paul (recorded by his agent) | Never filled in by an agent on its own judgement |
 | `website` | Order form, then Ant (or the client) | `lead_email` (where site enquiries go: the client's existing address), `brand` (colours, fonts and logo pulled from the client's own website), plus optional style, development name, headline, agents, prices |
 
-A level only counts once its `status` is `issued`. **The website and marketing are built once Level 3 (the development plan) is issued**, because that level carries the concept, residences and images.
+A level only counts once its `status` is `issued` and Paul's sign-off is recorded. **The website and marketing are built once Level 3 (the development plan) is issued and signed off**, and, where the job has options, once one option is selected.
 
 ## 3. What each level must include
 
@@ -82,7 +99,13 @@ node tools/validate.mjs /path/to/BM-20261008-275-montreal      # checks the data
 node tools/to-site-brief.mjs /path/to/BM-20261008-275-montreal # writes site-brief.md and copy-seed.json for the website
 ```
 
-`READY` means the website can be built. `NOT READY` lists exactly what to fix (a missing image, a residence id that doesn't match, a wrong value).
+The checker gives one of three answers:
+
+- `NOT VALID`: the data is wrong. It lists exactly what to fix (a missing image, an id that doesn't match, a lot with bedrooms).
+- `VALID` with holds: the data is sound but it cannot be published yet. Each hold is named: no sign-off, no option selected, blocking open items.
+- `READY`: the website can be built and published.
+
+For a private preview before sign-off, add `--draft` to the brief tool, and `--option C` to preview one option before a selection is recorded. Draft briefs are stamped as drafts.
 
 ## 6. Rules of thumb for Paul's agent
 
@@ -90,3 +113,5 @@ node tools/to-site-brief.mjs /path/to/BM-20261008-275-montreal # writes site-bri
 2. Don't invent prices, sale values or consent outcomes. Leave a field out rather than guess.
 3. Keep ids stable across revisions so prices and images stay attached.
 4. When a level is re-issued, bump `revision` and `issued_on`; the website rebuilds from the newest.
+5. Never add options together, and never copy one option's figures into `level3.totals` unless it is the selected option.
+6. Image fields are `file` (not `path`) and `artists_impression`.

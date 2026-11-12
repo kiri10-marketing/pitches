@@ -10,6 +10,7 @@ export type Order = {
   website: boolean;
   clientType: string;
   goal?: string;
+  developmentType?: string;
   name: string;
   company?: string;
   email: string;
@@ -40,7 +41,7 @@ export function buildJob(o: Order, now = new Date()) {
   const rawSite = (o.websiteUrl || "").trim();
   const site = rawSite ? (/^https?:\/\//i.test(rawSite) ? rawSite : `https://${rawSite}`) : "";
   const pkg = {
-    buildmap_version: "0.2",
+    buildmap_version: "0.3",
     job: {
       id: `BM-${ymd}-${slug}`,
       slug,
@@ -58,6 +59,7 @@ export function buildJob(o: Order, now = new Date()) {
         ...(o.phone ? { phone: o.phone.trim() } : {}),
       },
       ...(o.goal ? { goal: o.goal } : {}),
+      ...(o.developmentType ? { development_type: o.developmentType } : {}),
       ...(o.brief ? { brief: o.brief.trim() } : {}),
     },
     site: {

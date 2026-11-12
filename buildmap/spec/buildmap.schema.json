@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://buildmap.nz/schema/buildmap-0.2.json",
+  "$id": "https://buildmap.nz/schema/buildmap-0.3.json",
   "title": "BuildMap job package",
-  "description": "The hand-off contract between Paul's agent (Levels 1-3) and the BuildMap website builder. One buildmap.json per job, at the root of the job folder. Levels are filled in as they are issued; the website is built once level3.status is 'issued' (the development plan carries the concept, residences and images).",
+  "description": "The hand-off contract between Paul's agent (Levels 1-3) and the BuildMap website builder. One buildmap.json per job, at the root of the job folder. A job can carry several mutually exclusive options (subdivision or infill); they are never added together. The website is built from Level 3 once Paul has signed it off and, where there are options, one option has been selected.",
   "type": "object",
   "required": [
     "buildmap_version",
@@ -11,7 +11,7 @@
   ],
   "properties": {
     "buildmap_version": {
-      "const": "0.2"
+      "const": "0.3"
     },
     "job": {
       "type": "object",
@@ -118,6 +118,15 @@
         "account_requested": {
           "type": "boolean",
           "description": "The client asked for a BuildMap account: first basic report free, then half price"
+        },
+        "development_type": {
+          "enum": [
+            "infill",
+            "subdivision",
+            "both",
+            "not-sure"
+          ],
+          "description": "What the client wants looked at. infill = homes built on the site (terraces, townhouses, apartments). subdivision = the site cut into vacant lots for sale. both = compare them as separate options."
         }
       }
     },
@@ -371,6 +380,80 @@
           }
         }
       }
+    },
+    "options": {
+      "type": "array",
+      "description": "Mutually exclusive ways to develop the site. Counts, areas and yields are never added across options.",
+      "items": {
+        "$ref": "#/$defs/option"
+      }
+    },
+    "selection": {
+      "type": "object",
+      "description": "The one option chosen for the website and marketing. Only Paul (or the client through Paul) records this.",
+      "required": [
+        "option_id",
+        "selected_by",
+        "selected_on"
+      ],
+      "properties": {
+        "option_id": {
+          "type": "string"
+        },
+        "selected_by": {
+          "type": "string"
+        },
+        "selected_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "open_items": {
+      "type": "array",
+      "description": "Everything still to check, for the whole job. A blocking item stops publication.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "blocking": {
+            "type": "boolean",
+            "default": true
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "description": "Images that belong to the job or to options rather than to one level (site plans, option plans).",
+      "items": {
+        "$ref": "#/$defs/image"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Where the figures came from: source report, hashes, page references. Free form."
     }
   },
   "$defs": {
@@ -472,6 +555,34 @@
             "dusk",
             "night"
           ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "option_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "public": {
+          "type": "boolean",
+          "description": "false keeps the image out of the website, brochure, ads and every download"
+        },
+        "conceptual": {
+          "type": "boolean"
+        },
+        "width_px": {
+          "type": "integer"
+        },
+        "height_px": {
+          "type": "integer"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "disclaimer": {
+          "type": "string"
         }
       }
     },
@@ -510,6 +621,14 @@
           "items": {
             "$ref": "#/$defs/file"
           }
+        },
+        "signed_off_by": {
+          "type": "string",
+          "description": "The person who approved this level for issue. A level is only treated as issued when this and signed_off_on are filled in."
+        },
+        "signed_off_on": {
+          "type": "string",
+          "format": "date"
         }
       }
     },
@@ -701,11 +820,29 @@
                           "complies",
                           "minor-breach",
                           "breach",
-                          "unknown"
-                        ]
+                          "unknown",
+                          "not-applicable"
+                        ],
+                        "description": "Use minor-breach only when a planner has said so; do not infer it."
                       },
                       "note": {
                         "type": "string"
+                      },
+                      "basis": {
+                        "enum": [
+                          "geometric",
+                          "full-assessment"
+                        ]
+                      },
+                      "evidence": {
+                        "$ref": "#/$defs/evidence"
+                      },
+                      "option_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Which options this rule check applies to; leave out if it applies to the whole site"
                       }
                     }
                   }
@@ -1203,6 +1340,409 @@
                   "default": false
                 }
               }
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "enum": [
+        "source-report",
+        "authoring-calculation",
+        "independently-checked",
+        "surveyed",
+        "council-confirmed"
+      ],
+      "description": "How well the result is backed. source-report = taken from the report as written; authoring-calculation = the agent's own geometry maths; the last three need a named person or document in the note."
+    },
+    "home": {
+      "type": "object",
+      "description": "A home in an infill option.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type_group": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "bedrooms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bathrooms": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "storeys": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "car_parks": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "footprint_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Roof or building envelope on the ground"
+        },
+        "floor_area_status": {
+          "enum": [
+            "allowance",
+            "designed",
+            "measured"
+          ],
+          "description": "allowance = an envelope figure before any floor plan exists; never shown as the home's floor area"
+        },
+        "floor_area_allowance_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Envelope allowance only. Use with floor_area_status 'allowance'."
+        },
+        "floor_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Only once a floor plan exists (status designed or measured)"
+        },
+        "floor_area_basis": {
+          "enum": [
+            "gross",
+            "net",
+            "saleable",
+            "measured"
+          ]
+        },
+        "outdoor_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "outdoor_type": {
+          "type": "string"
+        },
+        "land_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "lot": {
+      "type": "object",
+      "description": "A vacant lot in a subdivision option. Lots have no bedrooms, bathrooms or floor area.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "area_m2"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "area_basis": {
+          "enum": [
+            "mapped",
+            "net",
+            "surveyed"
+          ],
+          "description": "mapped = measured off map geometry, not survey"
+        },
+        "shape_test": {
+          "enum": [
+            "fits",
+            "fails",
+            "not-tested"
+          ]
+        },
+        "building_test": {
+          "enum": [
+            "fits",
+            "fails",
+            "not-tested"
+          ]
+        },
+        "frontage_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "access": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": [
+        "test",
+        "result"
+      ],
+      "properties": {
+        "test": {
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "fits",
+            "fails",
+            "not-tested",
+            "partly"
+          ]
+        },
+        "basis": {
+          "enum": [
+            "geometric",
+            "full-assessment"
+          ],
+          "default": "geometric",
+          "description": "geometric = the shape fits on the drawing; it is not a statement that the planning rule is met"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "option": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "standing"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "infill",
+            "subdivision"
+          ]
+        },
+        "typology": {
+          "enum": [
+            "subdivision",
+            "townhouses",
+            "terraces",
+            "duplexes",
+            "apartments",
+            "mixed-use",
+            "single-home",
+            "other"
+          ]
+        },
+        "standing": {
+          "enum": [
+            "concept",
+            "conditional",
+            "potential"
+          ],
+          "description": "concept = drawn and fits, approvals outstanding; conditional = works only if named conditions are met; potential = known to fail a test as drawn and needs a consent departure"
+        },
+        "standing_note": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "source_pages": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "homes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/home"
+          }
+        },
+        "lots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/lot"
+          }
+        },
+        "totals": {
+          "type": "object",
+          "description": "For this option only. Leave a figure out if it is unknown; never write 0 for unknown.",
+          "properties": {
+            "homes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "lots": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "footprint_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "floor_area_allowance_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "gross_floor_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "lot_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "car_parks": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "car_parks_note": {
+              "type": "string"
+            },
+            "site_coverage_pct": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "site_coverage_basis": {
+              "type": "string"
+            }
+          }
+        },
+        "land": {
+          "type": "object",
+          "properties": {
+            "site_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "road_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "residual_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "basis": {
+              "type": "string"
+            }
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/check"
+          }
+        },
+        "assumptions": {
+          "type": "object",
+          "description": "Design assumptions as plain numbers, e.g. road_corridor_width_m"
+        },
+        "open_item_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "image_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "disclaimer": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "subdivision"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "lots"
+            ],
+            "not": {
+              "required": [
+                "homes"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "infill"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "homes"
+            ],
+            "not": {
+              "required": [
+                "lots"
+              ]
             }
           }
         }

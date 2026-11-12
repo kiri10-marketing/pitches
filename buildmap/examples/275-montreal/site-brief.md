@@ -1,5 +1,7 @@
 # Website brief: The Rise
 
+> **DRAFT, private preview only.** Level 3 is not signed off. Do not publish.
+
 Generated from BuildMap package `BM-20261008-275-montreal` (development plan 08 Oct 2026 updated concept). Build it with the website-generator skill; all copy goes into `src/content/copy.ts` from `copy-seed.json`.
 
 - **Style:** luxury build (set in the package)

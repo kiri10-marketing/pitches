@@ -128,6 +128,14 @@ export function OrderForm() {
             </select>
           </div>
           <div>
+            <label className="label" htmlFor="developmentType">{f.developmentTypeLabel}</label>
+            <select id="developmentType" name="developmentType" className="field" defaultValue="not-sure">
+              {f.developmentTypes.map((g) => (
+                <option key={g.value} value={g.value}>{g.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
             <label className="label" htmlFor="name">Your name</label>
             <input id="name" name="name" className="field" required autoComplete="name" />
           </div>

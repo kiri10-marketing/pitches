@@ -2,8 +2,10 @@
   "source": {
     "job": "BM-20261008-275-montreal",
     "level3": "08 Oct 2026 updated concept",
-    "generated": "2026-11-12T18:19:11.369Z"
+    "draft": true,
+    "generated": "2026-11-12T20:07:12.868Z"
   },
+  "kind": "homes",
   "style": "luxury",
   "slug": "the-rise",
   "meta": {
