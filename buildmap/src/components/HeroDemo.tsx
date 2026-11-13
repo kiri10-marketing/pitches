@@ -81,7 +81,7 @@ export function HeroDemo() {
       </div>
 
       {/* The timeline, along the bottom of the banner */}
-      <div className="mx-auto mt-4 max-w-5xl px-3 sm:mt-6 sm:px-6">
+      <div className="mx-auto mt-3 max-w-5xl px-3 sm:mt-4 sm:px-6">
         <ol className="grid grid-cols-4 gap-1.5 rounded-[22px] bg-white/90 p-3 shadow-[0_8px_30px_-12px_rgba(11,27,51,.35)] backdrop-blur sm:gap-3 sm:p-5">
           {stages.map((st, i) => {
             const n = i + 1;

@@ -13,8 +13,9 @@ export default function Home() {
         {/* A Canterbury Plains backdrop: an empty paddock under the Southern Alps. Washed pale at the top so the words stay easy to read. */}
         <div className="absolute inset-0 -z-10" aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/hero-landscape.webp" alt="" fetchPriority="high" className="h-full w-full object-cover object-[50%_72%]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper/75 via-[34%] to-paper/0 to-[62%]" />
+          <img src="/hero-landscape.webp" alt="" fetchPriority="high" className="h-full w-full scale-[1.04] object-cover object-[50%_72%] blur-[2px]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper/60 via-[22%] to-paper/0 to-[46%]" />
+          <div className="absolute inset-x-0 bottom-0 h-[38%] bg-gradient-to-t from-ink/80 via-ink/35 to-transparent" />
         </div>
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#" aria-label="BuildMap home">
@@ -32,15 +33,15 @@ export default function Home() {
           </a>
         </nav>
 
-        <div className="mx-auto max-w-5xl px-4 pt-3 text-center sm:px-6 sm:pt-4">
-          <h1 className="text-[2.5rem] leading-[0.98] sm:text-6xl lg:text-[4.4rem]">
-            <span className="block">{hero.headline}</span>
-            <span className="block text-blue">{hero.headline2}</span>
-          </h1>
+        <div className="flex flex-1 flex-col justify-center pt-1">
+          <HeroDemo />
         </div>
 
-        <div className="flex flex-1 flex-col justify-end pb-2 pt-6">
-          <HeroDemo />
+        <div className="mx-auto max-w-5xl px-4 pb-7 text-center sm:-mt-9 sm:px-6 sm:pb-8">
+          <h1 className="text-[1.9rem] leading-[1.02] text-white [text-shadow:0_2px_24px_rgba(11,27,51,.55)] sm:text-[2.5rem]">
+            <span className="block">{hero.headline}</span>
+            <span className="block text-blue-light">{hero.headline2}</span>
+          </h1>
         </div>
       </header>
 
