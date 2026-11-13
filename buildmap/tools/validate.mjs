@@ -65,13 +65,13 @@ for (const img of allImages) {
   if (plan && img.artists_impression) problems.push(`image ${img.file}: a technical plan is not an artist's impression`);
   if (plan && img.width_px && img.height_px && Math.max(img.width_px, img.height_px) < 2000) warnings.push(`image ${img.file}: ${Math.max(img.width_px, img.height_px)} px on the long side; plans need at least 2000 px, exported from the source, not enlarged`);
 }
-// Level 1 and Level 2 come from one run. Level 3 is separately commissioned.
+// Level 1 and Level 2 come from one run. Level 3 is its own order.
 const [L1, L2] = [pkg.level1, pkg.level2];
 if (past(L2) && !past(L1)) warnings.push("Level 2 exists without Level 1: the Lite and detailed reports are generated together");
 if (past(L1) && past(L2) && L1.revision && L2.revision && L1.revision !== L2.revision) warnings.push(`Level 1 is revision ${L1.revision} but Level 2 is ${L2.revision}: they should come from the same run`);
 if (past(L1) && past(L2) && L1.run_id && L2.run_id && L1.run_id !== L2.run_id) problems.push("Level 1 and Level 2 have different run_id: they must come from one assessment run");
 if (L1?.report_pages > 1) warnings.push(`the Lite report is ${L1.report_pages} pages; it should be one page showing every option and every material hold`);
-if (past(l3) && !(pkg.job?.levels_ordered || []).includes(3)) warnings.push("Level 3 is present but was not ordered: it is separately commissioned, never produced from an address alone");
+if (past(l3) && !(pkg.job?.levels_ordered || []).includes(3)) warnings.push("Level 3 is present but was not ordered: the development plan is its own order");
 for (const e of pkg.access?.entitlements || []) { const lv = pkg[`level${e.level}`]; if (lv?.revision && e.revision !== lv.revision) warnings.push(`entitlement is for Level ${e.level} revision ${e.revision} but the package holds ${lv.revision}`); }
 for (const img of allImages) for (const id of img.option_ids || []) if (!optIds.has(id)) problems.push(`image ${img.file} points at unknown option ${id}`);
 if (pkg.selection && !optIds.has(pkg.selection.option_id)) problems.push(`selection points at unknown option ${pkg.selection.option_id}`);

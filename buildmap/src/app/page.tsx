@@ -5,7 +5,7 @@ import { Journey } from "@/components/Journey";
 import { Logo, Mark } from "@/components/Mark";
 
 export default function Home() {
-  const { hero, proof, story, who, manifesto, pitch } = copy;
+  const { hero, proof, story, who, manifesto, pitch, partners } = copy;
   return (
     <main>
       {/* The banner: the product demo fills it, with the timeline along the bottom */}
@@ -62,6 +62,44 @@ export default function Home() {
 
       {/* The vertical timeline: what you get at each milestone */}
       <Journey />
+
+      {/* Partners: the architects behind the floor plans and the planners behind the reports */}
+      <section id="partners" className="mx-auto max-w-6xl px-4 pt-24 sm:px-6 sm:pt-32">
+        <div className="grid items-end gap-8 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+          <div>
+            <p className="eyebrow">{partners.eyebrow}</p>
+            <h2 className="mt-3 text-4xl sm:text-6xl">{partners.architect.title}</h2>
+          </div>
+          <div>
+            <p className="text-lg text-muted">{partners.architect.body}</p>
+            <p className="mt-3 text-xl font-semibold tracking-[-0.02em]">{partners.architect.offer}</p>
+            <a href={partners.architect.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-base font-semibold text-blue hover:text-blue-dark">{partners.architect.link} →</a>
+          </div>
+        </div>
+        <ul className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4 lg:grid-rows-2">
+          {partners.architect.images.map((im, i) => (
+            <li key={im.file} className={`group relative overflow-hidden rounded-[22px] bg-paper-2 sm:rounded-[28px] ${["col-span-2 aspect-[3/2] lg:row-span-2 lg:aspect-auto", "aspect-[3/4] lg:row-span-2 lg:aspect-auto", "aspect-[3/4] lg:aspect-[3/2]", "col-span-2 aspect-[3/2] lg:col-span-1"][i]}`}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={`/partners/fg-${im.file}.webp`} alt={`${im.name}, a project by ${partners.architect.name}`} width={im.w} height={im.h} loading="lazy" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/70 to-transparent p-4 pt-12 text-sm font-semibold text-white sm:p-5 sm:pt-14 sm:text-base">{im.name}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-3 text-sm text-muted">{partners.architect.credit}</p>
+
+        <div className="mt-6 grid items-center gap-8 rounded-[28px] bg-ink p-8 text-white sm:p-12 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <p className="text-sm font-semibold tracking-[0.2em] text-blue-light uppercase">{partners.planner.role}</p>
+            <p className="mt-4 text-5xl font-semibold tracking-[-0.04em] sm:text-6xl">{partners.planner.name}</p>
+          </div>
+          <div>
+            <h3 className="text-3xl sm:text-4xl">{partners.planner.title}</h3>
+            <p className="mt-4 text-lg text-white/70">{partners.planner.body}</p>
+            <p className="mt-3 text-xl font-semibold tracking-[-0.02em]">{partners.planner.offer}</p>
+            <a href={partners.planner.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block text-base font-semibold text-blue-light hover:text-white">{partners.planner.link} →</a>
+          </div>
+        </div>
+      </section>
 
       {/* Powered by data, guided by authority */}
       <section id="trust" className="mx-auto max-w-6xl px-4 pb-24 pt-24 sm:px-6 sm:pt-32">

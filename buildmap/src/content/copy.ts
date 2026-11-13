@@ -14,6 +14,7 @@ export const copy = {
   nav: [
     { href: "#journey", label: "The journey" },
     { href: "#compare", label: "Cost and time" },
+    { href: "#partners", label: "Partners" },
     { href: "#trust", label: "Data and authority" },
     { href: "#who", label: "Who it's for" },
   ],
@@ -22,7 +23,7 @@ export const copy = {
     placeholder: "Enter a site address",
     alt: "A sample address is typed into a search bar and the site is outlined on the land behind it.",
     stages: [
-      { name: "Concept", time: "Mostly automated", usual: "Days" },
+      { name: "Concept", time: "Mostly automated, with professional overview", usual: "Days" },
       { name: "Consent", time: "Within 24 hours", usual: "Weeks" },
       { name: "Construction", time: "Within 48 hours", usual: "30 to 60 days" },
       { name: "Sales and marketing", time: "Within 5 working days", usual: "Up to 90 days" },
@@ -99,6 +100,34 @@ export const copy = {
       { name: "All of your marketing assets", body: "Ads, social posts and signage concepts, with the strategy and feasibility behind them." },
     ],
   },
+  // Partners. Figure & Ground's description is taken from their own website; the photos are their projects.
+  partners: {
+    eyebrow: "Our partners",
+    architect: {
+      name: "Figure & Ground",
+      title: "We've partnered with Figure & Ground.",
+      body: "Figure & Ground is a Christchurch architectural design studio, working across private homes, multi-residential, later living and commercial projects.",
+      offer: "Order a full development plan or the full package and you get access to their floor plans.",
+      url: "https://www.figureandground.co.nz/",
+      link: "See their work",
+      credit: "Projects and photography: Figure & Ground.",
+      images: [
+        { file: "hereford", name: "Hereford Street", w: 1600, h: 1066 },
+        { file: "cranmer", name: "Cranmer Square", w: 1600, h: 1939 },
+        { file: "worcester", name: "Worcester Street", w: 1600, h: 1066 },
+        { file: "peterborough", name: "Peterborough Street", w: 1600, h: 1066 },
+      ],
+    },
+    planner: {
+      name: "LG Consulting",
+      role: "Chief planners",
+      title: "LG Consulting are our chief planners.",
+      body: "Christchurch-based town planners who specialise in resource consents for construction and subdivision projects across New Zealand.",
+      offer: "Their planning oversight stands behind BuildMap reports.",
+      url: "https://lgconsulting.co.nz/",
+      link: "Visit LG Consulting",
+    },
+  },
   proof: {
     eyebrow: "How it works",
     title: "Powered by data. Guided by authority.",
@@ -146,7 +175,7 @@ export const copy = {
         points: ["Zoning and site records pulled for your address", "Hazards flagged", "Options set out"],
         price: "Free",
         priceNote: "First one on us, then $99",
-        time: "Mostly automated",
+        time: "Mostly automated, with professional overview",
         usual: "Days, and up to $1,000",
       },
       {
@@ -203,7 +232,7 @@ export const copy = {
     intro: "What each stage usually costs and how long it takes, next to BuildMap.",
     cols: { stage: "Stage", usual: "The usual way", buildmap: "With BuildMap", cost: "Cost", time: "Time" },
     rows: [
-      { stage: "Lite report", usual: { cost: "Up to $1,000", time: "Days of your due diligence period" }, buildmap: { cost: "First one free, then $99", time: "Mostly automated" } },
+      { stage: "Lite report", usual: { cost: "Up to $1,000", time: "Days of your due diligence period" }, buildmap: { cost: "First one free, then $99", time: "Mostly automated, with professional overview" } },
       { stage: "Technical report", usual: { cost: "$1,500 or more", time: "Weeks, sometimes too long to make the call" }, buildmap: { cost: "$499", time: "Within 24 hours" } },
       { stage: "Full development plan", usual: { cost: "Tens of thousands of dollars", time: "30 to 60 days" }, buildmap: { cost: "$2,499 plus GST", time: "Within 48 hours" } },
       { stage: "Website and marketing concepts", usual: { cost: "Tens of thousands of dollars", time: "Up to 90 days" }, buildmap: { cost: "$4,999 plus GST", time: "Within 5 working days" } },

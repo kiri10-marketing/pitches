@@ -10,7 +10,7 @@ v0.4 comes from Paul's handoff review of 13 November 2026. Nothing from v0.3 was
 
 1. **Lite and detailed come as a pair.** Level 1 (the one-page Lite report) and Level 2 (the detailed report) are generated together from one assessment run, recorded under `run`. Both carry the same `run_id`.
 2. **Paying is separate from the findings.** What the customer may open is recorded under `access.entitlements`. A purchase never changes a finding, never removes a qualification and never gives permission to publish.
-3. **Level 3 is separately commissioned.** It is never produced from an address alone, and it is only present when it has actually been commissioned and produced.
+3. **Level 3 is its own order.** The development plan is ordered separately from the paired Lite and detailed reports and builds on their run. It is only present when it has been ordered and produced.
 4. **Release states.** A report moves through `generated`, `checked`, `reviewed` and `issued`. `issued` still means Paul's recorded sign-off. A report can be issued as a conditional desktop concept; say so in `issue_scope`.
 5. **A road lot is not a section.** Each lot has a `kind` (residential, road, access, reserve, utility). Only residential lots count in `totals.lots`. Seven residential lots plus a road lot is seven sections.
 6. **Four separate facts on every check.** `applicability`, the model `result`, `evidence_status` and the `consent` consequence are kept apart. A model pass is not an approval, and missing evidence can never be recorded as a pass.
@@ -38,7 +38,7 @@ BM-20261113-9-lowes-road/
   level-2/
     report.pdf             <- the detailed report, from the same run
     images/                <- plans, sections and movement diagrams
-  level-3/                 <- only if separately commissioned and actually produced
+  level-3/                 <- only when the development plan is ordered and produced
 ```
 
 ## 2. Who writes what
@@ -49,7 +49,7 @@ BM-20261113-9-lowes-road/
 | `site` | Automatic site record (Level 0), corrected by Paul's agent | Straight after the order; Paul's agent fixes anything wrong and adds a source |
 | `run`, `sources` | Paul's agent | Once per assessment run |
 | `level1`, `level2` | Paul's agent | Generated together. Status `generated`, then `checked`, `reviewed`, `issued` |
-| `level3` | Paul's agent | Only when separately commissioned |
+| `level3` | Paul's agent | When the development plan is ordered |
 | `options`, `open_items`, `images` | Paul's agent | Whenever the report compares more than one way to develop the site |
 | `selection`, `signed_off_by`, `signed_off_on` | Paul (recorded by his agent) | Never filled in by an agent on its own judgement |
 | `access` | The website (entitlements) and Paul (publication) | Never written by the assessment |
@@ -82,7 +82,7 @@ Generated in the same run as Level 1. Buying it gives access to it; it does not 
 
 ### Level 3: the development plan
 
-Separately commissioned. Present only when it has actually been produced. When it is, it carries the concept, the homes or lots, images, programme, staging and costs, and its `issue_scope` says exactly what was issued. A cost estimate or a programme is never described as consent or as ready to build.
+Ordered on its own, from the address, and built on the Level 1 and Level 2 run. Present only when it has been ordered and produced. It carries the concept, the homes or lots, images, programme, staging and costs, and its `issue_scope` says exactly what was issued. A cost estimate or a programme is never described as consent or as ready to build.
 
 ### Images
 
@@ -128,3 +128,18 @@ These are the website's obligations, not the agent's.
 3. Keep "highest tested concept yield" wording wherever `yield_label` is `highest-tested`.
 4. Never show alternatives as a combined total.
 5. When a corrected report is issued, link the revisions and decide which revision each customer can open.
+
+## 8. Agreed service levels
+
+Decided by Ant and Paul on 13 November 2026. These are what the website promises customers, so the workflow has to meet them.
+
+| Report | Promise to the customer |
+| --- | --- |
+| Lite report (Level 1) | Mostly automated, with professional overview |
+| Detailed report (Level 2) | Within 24 hours of order |
+| Full development plan (Level 3) | Within 48 hours of order, from the address |
+| Website and marketing | Within 5 working days |
+
+Professional overview means a report is still only shown once it is `issued` with a recorded sign-off. The time limits include that review. Where a site cannot be resolved inside the time, issue it as a conditional desktop concept with its holds stated, and say so in `issue_scope`; do not hold the report back and do not fill a gap with a guess. Record the real time taken on each job in `run` so the promises can be checked against what happens.
+
+Planning oversight is by LG Consulting, as chief planners. Floor plans for the development plan and beyond come from Figure & Ground.

@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://buildmap.nz/schema/buildmap-0.4.json",
   "title": "BuildMap job package",
-  "description": "The hand-off contract between Paul's agent and the BuildMap website. One buildmap.json per job, at the root of the job folder. Level 1 (the one-page Lite report) and Level 2 (the detailed report) come from one assessment run and are generated together; what the customer has paid for is recorded separately under access and never changes the findings. Level 3 is separately commissioned. A job can carry several mutually exclusive options (subdivision or townhouses); they are never added together. Passing this schema means the package is well formed. It does not mean the planning findings are right or that anything is approved.",
+  "description": "The hand-off contract between Paul's agent and the BuildMap website. One buildmap.json per job, at the root of the job folder. Level 1 (the one-page Lite report) and Level 2 (the detailed report) come from one assessment run and are generated together; what the customer has paid for is recorded separately under access and never changes the findings. Level 3 (the development plan) is its own order and builds on that run. A job can carry several mutually exclusive options (subdivision or townhouses); they are never added together. Passing this schema means the package is well formed. It does not mean the planning findings are right or that anything is approved.",
   "type": "object",
   "required": [
     "buildmap_version",
@@ -617,6 +617,20 @@
         },
         "template_version": {
           "type": "string"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the reports were ready for review"
+        },
+        "review_minutes": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Paul's or the planner's review time"
+        },
+        "reviewed_by": {
+          "type": "string",
+          "description": "Who gave the professional overview"
         }
       }
     },
@@ -1365,7 +1379,7 @@
       ]
     },
     "level3": {
-      "description": "Level 3: the development plan. Separately commissioned, never produced from an address alone. Present only when it has actually been commissioned and produced.",
+      "description": "Level 3: the development plan. Ordered on its own, from the address, and built on the Level 1 and Level 2 run. Present only when it has been ordered and produced.",
       "allOf": [
         {
           "$ref": "#/$defs/issue"
