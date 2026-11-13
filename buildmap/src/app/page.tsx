@@ -259,6 +259,13 @@ export default function Home() {
           <div className="max-w-2xl">
             <p className="font-semibold text-ink">{copy.conceptOnly.short}</p>
             <p className="mt-2">{copy.disclaimer}</p>
+            <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-base font-semibold text-ink">
+              {audienceOrder.map((slug) => (
+                <li key={slug}>
+                  <a href={`/${slug}`} className="hover:text-blue">For {audiences[slug].nav.toLowerCase()}</a>
+                </li>
+              ))}
+            </ul>
             <p className="mt-3">© {copy.brand}, New Zealand</p>
           </div>
         </div>
