@@ -1,0 +1,230 @@
+// One page per audience. Each sells a different use of BuildMap, in that audience's own words.
+// Prices and turnaround times match the homepage. Membership and trade pricing are not set yet, so no figure is shown for them.
+
+export const audienceOrder = ["agents", "builders", "landowners", "developers"] as const;
+export type AudienceSlug = (typeof audienceOrder)[number];
+
+export type Step = { title: string; body: string; tag: string; img: string; alt: string };
+
+export const audiences = {
+  agents: {
+    nav: "Agents",
+    tile: "Win the listing with proof, then win the on-sale of every home on the site.",
+    meta: {
+      title: "BuildMap for real estate agents",
+      description: "Prove what a site can carry with a technical report, and pitch the on-sale of every home on it. Win the listing other agents only bring comparable sales to.",
+    },
+    eyebrow: "BuildMap for agents",
+    h1: ["Bring the plan.", "Win the listing."],
+    sub: "Prove what a site can carry. Then pitch how you would sell every home on it.",
+    cta: "Run an appraisal address",
+    cta2: "See the numbers",
+    cta2Href: "#money",
+    pain: { quiet: "“Maybe subdividable” doesn't sell land.", loud: "Proof does." },
+    plays: {
+      label: "Two ways to use it",
+      items: [
+        {
+          tab: "Sell land with certainty",
+          title: "Swap “maybe” for a technical report.",
+          body: "Give buyers the answer up front, so they bid on what the site can become.",
+          tag: "Technical report · $499 · within 24 hours",
+          before: "May be subdividable (buyer to check)",
+          after: "Six residences. Technical report attached.",
+          points: ["Zoning and rules checked", "Consent pathway mapped", "Ready for the buyer's due diligence"],
+        },
+        {
+          tab: "Pitch the on-sale",
+          title: "Sell the vision, not just the section.",
+          body: "Walk in with how you would sell the finished homes. One appraisal could become every listing on the site.",
+          tag: "Full package · $4,999 plus GST · within 5 working days",
+          them: { name: "Other agents", item: "Comparable sales", count: "1 listing" },
+          you: { name: "You", item: "The plan to sell it", count: "6 listings" },
+          points: ["Concept plans and yield", "Project website and brochure", "Ads ready to run"],
+        },
+      ],
+    },
+    stepsTitle: "From appraisal to sold.",
+    steps: [
+      { title: "Before you walk in", body: "Run the address. Know what the site can carry before the vendor asks.", tag: "Lite report · first one free", img: "/demo/teaser-render.webp", alt: "A concept image of homes on the site" },
+      { title: "At the appraisal", body: "Put the report on the table. Show the plan, the yield and how you would sell it.", tag: "Technical report · $499", img: "/demo/plan-1.webp", alt: "A page from a BuildMap concept plan" },
+      { title: "Once you win it", body: "Launch with a project website, brochure and ads already made.", tag: "Full package · $4,999 plus GST", img: "/demo/brochure-1.webp", alt: "A sales brochure cover for the project" },
+    ] as Step[],
+    calc: {
+      eyebrow: "What it could be worth",
+      title: "One listing, or seven?",
+      intro: "Move the sliders to match your patch.",
+      land: "Land sale price",
+      homes: "Homes the site could carry",
+      price: "Average price of each home",
+      rate: "Your commission rate",
+      landOnly: "Land only",
+      onSale: "Land plus the on-sale",
+      listing: "listing",
+      listings: "listings",
+      more: "more commission from one appraisal",
+      note: "Illustrative only, using your own figures. Before GST and any agency split. What a site can carry depends on the site and on council consent.",
+    },
+    member: {
+      title: "Running appraisals every week?",
+      body: "BuildMap membership for agencies is on its way: reports at member rates for your whole team.",
+      cta: "Register your interest",
+    },
+    form: { clientType: "agent", level: "1", title: "Run an appraisal address", intro: "Your first Lite report is free. All we need is the address and your details." },
+  },
+
+  builders: {
+    nav: "Builders",
+    tile: "Show clients the path to consent in a report with your name on it.",
+    meta: {
+      title: "BuildMap for builders",
+      description: "Show clients exactly how their section gets from idea to consent, in a report branded as yours. Offer it as a service and win the build.",
+    },
+    eyebrow: "BuildMap for builders",
+    h1: ["Report by you.", "Built by you."],
+    sub: "Show clients exactly how their section gets from idea to consent, in a report branded as yours.",
+    cta: "Send a client's address",
+    cta2: "See the consent path",
+    cta2Href: "#path",
+    pain: { quiet: "Clients stall when they can't see the path to consent.", loud: "Show them the path." },
+    brand: {
+      label: "Try it: make it yours",
+      nameLabel: "Your company name",
+      placeholder: "Your Company",
+      colourLabel: "Your colour",
+      doc: "Site and consent report",
+      prepared: "Prepared by",
+      address: "123 The Terrace Street, Christchurch",
+      note: "Sample cover. Reports are produced by BuildMap and checked by our planning partners.",
+    },
+    path: {
+      eyebrow: "The consent path",
+      title: "Walk your client through it, step by step.",
+      steps: [
+        { name: "The site", body: "What the land is, and what it is zoned for.", points: ["Title and zoning", "Hazards on record", "Services"], img: "/demo/teaser-render.webp" },
+        { name: "The rules", body: "Each district plan rule, checked against the scheme.", points: ["Height and setbacks", "Site coverage", "Outdoor living and access"], img: "/demo/plan-7.webp" },
+        { name: "The pathway", body: "Which consents are needed, and what each one takes.", points: ["Resource consent or not", "What council will ask for", "What still needs checking"], img: "/demo/plan-1.webp" },
+        { name: "The programme", body: "Staging and timing, from design to handover.", points: ["Design and consent", "Construction stages", "Key dates"], img: "/demo/teaser-schedule.webp" },
+        { name: "The build", body: "A cost plan and concept you can price from.", points: ["Concept plans and areas", "Cost plan", "Over to you to quote"], img: "/demo/plan-3.webp" },
+      ],
+    },
+    stepsTitle: "A new service, without a new hire.",
+    steps: [
+      { title: "A client has a section", body: "They want to know what they can build. Send us the address.", tag: "Lite report · first one free", img: "/demo/teaser-render.webp", alt: "A concept image of homes on the site" },
+      { title: "We prepare it in your brand", body: "Your logo, your colours, your name on every page.", tag: "Technical report · within 24 hours", img: "/demo/plan-7.webp", alt: "A page from a BuildMap report" },
+      { title: "You present it and quote", body: "Charge for the report, then price the build from the plan.", tag: "Full development plan · within 48 hours", img: "/demo/plan-3.webp", alt: "A floor plan page from a BuildMap development plan" },
+    ] as Step[],
+    calc: {
+      eyebrow: "How it pays",
+      title: "Paid before you pick up a hammer.",
+      intro: "Sell the report as your own service. You set the price.",
+      count: "Reports you sell each month",
+      price: "Your price for each report",
+      out: "Report revenue a year",
+      also: "And every report is a head start on winning the build.",
+      note: "Illustrative only. You set your own price. Trade pricing for builders is on request.",
+    },
+    form: { clientType: "builder", level: "1,2", title: "Send a client's address", intro: "Tell us the site and we will be in touch about branding your reports." },
+  },
+
+  landowners: {
+    nav: "Landowners",
+    tile: "Find out what your land could become. Your first report is free.",
+    meta: {
+      title: "BuildMap for landowners",
+      description: "Find out what you can do with your land: subdivide, build, or sell with a plan. Your first BuildMap report is free.",
+    },
+    eyebrow: "BuildMap for landowners",
+    h1: ["What could your", "land become?"],
+    sub: "Subdivide, build, or sell for more with a plan. Find out which, starting with a free report.",
+    cta: "Get my free report",
+    cta2: "What you find out",
+    cta2Href: "#answers",
+    pain: { quiet: "You shouldn't need a planner and $1,000 just to ask the question.", loud: "Your first report is free." },
+    address: { label: "Your address", placeholder: "Start with your address", button: "Get my free report", hint: "Free with a BuildMap account. No card needed." },
+    tabs: {
+      eyebrow: "Three ways to use it",
+      title: "One section. Three options.",
+      items: [
+        { tab: "Subdivide", title: "Can it be split?", body: "See whether your section can be subdivided, and into how many lots.", points: ["What the zoning allows", "Access and services", "Hazards to be aware of"] },
+        { tab: "Build", title: "What fits?", body: "A second home, townhouses or more. See what your land can carry.", points: ["Concept options for the site", "The rules each one must meet", "A clear next step"] },
+        { tab: "Sell with a plan", title: "Sell what it could be.", body: "Give buyers the homework already done, so they bid on the potential and not the lawn.", points: ["A report buyers can rely on", "Concept plans to show", "Less guesswork in the offer"] },
+      ],
+    },
+    flips: {
+      eyebrow: "What you find out",
+      title: "Tap a question.",
+      items: [
+        { q: "Can I subdivide?", a: "Your free Lite report shows what you can do on the site within the zoning." },
+        { q: "What are the risks?", a: "Flooding, land and other hazards on record are flagged up front." },
+        { q: "What does it take?", a: "Go further with a technical report: the consent pathway, checked rule by rule, for $499." },
+      ],
+    },
+    stepsTitle: "Three steps. No jargon.",
+    steps: [
+      { title: "Enter your address", body: "That is all we need to start.", tag: "Takes a minute", img: "/demo/teaser-render.webp", alt: "A concept image of homes on a site" },
+      { title: "Get your free report", body: "What you can do on your land, and what to watch for.", tag: "Lite report · first one free", img: "/demo/plan-1.webp", alt: "A page from a BuildMap report" },
+      { title: "Choose your path", body: "Sell, subdivide or build, with a plan behind you.", tag: "From $499 when you're ready", img: "/demo/brochure-2.webp", alt: "A brochure page showing a finished home" },
+    ] as Step[],
+    form: { clientType: "landowner", level: "1", title: "Get your free report", intro: "Your first Lite report is free with a BuildMap account. All we need is your address." },
+  },
+
+  developers: {
+    nav: "Developers",
+    tile: "Run due diligence in a day, and take the good sites to market faster.",
+    meta: {
+      title: "BuildMap for developers",
+      description: "Run due diligence in 24 hours, screen more sites for less, and go to market with a sale-ready website and marketing in days.",
+    },
+    eyebrow: "BuildMap for developers",
+    h1: ["Due diligence", "in one day."],
+    sub: "Not one month. Screen more sites, drop the duds early, and take the good ones to market faster.",
+    cta: "Run a site",
+    cta2: "See the clock",
+    cta2Href: "#clock",
+    pain: { quiet: "The best sites go to whoever can say yes first.", loud: "Be first." },
+    pipeline: {
+      label: "Your deal flow",
+      count: "Sites you assess each month",
+      usual: "The usual way",
+      usualEach: "$1,500 or more a site, and weeks",
+      buildmap: "With BuildMap",
+      buildmapEach: "$499 a site, within 24 hours",
+      saved: "back in your pocket each month, at least",
+      note: "Technical report prices. Usual-way figures are typical of what we have seen and vary by site.",
+    },
+    clock: {
+      eyebrow: "The due diligence clock",
+      title: "Spend your DD period deciding, not waiting.",
+      pick: "Your due diligence period",
+      days: "working days",
+      day: "Day",
+      report: "Technical report back",
+      plan: "Full development plan back",
+      usual: "The usual way: still waiting on reports",
+      left: "working days left to negotiate, fund it or walk away",
+    },
+    stepsTitle: "From first look to first sale.",
+    steps: [
+      { title: "Screen", body: "What the zoning allows, and the hazards. Kill the duds early.", tag: "Lite report · $99, first one free", img: "/demo/teaser-render.webp", alt: "A concept image of homes on a site" },
+      { title: "Decide", body: "Almost everything you need in your due diligence period.", tag: "Technical report · $499 · 24 hours", img: "/demo/plan-7.webp", alt: "A building section page from a BuildMap report" },
+      { title: "Plan", body: "Concept, programme, staging and costs for your builder and lender.", tag: "Development plan · $2,499 plus GST · 48 hours", img: "/demo/plan-3.webp", alt: "A floor plan page from a BuildMap development plan" },
+      { title: "Sell", body: "A sale-ready website, brochure and ads to sell off the plans.", tag: "Full package · $4,999 plus GST · 5 working days", img: "/demo/brochure-1.webp", alt: "A sales brochure cover for the project" },
+    ] as Step[],
+    member: {
+      title: "Looking at sites every month?",
+      body: "BuildMap membership is on its way: reports at member rates, and a better deal on project websites and marketing.",
+      cta: "Register your interest",
+    },
+    form: { clientType: "developer", level: "1,2", title: "Run a site", intro: "Send the address and choose how far you want to go." },
+  },
+} as const;
+
+export const audienceShared = {
+  home: "Home",
+  stepsEyebrow: "How it works for you",
+  others: "BuildMap is also for",
+  partners: "Backed by people who do this every day.",
+  soon: "Coming soon",
+  sample: "Sample project shown. Address changed.",
+} as const;

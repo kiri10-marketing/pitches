@@ -1,0 +1,1378 @@
+{
+  "buildmap_version": "0.4",
+  "job": {
+    "id": "BM-20261113-9-lowes-road",
+    "slug": "9-lowes",
+    "address": "9 Lowes Road, Rolleston, New Zealand",
+    "ordered_at": "2026-11-13T00:00:00Z",
+    "levels_ordered": [
+      1,
+      2
+    ],
+    "website": false,
+    "development_type": "both",
+    "client": {
+      "type": "developer",
+      "name": "PLACEHOLDER client name",
+      "email": "placeholder@example.com"
+    },
+    "brief": "Example mapped into contract v0.4 from the figures in Paul's handoff review of 13 November 2026. It shows one job holding a subdivision and two townhouse alternatives side by side. The job record is a placeholder: no order-form record exists for this job."
+  },
+  "site": {
+    "address": "9 Lowes Road",
+    "suburb": "Rolleston",
+    "region": "Canterbury",
+    "legal_description": "Lot 2 DP 425172",
+    "title_reference": "499340",
+    "land_area_m2": 4184,
+    "land_area_note": "Recorded area. Mapped geometry measures about 4181.7748 m2. Not surveyed; net site area not confirmed.",
+    "zone": "MRZ",
+    "overlays": [
+      "DEV-RO2 / Rolleston ODP Area 9",
+      "Plains Flood Management Overlay",
+      "Liquefaction-damage-unlikely broad-scale overlay"
+    ],
+    "sources": [
+      {
+        "name": "Source concept report, pages 2, 6 and 7",
+        "checked_on": "2026-11-12",
+        "note": "Reported mapping and reference details; not survey or title verification. Selwyn District Council. Lowes Road - arterial."
+      }
+    ],
+    "land_area_basis": "recorded",
+    "areas": {
+      "recorded_m2": 4184,
+      "mapped_m2": 4181.7748,
+      "note": "Neither is a verified survey or a net site area certificate."
+    },
+    "identity": {
+      "status": "provisional",
+      "evidence": "Reported mapping and reference details",
+      "gaps": [
+        "Title and instruments not obtained",
+        "No boundary survey"
+      ]
+    }
+  },
+  "level1": {
+    "status": "generated",
+    "run_id": "lowes-example-run",
+    "summary": "Three alternatives are documented: a seven-lot subdivision with one road lot, 36 two-bedroom townhouses, or 27 three-bedroom townhouses. They are alternatives and are never added together. Each is the highest yield tested, not a verified maximum, and each carries planning, engineering and legal holds.",
+    "disclaimer": "Concept design, not for consent or construction"
+  },
+  "level2": {
+    "status": "generated",
+    "run_id": "lowes-example-run",
+    "disclaimer": "Concept design, not for consent or construction",
+    "planning": {
+      "pathway": "Consent required. Transport, fire, flood and services remain unresolved; no approval or permitted-as-drawn conclusion."
+    }
+  },
+  "level3": {
+    "status": "not-started"
+  },
+  "options": [
+    {
+      "id": "subdivision-main",
+      "name": "Seven-lot subdivision",
+      "type": "subdivision",
+      "typology": "subdivision",
+      "standing": "conditional",
+      "standing_note": "Conditional desktop concept. The road-junction hold and the smallest shape clearance remain.",
+      "summary": "Seven residential lots and one road lot. Road land about 949.76 m2; residential balance about 3,232.01 m2.",
+      "lots": [
+        {
+          "id": "lot-1",
+          "name": "Lot 1",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-2",
+          "name": "Lot 2",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-3",
+          "name": "Lot 3",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-4",
+          "name": "Lot 4",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-5",
+          "name": "Lot 5",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-6",
+          "name": "Lot 6",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-7",
+          "name": "Lot 7",
+          "kind": "residential",
+          "note": "Area not given in the review; fill from the detailed report. Never 0.",
+          "building_test": "fits",
+          "building_test_note": "8 x 15 m rectangle fits. A geometry test, not a designed 120 m2 house.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "lot-8",
+          "name": "Lot 8 (road)",
+          "kind": "road",
+          "area_m2": 949.7601,
+          "area_basis": "mapped",
+          "note": "Road land. Not a section.",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        }
+      ],
+      "totals": {
+        "lots": 7,
+        "road_lots": 1,
+        "lot_area_m2": 3232.0147,
+        "yield_label": "highest-tested",
+        "yield_note": "Highest yield found in the layouts tested; not proof of the legal maximum."
+      },
+      "land": {
+        "site_area_m2": 4181.7748,
+        "road_area_m2": 949.7601,
+        "residual_area_m2": 3232.0147,
+        "basis": "mapped geometry, not survey"
+      },
+      "quantities": [
+        {
+          "label": "Road land",
+          "value": 949.7601,
+          "unit": "m2",
+          "basis": "mapped geometry",
+          "status": "provisional",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "label": "Residential balance",
+          "value": 3232.0147,
+          "unit": "m2",
+          "basis": "mapped geometry; site less road land",
+          "status": "provisional",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        }
+      ],
+      "checks": [
+        {
+          "test": "8 x 15 m building-fit rectangle on each residential lot",
+          "result": "fits",
+          "basis": "geometric",
+          "applicability": "applies",
+          "evidence_status": "provisional",
+          "consent": "pathway-unresolved",
+          "note": "Geometry test only; not a house design."
+        }
+      ],
+      "open_item_ids": [
+        "legal-survey",
+        "rules-odp",
+        "road-traffic",
+        "flood-ground",
+        "servicing",
+        "consents-titles",
+        "seven-rear-sites"
+      ]
+    },
+    {
+      "id": "th-2bed-75",
+      "name": "Townhouses A: 36 two-bedroom homes",
+      "type": "infill",
+      "typology": "townhouses",
+      "standing": "concept",
+      "summary": "36 two-level, two-bedroom townhouses at a nominal 75 m2 gross each, with 36 external parking bays and 2 visitor bays. No new-title lots.",
+      "homes": [
+        {
+          "id": "a-home-001",
+          "name": "A1",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-002",
+          "name": "A2",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-003",
+          "name": "A3",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-004",
+          "name": "A4",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-005",
+          "name": "A5",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-006",
+          "name": "A6",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-007",
+          "name": "A7",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-008",
+          "name": "A8",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-009",
+          "name": "A9",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-010",
+          "name": "A10",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-011",
+          "name": "A11",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-012",
+          "name": "A12",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-013",
+          "name": "A13",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-014",
+          "name": "A14",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-015",
+          "name": "A15",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-016",
+          "name": "A16",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-017",
+          "name": "A17",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-018",
+          "name": "A18",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-019",
+          "name": "A19",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-020",
+          "name": "A20",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-021",
+          "name": "A21",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-022",
+          "name": "A22",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-023",
+          "name": "A23",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-024",
+          "name": "A24",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-025",
+          "name": "A25",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-026",
+          "name": "A26",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-027",
+          "name": "A27",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-028",
+          "name": "A28",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-029",
+          "name": "A29",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-030",
+          "name": "A30",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-031",
+          "name": "A31",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-032",
+          "name": "A32",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-033",
+          "name": "A33",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-034",
+          "name": "A34",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-035",
+          "name": "A35",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "a-home-036",
+          "name": "A36",
+          "type_group": "2-bed townhouse",
+          "bedrooms": 2,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 75,
+          "floor_area_note": "Nominal gross external floorplate. Stairs and void treatment and final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "external-bay",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        }
+      ],
+      "totals": {
+        "homes": 36,
+        "floor_area_allowance_m2": 2700,
+        "gross_floor_area_basis": "nominal gross external floorplates; not statutory GFA",
+        "car_parks": 36,
+        "visitor_car_parks": 2,
+        "car_parks_note": "36 external resident bays and 2 visitor bays. Provision only; movement evidence is a separate record.",
+        "roof_coverage_pct": 33.621,
+        "roof_coverage_basis": "roof-covered area 1,405.9546 m2 (roof edges, not wall footprints) divided by the mapped site area; denominator provisional until net site area is confirmed",
+        "yield_label": "highest-tested",
+        "yield_note": "Highest yield found in the layouts tested; not proof of the legal maximum."
+      },
+      "quantities": [
+        {
+          "label": "Roof-covered area",
+          "value": 1405.9546,
+          "unit": "m2",
+          "basis": "roof edges",
+          "status": "provisional",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        }
+      ],
+      "open_item_ids": [
+        "legal-survey",
+        "rules-odp",
+        "road-traffic",
+        "flood-ground",
+        "servicing",
+        "consents-titles",
+        "detailed-homes"
+      ]
+    },
+    {
+      "id": "th-3bed-140",
+      "name": "Townhouses B: 27 three-bedroom homes",
+      "type": "infill",
+      "typology": "townhouses",
+      "standing": "concept",
+      "summary": "27 two-level, three-bedroom townhouses at a nominal 140 m2 gross each including the garage, with 27 internal garages and no visitor bays. No new-title lots.",
+      "homes": [
+        {
+          "id": "b-home-001",
+          "name": "B1",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-002",
+          "name": "B2",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-003",
+          "name": "B3",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-004",
+          "name": "B4",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-005",
+          "name": "B5",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-006",
+          "name": "B6",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-007",
+          "name": "B7",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-008",
+          "name": "B8",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-009",
+          "name": "B9",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-010",
+          "name": "B10",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-011",
+          "name": "B11",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-012",
+          "name": "B12",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-013",
+          "name": "B13",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-014",
+          "name": "B14",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-015",
+          "name": "B15",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-016",
+          "name": "B16",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-017",
+          "name": "B17",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-018",
+          "name": "B18",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-019",
+          "name": "B19",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-020",
+          "name": "B20",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-021",
+          "name": "B21",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-022",
+          "name": "B22",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-023",
+          "name": "B23",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-024",
+          "name": "B24",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-025",
+          "name": "B25",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-026",
+          "name": "B26",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        },
+        {
+          "id": "b-home-027",
+          "name": "B27",
+          "type_group": "3-bed townhouse",
+          "bedrooms": 3,
+          "storeys": 2,
+          "floor_area_status": "allowance",
+          "floor_area_allowance_m2": 140,
+          "floor_area_note": "Nominal gross external floorplate including garage. Final statutory GFA not settled.",
+          "car_parks": 1,
+          "car_parks_type": "internal-garage",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        }
+      ],
+      "totals": {
+        "homes": 27,
+        "floor_area_allowance_m2": 3780,
+        "gross_floor_area_basis": "nominal gross external floorplates including garage; not statutory GFA",
+        "car_parks": 27,
+        "visitor_car_parks": 0,
+        "car_parks_note": "27 internal garages. Provision only; movement evidence is a separate record.",
+        "roof_coverage_pct": 46.6206,
+        "roof_coverage_basis": "roof-covered area 1,949.5667 m2 (roof edges, not wall footprints) divided by the mapped site area; denominator provisional until net site area is confirmed",
+        "yield_label": "highest-tested",
+        "yield_note": "Highest yield found in the layouts tested; not proof of the legal maximum."
+      },
+      "quantities": [
+        {
+          "label": "Roof-covered area",
+          "value": 1949.5667,
+          "unit": "m2",
+          "basis": "roof edges",
+          "status": "provisional",
+          "source_refs": [
+            "paul-review-2026-11-13"
+          ]
+        }
+      ],
+      "open_item_ids": [
+        "legal-survey",
+        "rules-odp",
+        "road-traffic",
+        "flood-ground",
+        "servicing",
+        "consents-titles",
+        "detailed-homes"
+      ]
+    }
+  ],
+  "open_items": [
+    {
+      "id": "selection",
+      "category": "design",
+      "summary": "No option has been selected. The subdivision and the two townhouse schemes are alternatives: 36 and 27 are never added to make 63.",
+      "blocking": true
+    },
+    {
+      "id": "issue-approval",
+      "category": "approval",
+      "summary": "No recorded sign-off from Paul. The reports are generated, not issued.",
+      "blocking": true
+    },
+    {
+      "id": "legal-survey",
+      "category": "legal-survey",
+      "summary": "Obtain title 499340, DP 425172, all instruments, property file and a boundary/topographic survey. No title instruments supplied.",
+      "blocking": true
+    },
+    {
+      "id": "rules-odp",
+      "category": "planning",
+      "summary": "Confirm current consolidated rules, legal effect, DEV-RO2 / ODP Area 9 links, staging, density and any upgrades with a planner.",
+      "blocking": true
+    },
+    {
+      "id": "road-traffic",
+      "category": "transport",
+      "summary": "Council acceptance of road class, vesting, cul-de-sac/connectivity, arterial junction, sightlines, crossings, gradients and complete tracking remains unverified.",
+      "blocking": true
+    },
+    {
+      "id": "flood-ground",
+      "category": "engineering",
+      "summary": "Flood certificate, floor levels, overland flow, storage, earthworks, groundwater, geotechnical and contamination advice remain outstanding.",
+      "blocking": true
+    },
+    {
+      "id": "servicing",
+      "category": "engineering",
+      "summary": "Confirm lawful stormwater outfall, water/wastewater capacity and connection points, levels, easements and fire supply. Map proximity does not authorise a connection.",
+      "blocking": true
+    },
+    {
+      "id": "detailed-homes",
+      "category": "design",
+      "summary": "No finished dwelling floor plans. Gross/net floor areas, bathrooms, room layouts, bedroom outlook, glazing, shading, privacy and final materials are unverified.",
+      "blocking": true
+    },
+    {
+      "id": "seven-rear-sites",
+      "category": "planning",
+      "summary": "Classify irregular lots and possible rear sites/access strips; curved road contact is not proof of compliant access.",
+      "blocking": true
+    },
+    {
+      "id": "consents-titles",
+      "category": "approval",
+      "summary": "Land-use/subdivision/engineering/building approvals and s223/s224 title processes are not established.",
+      "blocking": true
+    },
+    {
+      "id": "commercial",
+      "category": "feasibility",
+      "summary": "The source study contains no supplied purchase price, build rates, sale prices, DCs, finance costs, profit or programme. Do not infer them.",
+      "blocking": false
+    },
+    {
+      "id": "net-site-area",
+      "category": "legal-survey",
+      "summary": "Net site area is not confirmed, so every coverage percentage uses a provisional denominator.",
+      "blocking": true,
+      "effect": "Coverage and yield",
+      "evidence_needed": "Boundary survey and confirmed net site area",
+      "owner_discipline": "Surveyor",
+      "closure": "Surveyed net site area recorded and coverage recalculated"
+    },
+    {
+      "id": "plan-exports",
+      "category": "images",
+      "summary": "The scheme plan, townhouse A and B site plans, floor drawings, recession-plane section and vehicle-movement diagrams have not been exported as separate files of at least 2,000 px.",
+      "blocking": true,
+      "owner_discipline": "Paul's agent",
+      "closure": "Each plan exported from its vector source and listed under images"
+    }
+  ],
+  "images": [],
+  "provenance": {
+    "mapped_from": "Figures taken from the Lowes table in Paul's handoff review, 13 November 2026",
+    "not_supplied": [
+      "The four Lowes PDFs",
+      "Per-lot areas",
+      "Plan and diagram exports",
+      "Run and source-snapshot identifiers"
+    ],
+    "superseded": "The v0.3 example (14 and 12 terraces, 7 and 8 lots) came from an earlier 17-page report and is replaced by this one."
+  },
+  "sources": [
+    {
+      "id": "paul-review-2026-11-13",
+      "name": "BuildMap handoff review for Ant (Paul and his agent)",
+      "checked_on": "2026-11-13",
+      "limitations": "Reported concept-model results, not a fresh certification of the site. The four Lowes PDFs it reviews were not supplied to the website side."
+    }
+  ],
+  "run": {
+    "id": "lowes-example-run",
+    "assessed_at": "2026-11-13T00:00:00Z",
+    "source_snapshot": "PLACEHOLDER: fill from the real run"
+  },
+  "access": {
+    "entitlements": [],
+    "publication": {
+      "permitted": false,
+      "scope": "Lowes is an internal example. Nothing goes public."
+    }
+  }
+}

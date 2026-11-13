@@ -1,0 +1,2299 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://buildmap.nz/schema/buildmap-0.4.json",
+  "title": "BuildMap job package",
+  "description": "The hand-off contract between Paul's agent and the BuildMap website. One buildmap.json per job, at the root of the job folder. Level 1 (the one-page Lite report) and Level 2 (the detailed report) come from one assessment run and are generated together; what the customer has paid for is recorded separately under access and never changes the findings. Level 3 (the development plan) is its own order and builds on that run. A job can carry several mutually exclusive options (subdivision or townhouses); they are never added together. Passing this schema means the package is well formed. It does not mean the planning findings are right or that anything is approved.",
+  "type": "object",
+  "required": [
+    "buildmap_version",
+    "job",
+    "site"
+  ],
+  "properties": {
+    "buildmap_version": {
+      "const": "0.4"
+    },
+    "job": {
+      "type": "object",
+      "description": "Created by the BuildMap order form. Paul's agent never changes these fields. Corrections to the site go in site.corrections with their evidence.",
+      "required": [
+        "id",
+        "address",
+        "client",
+        "ordered_at",
+        "levels_ordered"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^BM-[0-9]{8}-[a-z0-9-]+$",
+          "description": "BM-<yyyymmdd>-<slug>, also the job folder name"
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$",
+          "description": "Becomes the website folder and pitch-<slug>.vercel.app"
+        },
+        "address": {
+          "type": "string",
+          "minLength": 5
+        },
+        "ordered_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "levels_ordered": {
+          "type": "array",
+          "items": {
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "website": {
+          "type": "boolean",
+          "default": true
+        },
+        "client": {
+          "type": "object",
+          "required": [
+            "type",
+            "name",
+            "email"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "landowner",
+                "developer",
+                "agent",
+                "builder",
+                "other"
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "company": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "phone": {
+              "type": "string"
+            }
+          }
+        },
+        "goal": {
+          "enum": [
+            "sell-land",
+            "sell-off-plan",
+            "joint-venture",
+            "develop-myself",
+            "raise-finance",
+            "not-sure"
+          ]
+        },
+        "brief": {
+          "type": "string",
+          "description": "The client's own words: what they want, worries, must-haves"
+        },
+        "uploads": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          }
+        },
+        "package": {
+          "type": "boolean",
+          "default": false,
+          "description": "True when the client ordered the full package: website, marketing assets, strategy and feasibility"
+        },
+        "account_requested": {
+          "type": "boolean",
+          "description": "The client asked for a BuildMap account: first basic report free, then half price"
+        },
+        "development_type": {
+          "enum": [
+            "townhouses",
+            "infill",
+            "subdivision",
+            "both",
+            "not-sure"
+          ],
+          "description": "What the customer asked us to look at. townhouses and infill mean the same thing (homes built on the site); new orders use townhouses."
+        },
+        "brief_version": {
+          "type": "string",
+          "description": "Version of the default brief the customer accepted"
+        }
+      }
+    },
+    "site": {
+      "type": "object",
+      "description": "Level 0: the automatic site record pulled from the address. Paul's agent may correct it and must say so in sources.",
+      "required": [
+        "address"
+      ],
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "suburb": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "region": {
+          "type": "string"
+        },
+        "legal_description": {
+          "type": "string",
+          "description": "e.g. Lot 2 DP 12345"
+        },
+        "title_reference": {
+          "type": "string"
+        },
+        "land_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Headline area. Say which one it is in land_area_basis."
+        },
+        "land_area_note": {
+          "type": "string",
+          "description": "e.g. title says 514, mapped 525.6: unresolved"
+        },
+        "zone": {
+          "type": "string"
+        },
+        "overlays": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Heritage, flood, liquefaction, intensification areas"
+        },
+        "existing_buildings": {
+          "type": "string"
+        },
+        "capital_value_nzd": {
+          "type": "number"
+        },
+        "lat": {
+          "type": "number"
+        },
+        "lng": {
+          "type": "number"
+        },
+        "nearby": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "kind": {
+                "type": "string"
+              },
+              "minutes": {
+                "type": "number"
+              },
+              "mode": {
+                "enum": [
+                  "walk",
+                  "drive",
+                  "cycle"
+                ]
+              }
+            }
+          }
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/source"
+          }
+        },
+        "land_area_basis": {
+          "enum": [
+            "recorded",
+            "mapped",
+            "net",
+            "surveyed"
+          ]
+        },
+        "areas": {
+          "type": "object",
+          "description": "The different site areas, kept apart. Leave out any that is not known.",
+          "properties": {
+            "recorded_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "mapped_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "net_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "surveyed_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "note": {
+              "type": "string"
+            }
+          }
+        },
+        "jurisdiction": {
+          "type": "string",
+          "description": "The council whose rules apply"
+        },
+        "parcel_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "identity": {
+          "type": "object",
+          "description": "How sure we are this is the right parcel.",
+          "properties": {
+            "status": {
+              "enum": [
+                "confirmed",
+                "provisional",
+                "unresolved"
+              ]
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "gaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "corrections": {
+          "type": "array",
+          "description": "Evidenced corrections to what the customer entered. The original stays in job.",
+          "items": {
+            "type": "object",
+            "required": [
+              "field",
+              "to",
+              "evidence"
+            ],
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "from": {},
+              "to": {},
+              "evidence": {
+                "type": "string"
+              },
+              "by": {
+                "type": "string"
+              },
+              "on": {
+                "type": "string",
+                "format": "date"
+              }
+            }
+          }
+        }
+      }
+    },
+    "level1": {
+      "$ref": "#/$defs/level1"
+    },
+    "level2": {
+      "$ref": "#/$defs/level2"
+    },
+    "level3": {
+      "$ref": "#/$defs/level3"
+    },
+    "website": {
+      "type": "object",
+      "description": "Optional overrides from Ant or the client. Anything missing becomes a marked placeholder on the site.",
+      "properties": {
+        "style": {
+          "enum": [
+            "standard",
+            "luxury",
+            "sitely"
+          ]
+        },
+        "development_name": {
+          "type": "string"
+        },
+        "headline": {
+          "type": "string"
+        },
+        "primary_action": {
+          "type": "string",
+          "description": "e.g. Register interest"
+        },
+        "agents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "agency": {
+                "type": "string"
+              },
+              "phone": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "photo": {
+                "type": "string"
+              },
+              "licence_line": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "prices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "residence_id"
+            ],
+            "properties": {
+              "residence_id": {
+                "type": "string"
+              },
+              "price_nzd": {
+                "type": "number"
+              },
+              "label": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "domain": {
+          "type": "string"
+        },
+        "lead_email": {
+          "type": "string",
+          "format": "email",
+          "description": "Where enquiries from the project website are sent: the client's existing email address"
+        },
+        "brand": {
+          "type": "object",
+          "description": "The client's own branding, pulled from their website (Firecrawl branding format) so the project website is on-brand. Checked by a person before the site goes live.",
+          "properties": {
+            "source_url": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "logo": {
+              "type": "string",
+              "description": "URL or file path of the logo"
+            },
+            "colors": {
+              "type": "object",
+              "properties": {
+                "primary": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                },
+                "secondary": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                },
+                "accent": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                },
+                "background": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                },
+                "text": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$"
+                }
+              }
+            },
+            "fonts": {
+              "type": "object",
+              "properties": {
+                "heading": {
+                  "type": "string"
+                },
+                "body": {
+                  "type": "string"
+                }
+              }
+            },
+            "phone": {
+              "type": "string"
+            },
+            "office_address": {
+              "type": "string"
+            },
+            "licence_line": {
+              "type": "string"
+            },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "confirmed_by_client": {
+              "type": "boolean",
+              "default": false,
+              "description": "The client has agreed to their logo and branding being used on the project website"
+            }
+          }
+        }
+      }
+    },
+    "options": {
+      "type": "array",
+      "description": "Mutually exclusive ways to develop the site. Counts, areas and yields are never added across options.",
+      "items": {
+        "$ref": "#/$defs/option"
+      }
+    },
+    "selection": {
+      "type": "object",
+      "description": "The one option chosen for the website and marketing. Only Paul (or the client through Paul) records this.",
+      "required": [
+        "option_id",
+        "selected_by",
+        "selected_on"
+      ],
+      "properties": {
+        "option_id": {
+          "type": "string"
+        },
+        "selected_by": {
+          "type": "string"
+        },
+        "selected_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "open_items": {
+      "type": "array",
+      "description": "Everything still to check, for the whole job. A blocking item stops publication.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "summary"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "blocking": {
+            "type": "boolean",
+            "default": true
+          },
+          "source_refs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "effect": {
+            "type": "string",
+            "description": "What it could change: yield, layout, cost, pathway"
+          },
+          "evidence_needed": {
+            "type": "string"
+          },
+          "owner_discipline": {
+            "type": "string",
+            "description": "Who closes it: planner, surveyor, traffic engineer, lawyer..."
+          },
+          "closure": {
+            "type": "string",
+            "description": "What counts as closed"
+          },
+          "option_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "images": {
+      "type": "array",
+      "description": "Images that belong to the job or to options rather than to one level (site plans, option plans).",
+      "items": {
+        "$ref": "#/$defs/image"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Where the figures came from: source report, hashes, page references. Free form."
+    },
+    "sources": {
+      "type": "array",
+      "description": "Every source used, each with an id that source_refs point at.",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "run": {
+      "type": "object",
+      "description": "The one assessment run behind Level 1 and Level 2. Two runs are only comparable when these match.",
+      "required": [
+        "id",
+        "assessed_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "assessed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workflow_version": {
+          "type": "string"
+        },
+        "rule_profile_version": {
+          "type": "string"
+        },
+        "source_snapshot": {
+          "type": "string",
+          "description": "Id or date of the frozen source data"
+        },
+        "calculation_version": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model or deployment identifier, where available"
+        },
+        "template_version": {
+          "type": "string"
+        },
+        "completed_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the reports were ready for review"
+        },
+        "review_minutes": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Paul's or the planner's review time"
+        },
+        "reviewed_by": {
+          "type": "string",
+          "description": "Who gave the professional overview"
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "description": "Payment and permission, kept apart from the findings. Written by the website and by Paul, never by the assessment. A purchase never changes a finding and never gives permission to publish.",
+      "properties": {
+        "entitlements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "level",
+              "revision"
+            ],
+            "properties": {
+              "level": {
+                "enum": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "revision": {
+                "type": "string"
+              },
+              "basis": {
+                "enum": [
+                  "free",
+                  "purchased",
+                  "complimentary"
+                ]
+              },
+              "granted_on": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        "publication": {
+          "type": "object",
+          "description": "A public marketing website is a separate decision from issuing a report.",
+          "required": [
+            "permitted"
+          ],
+          "properties": {
+            "permitted": {
+              "type": "boolean"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "decided_by": {
+              "type": "string"
+            },
+            "decided_on": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "status": {
+      "enum": [
+        "not-started",
+        "in-progress",
+        "generated",
+        "checked",
+        "reviewed",
+        "issued",
+        "superseded"
+      ],
+      "description": "How far this report has got. generated: produced by the agent. checked: passed the agent's own QA. reviewed: Paul has reviewed it. issued: Paul has signed it off (signed_off_by and signed_off_on are required). None of these says the customer has paid, and none says a council has approved anything."
+    },
+    "file": {
+      "type": "object",
+      "required": [
+        "file"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "description": "Path relative to the job folder, e.g. level-1/images/ext-west.jpg"
+        },
+        "title": {
+          "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/$defs/visibility"
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "checked_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "note": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "page": {
+          "type": "string",
+          "description": "Page or clause"
+        },
+        "limitations": {
+          "type": "string"
+        },
+        "reuse_permitted": {
+          "type": "boolean",
+          "description": "For third-party diagrams: true only when we have permission to republish"
+        }
+      }
+    },
+    "image": {
+      "type": "object",
+      "required": [
+        "file",
+        "kind",
+        "title"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "pattern": "\\.(jpe?g|png|webp)$",
+          "description": "Separate image file, at least 2000 px on the long side. Never only inside the PDF."
+        },
+        "kind": {
+          "enum": [
+            "render-exterior",
+            "render-interior",
+            "render-aerial",
+            "floor-plan",
+            "site-plan",
+            "section",
+            "elevation",
+            "photo",
+            "map",
+            "diagram",
+            "scheme-plan",
+            "movement-diagram"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "residence_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "artists_impression": {
+          "type": "boolean",
+          "default": true,
+          "description": "true only for renders. A technical plan is not an artist's impression."
+        },
+        "hero_candidate": {
+          "type": "boolean",
+          "default": false
+        },
+        "time_of_day": {
+          "enum": [
+            "morning",
+            "day",
+            "dusk",
+            "night"
+          ]
+        },
+        "id": {
+          "type": "string"
+        },
+        "option_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "public": {
+          "type": "boolean",
+          "description": "Older flag, still read: false means not public. Prefer visibility."
+        },
+        "conceptual": {
+          "type": "boolean"
+        },
+        "width_px": {
+          "type": "integer"
+        },
+        "height_px": {
+          "type": "integer"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "disclaimer": {
+          "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/$defs/visibility"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "string",
+          "description": "e.g. '1:200 at A3'. Leave out if not to scale."
+        },
+        "not_to_scale": {
+          "type": "boolean"
+        },
+        "has_scale_bar": {
+          "type": "boolean"
+        },
+        "north": {
+          "type": "string",
+          "description": "Orientation, e.g. 'north up'"
+        },
+        "vector_file": {
+          "type": "string",
+          "description": "The vector original, where one exists"
+        },
+        "source_id": {
+          "type": "string"
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "issued_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "revision": {
+          "type": "string",
+          "description": "e.g. R06 or 08 Oct 2026"
+        },
+        "prepared_by": {
+          "type": "string"
+        },
+        "contact_email": {
+          "type": "string"
+        },
+        "disclaimer": {
+          "type": "string",
+          "description": "Printed on the website wherever this level's content appears"
+        },
+        "report_pdf": {
+          "type": "string"
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          }
+        },
+        "signed_off_by": {
+          "type": "string",
+          "description": "The person who approved this level for issue. A level is only treated as issued when this and signed_off_on are filled in."
+        },
+        "signed_off_on": {
+          "type": "string",
+          "format": "date"
+        },
+        "issue_scope": {
+          "type": "string",
+          "description": "What exactly was issued, e.g. 'Conditional desktop concept, holds as listed'. Never 'build-ready' or 'approved' unless that is what was signed."
+        },
+        "report_pages": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Page count of report_pdf. The Lite report is one page."
+        },
+        "run_id": {
+          "type": "string",
+          "description": "The assessment run this report came from. Level 1 and Level 2 share one run."
+        }
+      }
+    },
+    "level1": {
+      "description": "Level 1: the Lite report. One page, made from the same assessment run as Level 2. It shows each option, the residential count, key areas and parking, a short zoning explanation and every material hold. No renders.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/issue"
+        },
+        {
+          "type": "object",
+          "if": {
+            "properties": {
+              "status": {
+                "const": "issued"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "zoning",
+              "hazards",
+              "disclaimer"
+            ]
+          },
+          "properties": {
+            "summary": {
+              "type": "string",
+              "description": "3-5 plain sentences: the headline answer for this site"
+            },
+            "zoning": {
+              "type": "object",
+              "required": [
+                "zone",
+                "what_you_can_do"
+              ],
+              "properties": {
+                "zone": {
+                  "type": "string"
+                },
+                "plan": {
+                  "type": "string",
+                  "description": "e.g. Christchurch District Plan"
+                },
+                "what_you_can_do": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "option"
+                    ],
+                    "properties": {
+                      "option": {
+                        "type": "string",
+                        "description": "e.g. Up to 3 homes of 3 storeys as a permitted activity"
+                      },
+                      "pathway": {
+                        "enum": [
+                          "permitted",
+                          "controlled",
+                          "restricted-discretionary",
+                          "discretionary",
+                          "non-complying",
+                          "unknown"
+                        ]
+                      },
+                      "indicative_yield": {
+                        "type": "string"
+                      },
+                      "note": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "key_rules": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "rule",
+                      "value"
+                    ],
+                    "properties": {
+                      "rule": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "source": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "hazards": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "hazard",
+                  "level"
+                ],
+                "properties": {
+                  "hazard": {
+                    "type": "string",
+                    "description": "Flood, liquefaction, coastal, slope, contamination (HAIL), heritage, protected trees, easements..."
+                  },
+                  "level": {
+                    "enum": [
+                      "none-found",
+                      "low",
+                      "medium",
+                      "high",
+                      "unknown"
+                    ]
+                  },
+                  "what_it_means": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "$ref": "#/$defs/source"
+                  }
+                }
+              }
+            },
+            "next_steps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "level2": {
+      "description": "Level 2: the detailed report, generated together with Level 1 from the same run. Buying it gives access to it; it does not produce different findings or remove a qualification.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/issue"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sections": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "title",
+                  "summary"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "planning": {
+              "type": "object",
+              "properties": {
+                "pathway": {
+                  "type": "string",
+                  "description": "e.g. Restricted discretionary resource consent"
+                },
+                "rules_checked": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "rule",
+                      "result"
+                    ],
+                    "properties": {
+                      "rule": {
+                        "type": "string"
+                      },
+                      "result": {
+                        "enum": [
+                          "complies",
+                          "minor-breach",
+                          "breach",
+                          "unknown",
+                          "not-applicable"
+                        ],
+                        "description": "Use minor-breach only when a planner has said so; do not infer it."
+                      },
+                      "note": {
+                        "type": "string"
+                      },
+                      "basis": {
+                        "enum": [
+                          "geometric",
+                          "full-assessment"
+                        ]
+                      },
+                      "evidence": {
+                        "$ref": "#/$defs/evidence"
+                      },
+                      "option_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Which options this rule check applies to; leave out if it applies to the whole site"
+                      },
+                      "applicability": {
+                        "enum": [
+                          "applies",
+                          "not-applicable",
+                          "uncertain"
+                        ]
+                      },
+                      "evidence_status": {
+                        "enum": [
+                          "verified",
+                          "provisional",
+                          "missing"
+                        ],
+                        "description": "How good the evidence is, within the scope of the source"
+                      },
+                      "consent": {
+                        "enum": [
+                          "none-identified",
+                          "consent-required",
+                          "pathway-unresolved",
+                          "approval-identified"
+                        ],
+                        "description": "What it means for consent. A model pass does not mean the development is permitted."
+                      },
+                      "rule_ref": {
+                        "type": "string",
+                        "description": "Exact rule and source"
+                      },
+                      "method": {
+                        "type": "string"
+                      },
+                      "threshold": {
+                        "type": "string"
+                      },
+                      "measured": {
+                        "type": "string"
+                      },
+                      "next_action": {
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "specification": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "element",
+                  "spec"
+                ],
+                "properties": {
+                  "element": {
+                    "type": "string"
+                  },
+                  "spec": {
+                    "type": "string"
+                  },
+                  "public": {
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              }
+            },
+            "engineering": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "discipline",
+                  "summary"
+                ],
+                "properties": {
+                  "discipline": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "risks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "risk",
+                  "rating"
+                ],
+                "properties": {
+                  "risk": {
+                    "type": "string"
+                  },
+                  "rating": {
+                    "enum": [
+                      "low",
+                      "medium",
+                      "high"
+                    ]
+                  },
+                  "mitigation": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "title_and_interests": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "item",
+                  "summary"
+                ],
+                "properties": {
+                  "item": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Easements, covenants, consent notices, encumbrances"
+            },
+            "services": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "service",
+                  "summary"
+                ],
+                "properties": {
+                  "service": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  }
+                }
+              },
+              "description": "Water, wastewater, stormwater, power, fibre, access"
+            },
+            "market": {
+              "type": "object",
+              "properties": {
+                "summary": {
+                  "type": "string"
+                },
+                "comparable_sales": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "address"
+                    ],
+                    "properties": {
+                      "address": {
+                        "type": "string"
+                      },
+                      "sold_on": {
+                        "type": "string"
+                      },
+                      "price_nzd": {
+                        "type": "number"
+                      },
+                      "note": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "decision": {
+              "type": "object",
+              "properties": {
+                "verdict": {
+                  "enum": [
+                    "proceed",
+                    "proceed-with-conditions",
+                    "do-not-proceed",
+                    "more-information-needed"
+                  ]
+                },
+                "reasons": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "conditions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "level3": {
+      "description": "Level 3: the development plan. Ordered on its own, from the address, and built on the Level 1 and Level 2 run. Present only when it has been ordered and produced.",
+      "allOf": [
+        {
+          "$ref": "#/$defs/issue"
+        },
+        {
+          "type": "object",
+          "if": {
+            "properties": {
+              "status": {
+                "const": "issued"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "concept",
+              "residences",
+              "images",
+              "disclaimer"
+            ]
+          },
+          "properties": {
+            "concept": {
+              "type": "object",
+              "required": [
+                "summary",
+                "typology"
+              ],
+              "properties": {
+                "working_name": {
+                  "type": "string"
+                },
+                "summary": {
+                  "type": "string",
+                  "description": "2-4 plain sentences: what is proposed and why it suits the site"
+                },
+                "typology": {
+                  "enum": [
+                    "subdivision",
+                    "townhouses",
+                    "terraces",
+                    "duplexes",
+                    "apartments",
+                    "mixed-use",
+                    "single-home",
+                    "other"
+                  ]
+                },
+                "positioning": {
+                  "enum": [
+                    "entry",
+                    "family",
+                    "mid",
+                    "prestige"
+                  ]
+                },
+                "storeys": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "key_points": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "maxItems": 8
+                },
+                "architecture": {
+                  "type": "string"
+                },
+                "materials": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "residences": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "bedrooms"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Stable id used by images and prices, e.g. apt-06"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "type_group": {
+                    "type": "string",
+                    "description": "Residences with the same plan share this, e.g. 'Upper full-floor'"
+                  },
+                  "level": {
+                    "type": "string"
+                  },
+                  "bedrooms": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "bathrooms": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "car_parks": {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  "floor_area_m2": {
+                    "type": "number"
+                  },
+                  "floor_area_basis": {
+                    "enum": [
+                      "gross",
+                      "net",
+                      "saleable",
+                      "measured"
+                    ]
+                  },
+                  "outdoor_area_m2": {
+                    "type": "number"
+                  },
+                  "outdoor_type": {
+                    "type": "string"
+                  },
+                  "land_area_m2": {
+                    "type": "number"
+                  },
+                  "features": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "indicative_price_nzd": {
+                    "type": "number",
+                    "description": "Only if Paul or the client supplies it; otherwise leave out"
+                  }
+                }
+              }
+            },
+            "totals": {
+              "type": "object",
+              "properties": {
+                "residences": {
+                  "type": "integer"
+                },
+                "gross_floor_area_m2": {
+                  "type": "number"
+                },
+                "site_coverage_pct": {
+                  "type": "number"
+                },
+                "car_parks": {
+                  "type": "number"
+                },
+                "car_parks_note": {
+                  "type": "string"
+                }
+              }
+            },
+            "amenities": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "images": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/image"
+              }
+            },
+            "comparables": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "summary"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "open_items": {
+              "type": "array",
+              "description": "What is not yet checked: survey, consent, engineering. Never shown as a selling point.",
+              "items": {
+                "type": "object",
+                "required": [
+                  "topic",
+                  "note"
+                ],
+                "properties": {
+                  "topic": {
+                    "type": "string"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "programme": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "stage",
+                  "start_week",
+                  "weeks"
+                ],
+                "properties": {
+                  "stage": {
+                    "type": "string"
+                  },
+                  "start_week": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "weeks": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "public": {
+                    "type": "boolean",
+                    "default": true
+                  }
+                }
+              }
+            },
+            "target_completion": {
+              "type": "string",
+              "description": "e.g. Q4 2028"
+            },
+            "cost_plan": {
+              "type": "object",
+              "properties": {
+                "total_nzd": {
+                  "type": "number"
+                },
+                "per_m2_nzd": {
+                  "type": "number"
+                },
+                "contingency_pct": {
+                  "type": "number"
+                },
+                "basis": {
+                  "type": "string"
+                },
+                "public": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            },
+            "procurement": {
+              "type": "string"
+            },
+            "staging": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "residence_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "feasibility": {
+              "type": "object",
+              "properties": {
+                "gross_realisation_nzd": {
+                  "type": "number"
+                },
+                "total_cost_nzd": {
+                  "type": "number"
+                },
+                "margin_pct": {
+                  "type": "number"
+                },
+                "basis": {
+                  "type": "string"
+                },
+                "public": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "enum": [
+        "source-report",
+        "authoring-calculation",
+        "independently-checked",
+        "surveyed",
+        "council-confirmed"
+      ],
+      "description": "How well the result is backed. source-report = taken from the report as written; authoring-calculation = the agent's own geometry maths; the last three need a named person or document in the note."
+    },
+    "home": {
+      "type": "object",
+      "description": "A home in an infill option.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type_group": {
+          "type": "string"
+        },
+        "level": {
+          "type": "string"
+        },
+        "bedrooms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bathrooms": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "storeys": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "car_parks": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "footprint_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Roof or building envelope on the ground"
+        },
+        "floor_area_status": {
+          "enum": [
+            "allowance",
+            "designed",
+            "measured"
+          ],
+          "description": "allowance = an envelope figure before any floor plan exists; never shown as the home's floor area"
+        },
+        "floor_area_allowance_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Envelope allowance only. Use with floor_area_status 'allowance'."
+        },
+        "floor_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Only once a floor plan exists (status designed or measured)"
+        },
+        "floor_area_basis": {
+          "enum": [
+            "gross",
+            "net",
+            "saleable",
+            "measured"
+          ]
+        },
+        "outdoor_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "outdoor_type": {
+          "type": "string"
+        },
+        "land_area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "floor_area_note": {
+          "type": "string",
+          "description": "What the figure includes: garage, stairs, voids"
+        },
+        "car_parks_type": {
+          "enum": [
+            "internal-garage",
+            "external-bay",
+            "carport",
+            "none",
+            "not-designed"
+          ]
+        }
+      }
+    },
+    "lot": {
+      "type": "object",
+      "description": "A vacant lot in a subdivision option. Lots have no bedrooms, bathrooms or floor area.",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "area_m2": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Leave out if not known and say why in note. Never 0."
+        },
+        "area_basis": {
+          "enum": [
+            "mapped",
+            "net",
+            "surveyed",
+            "recorded"
+          ],
+          "description": "mapped = measured off map geometry, not survey"
+        },
+        "shape_test": {
+          "enum": [
+            "fits",
+            "fails",
+            "not-tested"
+          ]
+        },
+        "building_test": {
+          "enum": [
+            "fits",
+            "fails",
+            "not-tested"
+          ]
+        },
+        "frontage_m": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "access": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "note": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "kind": {
+          "enum": [
+            "residential",
+            "road",
+            "access",
+            "reserve",
+            "utility"
+          ],
+          "default": "residential",
+          "description": "Only residential lots count as sections. A road lot is land, not yield."
+        },
+        "building_test_note": {
+          "type": "string",
+          "description": "What the building test was, e.g. '8 x 15 m rectangle fits'. This is a geometry test, not a designed house."
+        }
+      }
+    },
+    "check": {
+      "type": "object",
+      "required": [
+        "test",
+        "result"
+      ],
+      "properties": {
+        "test": {
+          "type": "string"
+        },
+        "result": {
+          "enum": [
+            "fits",
+            "fails",
+            "not-tested",
+            "partly"
+          ],
+          "description": "The model result only: whether the drawing fits the test. It says nothing about approval."
+        },
+        "basis": {
+          "enum": [
+            "geometric",
+            "full-assessment"
+          ],
+          "default": "geometric",
+          "description": "geometric = the shape fits on the drawing; it is not a statement that the planning rule is met"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "note": {
+          "type": "string"
+        },
+        "applicability": {
+          "enum": [
+            "applies",
+            "not-applicable",
+            "uncertain"
+          ]
+        },
+        "evidence_status": {
+          "enum": [
+            "verified",
+            "provisional",
+            "missing"
+          ],
+          "description": "How good the evidence is, within the scope of the source"
+        },
+        "consent": {
+          "enum": [
+            "none-identified",
+            "consent-required",
+            "pathway-unresolved",
+            "approval-identified"
+          ],
+          "description": "What it means for consent. A model pass does not mean the development is permitted."
+        },
+        "rule_ref": {
+          "type": "string",
+          "description": "Exact rule and source"
+        },
+        "method": {
+          "type": "string"
+        },
+        "threshold": {
+          "type": "string"
+        },
+        "measured": {
+          "type": "string"
+        },
+        "next_action": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "option": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "type",
+        "standing"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9-]+$"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "infill",
+            "subdivision"
+          ]
+        },
+        "typology": {
+          "enum": [
+            "subdivision",
+            "townhouses",
+            "terraces",
+            "duplexes",
+            "apartments",
+            "mixed-use",
+            "single-home",
+            "other"
+          ]
+        },
+        "standing": {
+          "enum": [
+            "concept",
+            "conditional",
+            "potential"
+          ],
+          "description": "concept = drawn and fits, approvals outstanding; conditional = works only if named conditions are met; potential = known to fail a test as drawn and needs a consent departure"
+        },
+        "standing_note": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "source_pages": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "homes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/home"
+          }
+        },
+        "lots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/lot"
+          }
+        },
+        "totals": {
+          "type": "object",
+          "description": "For this option only. Leave a figure out if it is unknown; never write 0 for unknown.",
+          "properties": {
+            "homes": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "lots": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Residential lots only. Road and other lots are counted separately."
+            },
+            "footprint_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "floor_area_allowance_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "gross_floor_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "lot_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "car_parks": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "car_parks_note": {
+              "type": "string"
+            },
+            "site_coverage_pct": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "site_coverage_basis": {
+              "type": "string"
+            },
+            "road_lots": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "other_lots": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "yield_label": {
+              "enum": [
+                "highest-tested",
+                "verified-maximum"
+              ],
+              "default": "highest-tested",
+              "description": "highest-tested: the best layout found in a finite search. Only use verified-maximum when the evidence and analysis support it."
+            },
+            "yield_note": {
+              "type": "string",
+              "description": "The search, brief and evidence limits behind the yield"
+            },
+            "visitor_car_parks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "roof_coverage_pct": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "roof_coverage_basis": {
+              "type": "string",
+              "description": "What was measured and what it was divided by"
+            },
+            "gross_floor_area_basis": {
+              "type": "string"
+            }
+          }
+        },
+        "land": {
+          "type": "object",
+          "properties": {
+            "site_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "road_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "residual_area_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "basis": {
+              "type": "string"
+            }
+          }
+        },
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/check"
+          }
+        },
+        "assumptions": {
+          "type": "object",
+          "description": "Design assumptions as plain numbers, e.g. road_corridor_width_m"
+        },
+        "open_item_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "image_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "disclaimer": {
+          "type": "string"
+        },
+        "quantities": {
+          "type": "array",
+          "description": "Any measured figure that needs its unit and basis kept with it.",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value",
+              "unit"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "basis": {
+                "type": "string",
+                "description": "How it was measured and, for a percentage, what it was divided by"
+              },
+              "inclusions": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "provisional",
+                  "verified"
+                ]
+              },
+              "source_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "search": {
+          "type": "object",
+          "description": "How the layout was found.",
+          "properties": {
+            "method": {
+              "type": "string"
+            },
+            "limitations": {
+              "type": "string"
+            },
+            "alternatives_tested": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "subdivision"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "lots"
+            ],
+            "not": {
+              "required": [
+                "homes"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "infill"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "homes"
+            ],
+            "not": {
+              "required": [
+                "lots"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "visibility": {
+      "enum": [
+        "public",
+        "client",
+        "internal"
+      ],
+      "description": "Who may see this. public: anyone. client: the customer entitled to this job and revision. internal: Paul and Ant only. The website enforces this on the server. If left out, treat as client."
+    }
+  }
+}

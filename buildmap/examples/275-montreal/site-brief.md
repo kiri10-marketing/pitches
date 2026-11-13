@@ -1,0 +1,34 @@
+# Website brief: The Rise
+
+> **DRAFT, private preview only.** Level 3 is not signed off. Do not publish.
+
+Generated from BuildMap package `BM-20261008-275-montreal` (development plan 08 Oct 2026 updated concept). Build it with the website-generator skill; all copy goes into `src/content/copy.ts` from `copy-seed.json`.
+
+- **Style:** luxury build (set in the package)
+- **Live link:** https://pitch-the-rise.vercel.app
+- **Client:** developer, goal sell-off-plan
+- **Primary action:** Register interest
+- **Hero image:** level-3/images/01-exterior-west.jpg (Updated exterior, approved brick character)
+- **Branding:** BuildMap default for the style
+- **Enquiries go to:** [PLACEHOLDER: enquiry email]
+- **Levels issued:** 1, 3
+
+## Sections
+1. Hero: Christchurch Central City, Christchurch · [PLACEHOLDER: hero headline, Ant]
+2. Facts: 6 residences · 2 to 3 bedrooms · 6 levels · Up to 8 car parks
+3. Intro and architecture: 5 key points; materials Red brick, Bronze window frames, Clear glass balustrades, Cedar accents, Stone-toned paving
+4. Residences: Ground garden (1), Upper full-floor (5)
+5. Amenities: Sauna, Spa garden, Gym and garden lounge
+6. Gallery: 8 renders, each tagged "Artist's impression"
+7. Location, agents, register form, FAQ
+
+## Must carry
+- Concept design, not for consent or construction. Renders are artist's impressions. Areas are gross design zones, not net saleable areas.
+- Level 1 hazards (not selling points; don't contradict them): Heritage: Residential Heritage Area, contributory existing house (high); Title and site area (medium); Flood and geotechnical (unknown)
+- Never present these open items as resolved: Survey and title; Planning and heritage; Parking; Fire and access; Engineering
+
+## Placeholders to fill
+- [PLACEHOLDER: hero headline, Ant]
+- [PLACEHOLDER: agent name]
+- [PLACEHOLDER: phone]
+- [PLACEHOLDER: email]
