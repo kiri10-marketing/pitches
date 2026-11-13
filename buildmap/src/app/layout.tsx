@@ -6,7 +6,7 @@ const figtree = Figtree({ subsets: ["latin"], variable: "--font-figtree" });
 
 export const metadata: Metadata = {
   title: "BuildMap: map out your journey to success",
-  description: "Type in an address. BuildMap takes it from concept to consents, construction and completion, with the website, sales brochure and marketing assets to sell it.",
+  description: "From an address to concept, consent, construction, and sales and marketing, with the website, sales brochure and marketing assets to sell it.",
   robots: { index: false, follow: false },
 };
 

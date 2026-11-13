@@ -1,10 +1,11 @@
 import { copy } from "@/content/copy";
 import { OrderForm } from "@/components/OrderForm";
-import { HeroDemo } from "@/components/HeroDemo";
+import { HeroAddress } from "@/components/HeroAddress";
+import { Journey } from "@/components/Journey";
 import { Logo, Mark } from "@/components/Mark";
 
 export default function Home() {
-  const { hero, steps, proof, story, who, manifesto, how, pitch, assets } = copy;
+  const { hero, proof, story, who, manifesto, pitch } = copy;
   return (
     <main>
       {/* The banner: the product demo fills it, with the timeline along the bottom */}
@@ -13,7 +14,8 @@ export default function Home() {
         <div className="absolute inset-0 -z-10" aria-hidden="true">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero-landscape.webp" alt="" fetchPriority="high" className="h-full w-full object-cover object-[50%_72%]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper/80 via-[38%] to-paper/0 to-[72%]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper/75 via-[34%] to-paper/0 to-[62%]" />
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/55 to-transparent" />
         </div>
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#" aria-label="BuildMap home">
@@ -31,16 +33,14 @@ export default function Home() {
           </a>
         </nav>
 
-        <div className="mx-auto max-w-4xl px-4 pt-4 text-center sm:px-6 sm:pt-5">
-          <h1 className="text-balance text-[2.2rem] sm:text-5xl lg:text-[3.4rem]">
-            {hero.headline}{hero.headline2 && <span className="mt-1 block text-[0.62em] text-blue"> {hero.headline2}</span>}
+        <div className="mx-auto max-w-5xl px-4 pt-6 text-center sm:px-6 sm:pt-10">
+          <h1 className="text-[2.9rem] leading-[0.98] sm:text-7xl lg:text-[5.6rem]">
+            <span className="block">{hero.headline}</span>
+            <span className="block text-blue">{hero.headline2}</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-3xl text-lg text-muted">{hero.subheader}</p>
         </div>
 
-        <div className="flex flex-1 flex-col justify-end pb-2 pt-7">
-          <HeroDemo />
-        </div>
+        <HeroAddress />
       </header>
 
       {/* The promise */}
@@ -50,7 +50,7 @@ export default function Home() {
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <a href="#start" className="btn btn-blue">{hero.cta}</a>
-          <a href="#assets" className="btn btn-line">{hero.cta2}</a>
+          <a href="#journey" className="btn btn-line">{hero.cta2}</a>
         </div>
         <ul className="mt-8 flex flex-wrap justify-center gap-x-7 gap-y-1 text-base text-muted">
           {hero.ticks.map((t) => (
@@ -60,62 +60,11 @@ export default function Home() {
         <p className="mt-4 text-sm text-muted">{copy.conceptOnly.short}</p>
       </section>
 
-      {/* What you get */}
-      <section id="inside" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow">{copy.teaser.eyebrow}</p>
-          <h2 className="mt-3 text-4xl sm:text-5xl">{copy.teaser.title}</h2>
-          <p className="mt-5 text-lg text-muted">{copy.teaser.intro}</p>
-        </div>
-        <ul className="mt-12 grid gap-4 md:grid-cols-6">
-          {copy.teaser.items.map((t, i) => (
-            <li key={t.img} className={`tile flex flex-col p-5 sm:p-6 ${i === 0 || i === 3 ? "md:col-span-4" : "md:col-span-2"}`}>
-              <div className="flex flex-1 items-center justify-center overflow-hidden rounded-2xl border border-line bg-white p-3">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/demo/teaser-${t.img}.webp`} alt={`Sample ${t.name.toLowerCase()} from a BuildMap report`} width={t.w} height={t.h} loading="lazy" className="h-auto max-h-80 w-full object-contain" />
-              </div>
-              <h3 className="mt-5 text-xl">{t.name}</h3>
-              <p className="mt-1 text-base text-muted">{t.body}</p>
-            </li>
-          ))}
-          <li className="tile relative overflow-hidden p-5 sm:p-6 md:col-span-6">
-            <div className="grid items-center gap-6 md:grid-cols-[1.5fr_1fr]">
-              <div className="relative max-h-56 overflow-hidden rounded-2xl border border-line bg-white p-3" aria-hidden="true">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={`/demo/teaser-${copy.teaser.locked.img}.webp`} alt="" width={copy.teaser.locked.w} height={copy.teaser.locked.h} loading="lazy" className="h-auto w-full" />
-                <span className="absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-white via-white/85 to-transparent" />
-              </div>
-              <div>
-                <h3 className="text-xl">{copy.teaser.locked.name}</h3>
-                <p className="mt-1 text-base text-muted">{copy.teaser.locked.body}</p>
-                <p className="mt-4 text-base font-semibold">{copy.teaser.locked.more}</p>
-                <a href="#start" className="btn btn-blue mt-4">{copy.teaser.locked.cta}</a>
-              </div>
-            </div>
-          </li>
-        </ul>
-        <p className="mt-4 text-center text-sm text-muted">{copy.teaser.note}</p>
-      </section>
-
-      <section id="assets" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow">{assets.eyebrow}</p>
-          <h2 className="mt-3 text-4xl sm:text-5xl">{assets.title}</h2>
-          <p className="mt-5 text-lg text-muted">{assets.intro}</p>
-        </div>
-        <ul className="mt-12 grid gap-4 md:grid-cols-3">
-          {assets.items.map((a, i) => (
-            <li key={a.name} className="tile flex flex-col p-7">
-              <AssetArt i={i} />
-              <h3 className="mt-6 text-2xl">{a.name}</h3>
-              <p className="mt-2 text-base text-muted">{a.body}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* The vertical timeline: what you get at each milestone */}
+      <Journey />
 
       {/* Powered by data, guided by authority */}
-      <section id="trust" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+      <section id="trust" className="mx-auto max-w-6xl px-4 pb-24 pt-24 sm:px-6 sm:pt-32">
         <div className="mx-auto max-w-3xl text-center">
           <p className="eyebrow">{proof.eyebrow}</p>
           <h2 className="mt-3 text-4xl sm:text-6xl">
@@ -243,20 +192,8 @@ export default function Home() {
         <p className="mx-auto mt-5 max-w-3xl text-center text-sm text-muted">{copy.compare.note}</p>
       </section>
 
-      <section id="how" className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
-        <p className="eyebrow">{how.eyebrow}</p>
-        <h2 className="mt-3 text-4xl sm:text-5xl">{how.title}</h2>
-        <ol className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s) => (
-            <li key={s.n} className="tile flex flex-col p-7">
-              <span className="text-base font-semibold text-muted">Level {s.n}</span>
-              <h3 className="mt-2 text-2xl">{s.title}</h3>
-              <p className="mt-2 text-base font-semibold text-blue">{s.time}</p>
-              <p className="mt-3 text-base text-muted">{s.body}</p>
-            </li>
-          ))}
-        </ol>
-        <div className="mt-4 rounded-[28px] border border-line p-6 sm:p-7" role="note">
+      <section className="mx-auto max-w-6xl px-4 pb-24 sm:px-6">
+        <div className="rounded-[28px] border border-line p-6 sm:p-7" role="note">
           <p className="text-base font-semibold">{copy.conceptOnly.title}</p>
           <p className="mt-1 max-w-4xl text-base text-muted">{copy.conceptOnly.body}</p>
         </div>
@@ -284,36 +221,4 @@ export default function Home() {
       </footer>
     </main>
   );
-}
-
-// Small drawings for the three things you get: website, brochure, marketing assets.
-// Real examples from one BuildMap project (address changed): its website, brochure and ads.
-function AssetArt({ i }: { i: number }) {
-  /* eslint-disable @next/next/no-img-element */
-  if (i === 0)
-    return (
-      <div className="overflow-hidden rounded-2xl bg-white shadow-[0_2px_12px_rgba(11,27,51,.07)]" aria-hidden="true">
-        <div className="flex gap-1.5 p-2.5">
-          {[0, 1, 2].map((d) => (
-            <span key={d} className="h-2 w-2 rounded-full bg-line" />
-          ))}
-        </div>
-        <img src="/demo/site-poster.jpg" alt="" width={1120} height={700} loading="lazy" className="block h-[9.6rem] w-full object-cover object-top" />
-      </div>
-    );
-  if (i === 1)
-    return (
-      <div className="relative h-[11.5rem]" aria-hidden="true">
-        <img src="/demo/brochure-2.webp" alt="" loading="lazy" className="absolute left-[18%] top-3 w-[72%] rotate-3 rounded-sm shadow-[0_2px_12px_rgba(11,27,51,.12)]" />
-        <img src="/demo/brochure-1.webp" alt="" loading="lazy" className="absolute left-[8%] top-6 w-[72%] -rotate-2 rounded-sm shadow-[0_4px_16px_rgba(11,27,51,.18)]" />
-      </div>
-    );
-  return (
-    <div className="grid h-[11.5rem] grid-cols-3 gap-2.5" aria-hidden="true">
-      {[2, 1, 3].map((n) => (
-        <img key={n} src={`/demo/ad-${n}.webp`} alt="" loading="lazy" className="h-[11.5rem] w-full rounded-xl object-cover object-top" />
-      ))}
-    </div>
-  );
-  /* eslint-enable @next/next/no-img-element */
 }
