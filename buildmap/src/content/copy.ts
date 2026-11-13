@@ -21,9 +21,9 @@ export const copy = {
   demo: {
     address: "123 The Terrace Street, Christchurch",
     placeholder: "Enter a site address",
-    alt: "A sample address is typed into a search bar and the site is outlined on the land behind it.",
+    alt: "Product demo: a sample address is typed into a search bar and the site is outlined on the land behind it. Concept plans fly out, page by page, followed by the consent checks and the build programme. A short timer runs while the plans become a project website, which scrolls through while its phone view, sales brochure and ad concepts land around it.",
     stages: [
-      { name: "Concept", time: "Mostly automated, with professional overview", usual: "Days" },
+      { name: "Concept", time: "Mostly automated", usual: "Days" },
       { name: "Consent", time: "Within 24 hours", usual: "Weeks" },
       { name: "Construction", time: "Within 48 hours", usual: "30 to 60 days" },
       { name: "Sales and marketing", time: "Within 5 working days", usual: "Up to 90 days" },

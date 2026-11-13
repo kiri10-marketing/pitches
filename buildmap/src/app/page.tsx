@@ -1,6 +1,6 @@
 import { copy } from "@/content/copy";
 import { OrderForm } from "@/components/OrderForm";
-import { HeroAddress } from "@/components/HeroAddress";
+import { HeroDemo } from "@/components/HeroDemo";
 import { Journey } from "@/components/Journey";
 import { Logo, Mark } from "@/components/Mark";
 
@@ -15,7 +15,6 @@ export default function Home() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/hero-landscape.webp" alt="" fetchPriority="high" className="h-full w-full object-cover object-[50%_72%]" />
           <div className="absolute inset-0 bg-gradient-to-b from-paper via-paper/75 via-[34%] to-paper/0 to-[62%]" />
-          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/55 to-transparent" />
         </div>
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#" aria-label="BuildMap home">
@@ -33,14 +32,16 @@ export default function Home() {
           </a>
         </nav>
 
-        <div className="mx-auto max-w-5xl px-4 pt-6 text-center sm:px-6 sm:pt-10">
-          <h1 className="text-[2.9rem] leading-[0.98] sm:text-7xl lg:text-[5.6rem]">
+        <div className="mx-auto max-w-5xl px-4 pt-3 text-center sm:px-6 sm:pt-4">
+          <h1 className="text-[2.5rem] leading-[0.98] sm:text-6xl lg:text-[4.4rem]">
             <span className="block">{hero.headline}</span>
             <span className="block text-blue">{hero.headline2}</span>
           </h1>
         </div>
 
-        <HeroAddress />
+        <div className="flex flex-1 flex-col justify-end pb-2 pt-6">
+          <HeroDemo />
+        </div>
       </header>
 
       {/* The promise */}
