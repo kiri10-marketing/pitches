@@ -3,6 +3,7 @@ import { OrderForm } from "@/components/OrderForm";
 import { HeroDemo } from "@/components/HeroDemo";
 import { Journey } from "@/components/Journey";
 import { Logo, Mark } from "@/components/Mark";
+import { audiences, audienceOrder } from "@/content/audiences";
 
 export default function Home() {
   const { hero, proof, story, who, manifesto, pitch, partners } = copy;
@@ -150,10 +151,13 @@ export default function Home() {
         <p className="eyebrow">{who.eyebrow}</p>
         <h2 className="mt-3 max-w-3xl text-4xl sm:text-5xl">{who.title}</h2>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {who.groups.map((g) => (
-            <li key={g.name} className="tile p-7">
-              <h3 className="text-2xl">{g.name}</h3>
-              <p className="mt-3 text-base text-muted">{g.body}</p>
+          {audienceOrder.map((slug) => (
+            <li key={slug}>
+              <a href={`/${slug}`} className="tile group flex h-full flex-col p-7 transition-colors hover:bg-ink hover:text-white">
+                <h3 className="text-2xl">{audiences[slug].nav}</h3>
+                <p className="mt-3 flex-1 text-base text-muted group-hover:text-white/70">{audiences[slug].tile}</p>
+                <span className="mt-6 text-base font-semibold text-blue group-hover:text-blue-light">{who.more} <span aria-hidden="true">→</span></span>
+              </a>
             </li>
           ))}
         </ul>

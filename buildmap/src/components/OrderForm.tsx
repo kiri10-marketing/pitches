@@ -5,7 +5,7 @@ import { copy } from "@/content/copy";
 
 type Job = { job: { id: string; address: string; levels_ordered: number[] } };
 
-export function OrderForm() {
+export function OrderForm({ clientType = "", level, title, intro }: { clientType?: string; level?: string; title?: string; intro?: string } = {}) {
   const f = copy.form;
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
@@ -58,8 +58,8 @@ export function OrderForm() {
 
   return (
     <form onSubmit={submit} noValidate={false}>
-      <h2 className="text-4xl text-ink">{f.title}</h2>
-      <p className="mt-3 text-lg text-muted">{f.intro}</p>
+      <h2 className="text-4xl text-ink">{title ?? f.title}</h2>
+      <p className="mt-3 text-lg text-muted">{intro ?? f.intro}</p>
 
       <fieldset className="mt-10">
         <legend className="legend">The site</legend>
@@ -77,7 +77,7 @@ export function OrderForm() {
         <div className="mt-4 space-y-3">
           {f.levels.map((l, i) => (
             <label key={l.value} className="flex cursor-pointer gap-4 rounded-2xl border border-line p-4 has-[:checked]:border-blue has-[:checked]:bg-blue-soft">
-              <input type="radio" name="levels" value={l.value} defaultChecked={i === 0} className="mt-1.5 h-5 w-5 shrink-0 accent-[#1257D6]" />
+              <input type="radio" name="levels" value={l.value} defaultChecked={level ? l.value === level : i === 0} className="mt-1.5 h-5 w-5 shrink-0 accent-[#1257D6]" />
               <span className="flex-1">
                 <span className="flex flex-wrap items-baseline justify-between gap-x-4">
                   <span className="font-semibold">{l.label}</span>
@@ -112,7 +112,7 @@ export function OrderForm() {
         <div className="mt-4 grid gap-5 sm:grid-cols-2">
           <div>
             <label className="label" htmlFor="clientType">You are</label>
-            <select id="clientType" name="clientType" className="field" required defaultValue="">
+            <select id="clientType" name="clientType" className="field" required defaultValue={clientType}>
               <option value="" disabled>Choose one</option>
               {f.clientTypes.map((c) => (
                 <option key={c.value} value={c.value}>{c.label}</option>

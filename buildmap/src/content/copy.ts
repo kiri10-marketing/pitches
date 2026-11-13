@@ -213,12 +213,7 @@ export const copy = {
   who: {
     eyebrow: "Who it's for",
     title: "Made for the people who make property happen.",
-    groups: [
-      { name: "Future developers", body: "Know what a site can carry, and what it will take, before you commit to it." },
-      { name: "Agents", body: "Walk into the appraisal with a plan for the site, and take the listing to market with a website ready to sell it." },
-      { name: "Landowners", body: "See what your land could become, and sell it with the plan attached." },
-      { name: "Builders", body: "Turn a client's address into a scheme you can programme, price and build." },
-    ],
+    more: "See how",
   },
   manifesto: {
     quote: "New Zealand has a wealth of incredible builders, but only a small number of developers. My hope is that BuildMap lets those who have sat on the sidelines take the plunge and create their vision.",
