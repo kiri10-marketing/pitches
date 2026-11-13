@@ -1,41 +1,44 @@
-# BuildMap hand-off contract (v0.3)
+# BuildMap hand-off contract (v0.4)
 
-This is what Paul's agent hands to the website builder for every job. Paul's agent keeps making its PDF exactly as now; it **also** writes one data file and saves the images separately. The website builder reads only this folder, so if the folder is right, the website builds without questions.
+This is what Paul's agent hands to the BuildMap website for every job. The assessment workflow stays exactly as it is. This contract is the export and delivery layer around it: one data file, the report PDFs, and every plan as its own image file.
 
-The formal definition is [`buildmap.schema.json`](buildmap.schema.json). There are two filled-in examples: a single infill scheme from the 275 Montreal concept report ([`../examples/275-montreal/buildmap.json`](../examples/275-montreal/buildmap.json)) and a job with four alternatives, two infill and two subdivision, from the 9 Lowes Road hand-off ([`../examples/9-lowes-road/buildmap.json`](../examples/9-lowes-road/buildmap.json)).
+The formal definition is [`buildmap.schema.json`](buildmap.schema.json). The worked example is 9 Lowes Road ([`../examples/9-lowes-road/buildmap.json`](../examples/9-lowes-road/buildmap.json)): one job holding a subdivision and two townhouse alternatives.
 
-## 0. What changed in v0.3
+## 0. What changed in v0.4
 
-v0.3 comes from the answers Paul's agent gave on the Lowes Road job. Nothing from v0.2 was removed.
+v0.4 comes from Paul's handoff review of 13 November 2026. Nothing from v0.3 was removed, and a v0.3 package still passes once its version number is changed.
 
-1. **Options.** A job can hold several `options`, each typed `infill` (homes built on the site) or `subdivision` (vacant lots). They are mutually exclusive: nothing is ever added across options, and each carries its own totals, checks, open items and images.
-2. **Lots are not homes.** A subdivision option lists `lots` (area, how the area was measured, shape test, building test). A lot cannot carry bedrooms, bathrooms or a floor area. An infill option lists `homes`.
-3. **Allowance is not floor area.** Before a floor plan exists, a home carries `floor_area_allowance_m2` with `floor_area_status: "allowance"`. The website never shows an allowance as the size of a home.
-4. **A fit is not compliance.** Each check says whether it is `geometric` (the shape fits on the drawing) or a `full-assessment`, and how well it is evidenced. `minor-breach` is only used when a planner has said so.
-5. **Unknown is left out.** Unknown numbers are omitted, never written as 0. The schema rejects zero areas.
-6. **Issued means signed off.** A level only counts as issued when `signed_off_by` and `signed_off_on` are filled in with Paul's sign-off.
-7. **One option goes public.** `selection` records which option the website and marketing use, who chose it and when.
-8. **Private stays private.** An image with `public: false` is left out of the website, brochure, ads and downloads.
-9. **Four separate answers.** The checker reports separately whether the data is sound, whether levels are signed off, whether an option is selected, and whether anything blocks publication.
-10. **Development type on the order.** `job.development_type` (infill, subdivision, both, not-sure) comes from the order form.
+1. **Lite and detailed come as a pair.** Level 1 (the one-page Lite report) and Level 2 (the detailed report) are generated together from one assessment run, recorded under `run`. Both carry the same `run_id`.
+2. **Paying is separate from the findings.** What the customer may open is recorded under `access.entitlements`. A purchase never changes a finding, never removes a qualification and never gives permission to publish.
+3. **Level 3 is separately commissioned.** It is never produced from an address alone, and it is only present when it has actually been commissioned and produced.
+4. **Release states.** A report moves through `generated`, `checked`, `reviewed` and `issued`. `issued` still means Paul's recorded sign-off. A report can be issued as a conditional desktop concept; say so in `issue_scope`.
+5. **A road lot is not a section.** Each lot has a `kind` (residential, road, access, reserve, utility). Only residential lots count in `totals.lots`. Seven residential lots plus a road lot is seven sections.
+6. **Four separate facts on every check.** `applicability`, the model `result`, `evidence_status` and the `consent` consequence are kept apart. A model pass is not an approval, and missing evidence can never be recorded as a pass.
+7. **Highest tested, not maximum.** `totals.yield_label` is `highest-tested` unless a verified maximum is actually supported, and `yield_note` says what limits the search.
+8. **Figures keep their basis.** Site area is split into recorded, mapped, net and surveyed. `quantities` holds any figure with its unit, basis, inclusions and whether it is provisional. Coverage says what was measured and what it was divided by.
+9. **Three audiences.** `visibility` is `public`, `client` or `internal` on images, documents and specification lines. The website enforces it on the server. The older `public: false` flag is still read.
+10. **Plans are plans.** Image kinds now include `scheme-plan` and `movement-diagram`. A plan cannot be flagged as an artist's impression, and the checker warns when a plan is under 2,000 px on the long side. Renders, materials and architecture notes are only included when a real design exists.
+11. **Sources and open items say more.** `sources` have ids, dates, pages and limitations. An open item can say its effect, the evidence needed, who closes it and what counts as closed.
+12. **The original order is never rewritten.** Corrections to the site go in `site.corrections` with their evidence.
+13. **The checker only checks the package.** Its answers are now `PACKAGE NOT VALID`, `PACKAGE VALID` and `PACKAGE READY`. It says in every run that it does not check the planning findings.
+
+Still true from v0.3: options are mutually exclusive and never added together, lots carry no bedrooms or floor area, an allowance is not a floor area, unknown numbers are left out and never written as 0, and one option is selected before anything goes public.
 
 ## 1. The job folder
 
 One folder per job, named by the job id the order form gives (`BM-<yyyymmdd>-<slug>`):
 
 ```
-BM-20261008-275-montreal/
+BM-20261113-9-lowes-road/
   buildmap.json            <- the data file (job + site come from the order form; Paul's agent fills level1/2/3)
-  intake/                  <- anything the client uploaded (title, LIM, survey, photos)
+  intake/                  <- anything the client uploaded (title, LIM, survey, photos); never a public folder
   level-1/
-    report.pdf             <- basic report
+    report.pdf             <- the one-page Lite report
+    images/                <- the scheme exports, one file per option
   level-2/
-    report.pdf             <- technical report
-  level-3/
-    report.pdf             <- development plan
-    images/                <- every render, plan and diagram as its own file
-      01-exterior-west.jpg
-      03-plan-ground.png
+    report.pdf             <- the detailed report, from the same run
+    images/                <- plans, sections and movement diagrams
+  level-3/                 <- only if separately commissioned and actually produced
 ```
 
 ## 2. Who writes what
@@ -44,66 +47,63 @@ BM-20261008-275-montreal/
 | --- | --- | --- |
 | `job` | Order form | When the client orders. Never changed afterwards. |
 | `site` | Automatic site record (Level 0), corrected by Paul's agent | Straight after the order; Paul's agent fixes anything wrong and adds a source |
-| `level1` | Paul's agent (mostly automated) | Status `in-progress`, then `issued` |
-| `level2`, `level3` | Paul's agent | Same, if ordered; `issued` when Paul signs it off |
+| `run`, `sources` | Paul's agent | Once per assessment run |
+| `level1`, `level2` | Paul's agent | Generated together. Status `generated`, then `checked`, `reviewed`, `issued` |
+| `level3` | Paul's agent | Only when separately commissioned |
 | `options`, `open_items`, `images` | Paul's agent | Whenever the report compares more than one way to develop the site |
 | `selection`, `signed_off_by`, `signed_off_on` | Paul (recorded by his agent) | Never filled in by an agent on its own judgement |
+| `access` | The website (entitlements) and Paul (publication) | Never written by the assessment |
 | `website` | Order form, then Ant (or the client) | `lead_email` (where site enquiries go: the client's existing address), `brand` (colours, fonts and logo pulled from the client's own website), plus optional style, development name, headline, agents, prices |
 
-A level only counts once its `status` is `issued` and Paul's sign-off is recorded. **The website and marketing are built once Level 3 (the development plan) is issued and signed off**, and, where the job has options, once one option is selected.
+A report is only shown to a customer once its `status` is `issued` and Paul's sign-off is recorded. The Lite report is shown at that point; the detailed report is released to a customer who is entitled to that revision. **A public project website is a separate decision**: it needs an issued Level 3, one selected option and `access.publication.permitted`.
 
 ## 3. What each level must include
 
-### Level 1: basic report ($99, mostly automated)
+Prices are not part of this contract. They live in the website's own settings.
 
-A short-form due diligence accelerator. No renders.
+### Level 1: the Lite report
+
+One page, made from the same run as Level 2. It must stay legible and must not drop an option or a hold.
 
 - `summary`: 3 to 5 plain sentences with the headline answer for the site.
-- `zoning`: the zone, the district plan, **what you can do on the site** (each option with its consent pathway and an indicative yield) and the key rules behind that (height, coverage, setbacks), each with its source.
-- `hazards`: every hazard to be aware of (flood, liquefaction, coastal, slope, contamination, heritage, protected trees, easements), each with a level (none found, low, medium, high, unknown), what it means in plain words, and the source.
-- `next_steps` and the `disclaimer` (desktop review, not a LIM or consent opinion).
+- Each option, its residential count, key areas and parking, read from `options`.
+- `zoning`: the zone, the plan, what you can do on the site and the key rules behind it, each with its source.
+- `hazards`: each with a level, what it means in plain words, and the source.
+- Every material hold, the assessment date and revision, and the `disclaimer`.
 
-### Level 2: technical report ($499, within 24 hours)
+### Level 2: the detailed report
 
-Almost everything needed in a due diligence period to make a decision.
+Generated in the same run as Level 1. Buying it gives access to it; it does not produce different findings.
 
-- `planning`: pathway and each rule checked (complies / minor breach / breach / unknown).
-- `title_and_interests`: easements, covenants, consent notices.
-- `services`: water, wastewater, stormwater, power, fibre, access.
-- `engineering`: notes by discipline (geotechnical, structural, civil, traffic, fire).
-- `market`: summary and comparable sales.
-- `risks`: each with a rating and mitigation.
-- `decision`: proceed, proceed with conditions, do not proceed, or more information needed, with reasons.
+- `planning`: the pathway and each rule checked, with applicability, result, evidence status and consent consequence kept apart.
+- `title_and_interests`, `services`, `engineering`, `risks`, `decision`, where the report covers them.
+- The tested alternatives, calculations and sources.
+- Its own plan, section and movement-diagram exports under `level-2/images/`.
 
-### Level 3: full development plan (price on application, within 48 hours)
+### Level 3: the development plan
 
-- `concept`: a 2 to 4 sentence summary, typology, positioning, storeys, key points, architecture and materials.
-- `residences`: one entry per home or lot, with a stable `id` (e.g. `apt-06`, `lot-3`), bedrooms, bathrooms, floor area **and whether it is gross or net**, outdoor area, features. Homes that share a plan share a `type_group`.
-- `totals`, `amenities`, `comparables`.
-- `images`: every render and plan as a **separate file of at least 2000 px** on the long side, never only inside the PDF. Each has a kind, a title, which residences it shows, and whether it is an artist's impression. Mark one or two exteriors as `hero_candidate`.
-- `programme`, `staging`, `cost_plan`, `feasibility` and `procurement`. Costs and feasibility are private by default.
-- `open_items`: everything still to check. The website never presents these as resolved.
+Separately commissioned. Present only when it has actually been produced. When it is, it carries the concept, the homes or lots, images, programme, staging and costs, and its `issue_scope` says exactly what was issued. A cost estimate or a programme is never described as consent or as ready to build.
 
-### Full package (price on application, within 5 working days)
+### Images
 
-`job.package` is true. The website, brochure, ad concepts, strategy and feasibility are built from Levels 1 to 3. Anything marked `public: false` stays out of the website.
-
-These fields are a first version, to be replaced by what Paul's agent actually produces once it has answered the note.
+Export each actual plan from its vector or numerical source at 2,000 px or more on the long side, and keep the vector original where there is one. An enlarged small image does not count. Give each image its option, revision, kind, a scale bar or `not_to_scale`, and its orientation. Third-party diagrams need `reuse_permitted`.
 
 ## 5. Checking a package
 
 ```
 cd buildmap
 npm install
-node tools/validate.mjs /path/to/BM-20261008-275-montreal      # checks the data and that every file exists
-node tools/to-site-brief.mjs /path/to/BM-20261008-275-montreal # writes site-brief.md and copy-seed.json for the website
+node tools/validate.mjs /path/to/BM-20261113-9-lowes-road      # checks the data and that every file exists
+node tools/to-site-brief.mjs /path/to/BM-20261113-9-lowes-road # writes site-brief.md and copy-seed.json for the website
 ```
 
 The checker gives one of three answers:
 
-- `NOT VALID`: the data is wrong. It lists exactly what to fix (a missing image, an id that doesn't match, a lot with bedrooms).
-- `VALID` with holds: the data is sound but it cannot be published yet. Each hold is named: no sign-off, no option selected, blocking open items.
-- `READY`: the website can be built and published.
+- `PACKAGE NOT VALID`: the data is malformed. It lists exactly what to fix (a road lot counted as a section, a missing image, a pass recorded with missing evidence).
+- `PACKAGE VALID` with holds: the data is well formed but a public website cannot be built yet. Each hold is named.
+- `PACKAGE READY`: a public website can be built.
+
+Every run also says whether the Lite and detailed reports can be released, which is a separate question. The checker only checks the package. It does not check the planning, the identity of the site, the geometry or any approval; those stay with the assessment's own QA and with Paul.
 
 For a private preview before sign-off, add `--draft` to the brief tool, and `--option C` to preview one option before a selection is recorded. Draft briefs are stamped as drafts.
 
@@ -115,3 +115,16 @@ For a private preview before sign-off, add `--draft` to the brief tool, and `--o
 4. When a level is re-issued, bump `revision` and `issued_on`; the website rebuilds from the newest.
 5. Never add options together, and never copy one option's figures into `level3.totals` unless it is the selected option.
 6. Image fields are `file` (not `path`) and `artists_impression`.
+7. Scenario ids are stable and say what they are (`subdivision-main`, `th-2bed-75`). Home and lot ids stay the same across revisions; when one changes or is retired, say so in its note.
+8. Calculate totals from unrounded values and round once, at the end.
+9. The 8 x 15 m building-fit rectangle is a geometry test. Never turn it into a house of 120 m2.
+
+## 7. What the website must do
+
+These are the website's obligations, not the agent's.
+
+1. Enforce `visibility` and entitlements on the server, for JSON, images, PDFs and direct download links, and check that the job belongs to the customer asking. Never send the whole package to a browser and hide parts of it.
+2. Show conditional and unresolved results honestly. An address is enough to start; it is not enough to promise a verified yield for every site.
+3. Keep "highest tested concept yield" wording wherever `yield_label` is `highest-tested`.
+4. Never show alternatives as a combined total.
+5. When a corrected report is issued, link the revisions and decide which revision each customer can open.

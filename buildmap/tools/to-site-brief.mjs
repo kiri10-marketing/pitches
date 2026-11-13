@@ -39,7 +39,7 @@ const c = l1.concept || { summary: opt?.summary || TODO("concept summary"), typo
 // Style: an explicit choice wins, then the website-generator rule (prestige or apartments = luxury).
 const style = w.style || (c.positioning === "prestige" || ["apartments", "mixed-use"].includes(c.typology) ? "luxury" : "standard");
 const name = w.development_name || c.working_name || site.address;
-const rs = opt ? (isLots ? opt.lots : opt.homes) || [] : l1.residences || [];
+const rs = opt ? (isLots ? (opt.lots || []).filter((l) => (l.kind || "residential") === "residential") : opt.homes) || [] : l1.residences || [];
 const totals = opt ? opt.totals || {} : l1.totals || {};
 const groups = Object.values(
   rs.reduce((acc, r) => {
@@ -57,10 +57,10 @@ const priceLabel = (id) => {
 };
 // A lot shows its land area. A home shows a floor area only once one is designed; an envelope allowance is never shown.
 const area = (r) =>
-  isLots ? `${r.area_m2} m²${r.area_basis === "surveyed" ? "" : " (approx.)"}` : r.floor_area_m2 ? `${r.floor_area_m2} m²${r.floor_area_basis === "gross" ? " gross" : ""}` : "";
-// public:false keeps an image out of everything. With an option chosen, images tagged for other options are left out too.
+  isLots ? (r.area_m2 ? `${r.area_m2} m²${r.area_basis === "surveyed" ? "" : " (approx.)"}` : "") : r.floor_area_m2 ? `${r.floor_area_m2} m²${r.floor_area_basis === "gross" ? " gross" : ""}` : "";
+// Only public images are used (visibility "public", or the older public flag not false). With an option chosen, images tagged for other options are left out too.
 const imgs = [...(l1.images || []), ...(pkg.images || [])].filter(
-  (i) => i.public !== false && (!opt || !i.option_ids?.length || i.option_ids.includes(opt.id)),
+  (i) => (i.visibility ? i.visibility === "public" : i.public !== false) && (!opt || !i.option_ids?.length || i.option_ids.includes(opt.id)),
 );
 const hero =
   imgs.find((i) => i.hero_candidate && i.kind.startsWith("render")) || imgs.find((i) => i.kind === "render-exterior") || imgs[0];
@@ -119,8 +119,8 @@ const seed = {
   gallery: imgs
     .filter((i) => i.kind.startsWith("render"))
     .map((i) => ({ file: i.file, title: i.title, artistsImpression: i.artists_impression !== false })),
-  specification: (l2.status === "issued" ? l2.specification || [] : []).filter((s) => s.public !== false),
-  timeline: (l3.status === "issued" ? l3.programme || [] : []).filter((p) => p.public !== false),
+  specification: (l2.status === "issued" ? l2.specification || [] : []).filter((s) => (s.visibility ? s.visibility === "public" : s.public !== false)),
+  timeline: (l3.status === "issued" ? l3.programme || [] : []).filter((p) => (p.visibility ? p.visibility === "public" : p.public !== false)),
   targetCompletion: l3.status === "issued" ? l3.target_completion : undefined,
   location: { address: site.address, nearby: site.nearby || [] },
   brand: w.brand || null,

@@ -1,12 +1,12 @@
-# 9 Lowes Road: one job, four options
+# 9 Lowes Road: one job, three alternatives
 
-Mapped from the Lowes Road hand-off package into contract v0.3. It shows a single job holding two infill options (A: 14 two-bedroom terraces, B: 12 three-bedroom terraces) and two subdivision options (C: 7 lots, D: 8 lots that fail the shape test as drawn). The options are alternatives and are never added together.
+Mapped into contract v0.4 from the figures in Paul's handoff review of 13 November 2026. One job holds a subdivision (7 residential lots plus road lot 8) and two townhouse schemes (A: 36 two-bedroom homes, B: 27 three-bedroom homes). They are alternatives and are never added together.
 
 - The `job` record is a placeholder: no order-form record exists for this job.
-- The report PDF and the seven images are not stored here, so check it with `--no-files`.
-- All images are private, no level is signed off and no option is selected, so the checker answers `VALID` with holds and the brief tool refuses to build.
+- The four Lowes PDFs and the plan exports were not supplied to the website side, so there are no images and the per-lot areas are left out rather than guessed. Check it with `--no-files`.
+- Both reports are `generated`, not issued, no option is selected and publication is not permitted, so the checker answers `PACKAGE VALID` with holds and the brief tool refuses to build.
+- This replaces the v0.3 example (14 and 12 terraces, 7 and 8 lots), which came from an earlier report.
 
 ```
 node tools/validate.mjs examples/9-lowes-road --no-files
-node tools/to-site-brief.mjs examples/9-lowes-road /tmp/lowes-preview --draft --option C   # private preview only
 ```

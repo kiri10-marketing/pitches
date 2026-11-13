@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://buildmap.nz/schema/buildmap-0.3.json",
+  "$id": "https://buildmap.nz/schema/buildmap-0.4.json",
   "title": "BuildMap job package",
-  "description": "The hand-off contract between Paul's agent (Levels 1-3) and the BuildMap website builder. One buildmap.json per job, at the root of the job folder. A job can carry several mutually exclusive options (subdivision or infill); they are never added together. The website is built from Level 3 once Paul has signed it off and, where there are options, one option has been selected.",
+  "description": "The hand-off contract between Paul's agent and the BuildMap website. One buildmap.json per job, at the root of the job folder. Level 1 (the one-page Lite report) and Level 2 (the detailed report) come from one assessment run and are generated together; what the customer has paid for is recorded separately under access and never changes the findings. Level 3 is separately commissioned. A job can carry several mutually exclusive options (subdivision or townhouses); they are never added together. Passing this schema means the package is well formed. It does not mean the planning findings are right or that anything is approved.",
   "type": "object",
   "required": [
     "buildmap_version",
@@ -11,11 +11,11 @@
   ],
   "properties": {
     "buildmap_version": {
-      "const": "0.3"
+      "const": "0.4"
     },
     "job": {
       "type": "object",
-      "description": "Created by the BuildMap order form. Paul's agent never changes these fields.",
+      "description": "Created by the BuildMap order form. Paul's agent never changes these fields. Corrections to the site go in site.corrections with their evidence.",
       "required": [
         "id",
         "address",
@@ -121,12 +121,17 @@
         },
         "development_type": {
           "enum": [
+            "townhouses",
             "infill",
             "subdivision",
             "both",
             "not-sure"
           ],
-          "description": "What the client wants looked at. infill = homes built on the site (terraces, townhouses, apartments). subdivision = the site cut into vacant lots for sale. both = compare them as separate options."
+          "description": "What the customer asked us to look at. townhouses and infill mean the same thing (homes built on the site); new orders use townhouses."
+        },
+        "brief_version": {
+          "type": "string",
+          "description": "Version of the default brief the customer accepted"
         }
       }
     },
@@ -158,7 +163,8 @@
         },
         "land_area_m2": {
           "type": "number",
-          "exclusiveMinimum": 0
+          "exclusiveMinimum": 0,
+          "description": "Headline area. Say which one it is in land_area_basis."
         },
         "land_area_note": {
           "type": "string",
@@ -217,6 +223,100 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/source"
+          }
+        },
+        "land_area_basis": {
+          "enum": [
+            "recorded",
+            "mapped",
+            "net",
+            "surveyed"
+          ]
+        },
+        "areas": {
+          "type": "object",
+          "description": "The different site areas, kept apart. Leave out any that is not known.",
+          "properties": {
+            "recorded_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "mapped_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "net_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "surveyed_m2": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "note": {
+              "type": "string"
+            }
+          }
+        },
+        "jurisdiction": {
+          "type": "string",
+          "description": "The council whose rules apply"
+        },
+        "parcel_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "identity": {
+          "type": "object",
+          "description": "How sure we are this is the right parcel.",
+          "properties": {
+            "status": {
+              "enum": [
+                "confirmed",
+                "provisional",
+                "unresolved"
+              ]
+            },
+            "evidence": {
+              "type": "string"
+            },
+            "gaps": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "corrections": {
+          "type": "array",
+          "description": "Evidenced corrections to what the customer entered. The original stays in job.",
+          "items": {
+            "type": "object",
+            "required": [
+              "field",
+              "to",
+              "evidence"
+            ],
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "from": {},
+              "to": {},
+              "evidence": {
+                "type": "string"
+              },
+              "by": {
+                "type": "string"
+              },
+              "on": {
+                "type": "string",
+                "format": "date"
+              }
+            }
           }
         }
       }
@@ -440,6 +540,27 @@
             "items": {
               "type": "string"
             }
+          },
+          "effect": {
+            "type": "string",
+            "description": "What it could change: yield, layout, cost, pathway"
+          },
+          "evidence_needed": {
+            "type": "string"
+          },
+          "owner_discipline": {
+            "type": "string",
+            "description": "Who closes it: planner, surveyor, traffic engineer, lawyer..."
+          },
+          "closure": {
+            "type": "string",
+            "description": "What counts as closed"
+          },
+          "option_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
@@ -454,6 +575,111 @@
     "provenance": {
       "type": "object",
       "description": "Where the figures came from: source report, hashes, page references. Free form."
+    },
+    "sources": {
+      "type": "array",
+      "description": "Every source used, each with an id that source_refs point at.",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "run": {
+      "type": "object",
+      "description": "The one assessment run behind Level 1 and Level 2. Two runs are only comparable when these match.",
+      "required": [
+        "id",
+        "assessed_at"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "assessed_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "workflow_version": {
+          "type": "string"
+        },
+        "rule_profile_version": {
+          "type": "string"
+        },
+        "source_snapshot": {
+          "type": "string",
+          "description": "Id or date of the frozen source data"
+        },
+        "calculation_version": {
+          "type": "string"
+        },
+        "model": {
+          "type": "string",
+          "description": "Model or deployment identifier, where available"
+        },
+        "template_version": {
+          "type": "string"
+        }
+      }
+    },
+    "access": {
+      "type": "object",
+      "description": "Payment and permission, kept apart from the findings. Written by the website and by Paul, never by the assessment. A purchase never changes a finding and never gives permission to publish.",
+      "properties": {
+        "entitlements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "level",
+              "revision"
+            ],
+            "properties": {
+              "level": {
+                "enum": [
+                  1,
+                  2,
+                  3
+                ]
+              },
+              "revision": {
+                "type": "string"
+              },
+              "basis": {
+                "enum": [
+                  "free",
+                  "purchased",
+                  "complimentary"
+                ]
+              },
+              "granted_on": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          }
+        },
+        "publication": {
+          "type": "object",
+          "description": "A public marketing website is a separate decision from issuing a report.",
+          "required": [
+            "permitted"
+          ],
+          "properties": {
+            "permitted": {
+              "type": "boolean"
+            },
+            "scope": {
+              "type": "string"
+            },
+            "decided_by": {
+              "type": "string"
+            },
+            "decided_on": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        }
+      }
     }
   },
   "$defs": {
@@ -461,9 +687,13 @@
       "enum": [
         "not-started",
         "in-progress",
+        "generated",
+        "checked",
+        "reviewed",
         "issued",
         "superseded"
-      ]
+      ],
+      "description": "How far this report has got. generated: produced by the agent. checked: passed the agent's own QA. reviewed: Paul has reviewed it. issued: Paul has signed it off (signed_off_by and signed_off_on are required). None of these says the customer has paid, and none says a council has approved anything."
     },
     "file": {
       "type": "object",
@@ -477,6 +707,9 @@
         },
         "title": {
           "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/$defs/visibility"
         }
       }
     },
@@ -498,6 +731,36 @@
         },
         "note": {
           "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "file": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        },
+        "authority": {
+          "type": "string"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "page": {
+          "type": "string",
+          "description": "Page or clause"
+        },
+        "limitations": {
+          "type": "string"
+        },
+        "reuse_permitted": {
+          "type": "boolean",
+          "description": "For third-party diagrams: true only when we have permission to republish"
         }
       }
     },
@@ -525,7 +788,9 @@
             "elevation",
             "photo",
             "map",
-            "diagram"
+            "diagram",
+            "scheme-plan",
+            "movement-diagram"
           ]
         },
         "title": {
@@ -542,7 +807,8 @@
         },
         "artists_impression": {
           "type": "boolean",
-          "default": true
+          "default": true,
+          "description": "true only for renders. A technical plan is not an artist's impression."
         },
         "hero_candidate": {
           "type": "boolean",
@@ -567,7 +833,7 @@
         },
         "public": {
           "type": "boolean",
-          "description": "false keeps the image out of the website, brochure, ads and every download"
+          "description": "Older flag, still read: false means not public. Prefer visibility."
         },
         "conceptual": {
           "type": "boolean"
@@ -582,6 +848,33 @@
           "type": "string"
         },
         "disclaimer": {
+          "type": "string"
+        },
+        "visibility": {
+          "$ref": "#/$defs/visibility"
+        },
+        "revision": {
+          "type": "string"
+        },
+        "scale": {
+          "type": "string",
+          "description": "e.g. '1:200 at A3'. Leave out if not to scale."
+        },
+        "not_to_scale": {
+          "type": "boolean"
+        },
+        "has_scale_bar": {
+          "type": "boolean"
+        },
+        "north": {
+          "type": "string",
+          "description": "Orientation, e.g. 'north up'"
+        },
+        "vector_file": {
+          "type": "string",
+          "description": "The vector original, where one exists"
+        },
+        "source_id": {
           "type": "string"
         }
       }
@@ -629,11 +922,24 @@
         "signed_off_on": {
           "type": "string",
           "format": "date"
+        },
+        "issue_scope": {
+          "type": "string",
+          "description": "What exactly was issued, e.g. 'Conditional desktop concept, holds as listed'. Never 'build-ready' or 'approved' unless that is what was signed."
+        },
+        "report_pages": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Page count of report_pdf. The Lite report is one page."
+        },
+        "run_id": {
+          "type": "string",
+          "description": "The assessment run this report came from. Level 1 and Level 2 share one run."
         }
       }
     },
     "level1": {
-      "description": "Level 1: basic report ($99). A short-form due diligence accelerator: what can be done on the site within the zoning, and the hazards to be aware of. No renders. Mostly automated.",
+      "description": "Level 1: the Lite report. One page, made from the same assessment run as Level 2. It shows each option, the residential count, key areas and parking, a short zoning explanation and every material hold. No renders.",
       "allOf": [
         {
           "$ref": "#/$defs/issue"
@@ -770,7 +1076,7 @@
       ]
     },
     "level2": {
-      "description": "Level 2: technical report ($499, within 24 hours). Almost everything needed in a due diligence period to make a decision on the site.",
+      "description": "Level 2: the detailed report, generated together with Level 1 from the same run. Buying it gives access to it; it does not produce different findings or remove a qualification.",
       "allOf": [
         {
           "$ref": "#/$defs/issue"
@@ -843,6 +1149,52 @@
                           "type": "string"
                         },
                         "description": "Which options this rule check applies to; leave out if it applies to the whole site"
+                      },
+                      "applicability": {
+                        "enum": [
+                          "applies",
+                          "not-applicable",
+                          "uncertain"
+                        ]
+                      },
+                      "evidence_status": {
+                        "enum": [
+                          "verified",
+                          "provisional",
+                          "missing"
+                        ],
+                        "description": "How good the evidence is, within the scope of the source"
+                      },
+                      "consent": {
+                        "enum": [
+                          "none-identified",
+                          "consent-required",
+                          "pathway-unresolved",
+                          "approval-identified"
+                        ],
+                        "description": "What it means for consent. A model pass does not mean the development is permitted."
+                      },
+                      "rule_ref": {
+                        "type": "string",
+                        "description": "Exact rule and source"
+                      },
+                      "method": {
+                        "type": "string"
+                      },
+                      "threshold": {
+                        "type": "string"
+                      },
+                      "measured": {
+                        "type": "string"
+                      },
+                      "next_action": {
+                        "type": "string"
+                      },
+                      "source_refs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
                       }
                     }
                   }
@@ -1013,7 +1365,7 @@
       ]
     },
     "level3": {
-      "description": "Level 3: full development plan (price on application, within 48 hours). The concept, residences, images, programme, staging and costs. The website and marketing are built from this level.",
+      "description": "Level 3: the development plan. Separately commissioned, never produced from an address alone. Present only when it has actually been commissioned and produced.",
       "allOf": [
         {
           "$ref": "#/$defs/issue"
@@ -1448,6 +1800,19 @@
           "items": {
             "type": "string"
           }
+        },
+        "floor_area_note": {
+          "type": "string",
+          "description": "What the figure includes: garage, stairs, voids"
+        },
+        "car_parks_type": {
+          "enum": [
+            "internal-garage",
+            "external-bay",
+            "carport",
+            "none",
+            "not-designed"
+          ]
         }
       }
     },
@@ -1457,8 +1822,7 @@
       "additionalProperties": false,
       "required": [
         "id",
-        "name",
-        "area_m2"
+        "name"
       ],
       "properties": {
         "id": {
@@ -1469,13 +1833,15 @@
         },
         "area_m2": {
           "type": "number",
-          "exclusiveMinimum": 0
+          "exclusiveMinimum": 0,
+          "description": "Leave out if not known and say why in note. Never 0."
         },
         "area_basis": {
           "enum": [
             "mapped",
             "net",
-            "surveyed"
+            "surveyed",
+            "recorded"
           ],
           "description": "mapped = measured off map geometry, not survey"
         },
@@ -1514,6 +1880,21 @@
           "items": {
             "type": "string"
           }
+        },
+        "kind": {
+          "enum": [
+            "residential",
+            "road",
+            "access",
+            "reserve",
+            "utility"
+          ],
+          "default": "residential",
+          "description": "Only residential lots count as sections. A road lot is land, not yield."
+        },
+        "building_test_note": {
+          "type": "string",
+          "description": "What the building test was, e.g. '8 x 15 m rectangle fits'. This is a geometry test, not a designed house."
         }
       }
     },
@@ -1533,7 +1914,8 @@
             "fails",
             "not-tested",
             "partly"
-          ]
+          ],
+          "description": "The model result only: whether the drawing fits the test. It says nothing about approval."
         },
         "basis": {
           "enum": [
@@ -1548,6 +1930,52 @@
         },
         "note": {
           "type": "string"
+        },
+        "applicability": {
+          "enum": [
+            "applies",
+            "not-applicable",
+            "uncertain"
+          ]
+        },
+        "evidence_status": {
+          "enum": [
+            "verified",
+            "provisional",
+            "missing"
+          ],
+          "description": "How good the evidence is, within the scope of the source"
+        },
+        "consent": {
+          "enum": [
+            "none-identified",
+            "consent-required",
+            "pathway-unresolved",
+            "approval-identified"
+          ],
+          "description": "What it means for consent. A model pass does not mean the development is permitted."
+        },
+        "rule_ref": {
+          "type": "string",
+          "description": "Exact rule and source"
+        },
+        "method": {
+          "type": "string"
+        },
+        "threshold": {
+          "type": "string"
+        },
+        "measured": {
+          "type": "string"
+        },
+        "next_action": {
+          "type": "string"
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -1627,7 +2055,8 @@
             },
             "lots": {
               "type": "integer",
-              "minimum": 1
+              "minimum": 1,
+              "description": "Residential lots only. Road and other lots are counted separately."
             },
             "footprint_m2": {
               "type": "number",
@@ -1657,6 +2086,41 @@
               "exclusiveMinimum": 0
             },
             "site_coverage_basis": {
+              "type": "string"
+            },
+            "road_lots": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "other_lots": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "yield_label": {
+              "enum": [
+                "highest-tested",
+                "verified-maximum"
+              ],
+              "default": "highest-tested",
+              "description": "highest-tested: the best layout found in a finite search. Only use verified-maximum when the evidence and analysis support it."
+            },
+            "yield_note": {
+              "type": "string",
+              "description": "The search, brief and evidence limits behind the yield"
+            },
+            "visitor_car_parks": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "roof_coverage_pct": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "roof_coverage_basis": {
+              "type": "string",
+              "description": "What was measured and what it was divided by"
+            },
+            "gross_floor_area_basis": {
               "type": "string"
             }
           }
@@ -1705,6 +2169,67 @@
         },
         "disclaimer": {
           "type": "string"
+        },
+        "quantities": {
+          "type": "array",
+          "description": "Any measured figure that needs its unit and basis kept with it.",
+          "items": {
+            "type": "object",
+            "required": [
+              "label",
+              "value",
+              "unit"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "type": "string"
+              },
+              "basis": {
+                "type": "string",
+                "description": "How it was measured and, for a percentage, what it was divided by"
+              },
+              "inclusions": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "provisional",
+                  "verified"
+                ]
+              },
+              "source_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "search": {
+          "type": "object",
+          "description": "How the layout was found.",
+          "properties": {
+            "method": {
+              "type": "string"
+            },
+            "limitations": {
+              "type": "string"
+            },
+            "alternatives_tested": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
         }
       },
       "allOf": [
@@ -1747,6 +2272,14 @@
           }
         }
       ]
+    },
+    "visibility": {
+      "enum": [
+        "public",
+        "client",
+        "internal"
+      ],
+      "description": "Who may see this. public: anyone. client: the customer entitled to this job and revision. internal: Paul and Ant only. The website enforces this on the server. If left out, treat as client."
     }
   }
 }

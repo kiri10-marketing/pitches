@@ -31,6 +31,9 @@ const optIds = new Set(opts.map((o) => o.id));
 const openIds = new Set((pkg.open_items || []).map((o) => o.id));
 const allImages = [...(pkg.images || []), ...(l3?.images || [])];
 const imageIds = new Set(allImages.map((i) => i.id).filter(Boolean));
+const isPublic = (x) => (x.visibility ? x.visibility === "public" : x.public !== false);
+const PLAN_KINDS = ["floor-plan", "site-plan", "scheme-plan", "section", "elevation", "movement-diagram", "diagram", "map"];
+const past = (lv) => lv && !["not-started", "in-progress"].includes(lv.status);
 const signed = (lv) => lv?.status === "issued" && lv.signed_off_by && lv.signed_off_on;
 
 // Options are mutually exclusive: check each on its own and never add them together.
@@ -39,7 +42,14 @@ for (const o of opts) {
   const units = o.type === "subdivision" ? o.lots || [] : o.homes || [];
   const word = o.type === "subdivision" ? "lots" : "homes";
   if (new Set(units.map((u) => u.id)).size !== units.length) problems.push(`option ${o.id}: two ${word} share the same id`);
-  if (o.totals?.[word] && o.totals[word] !== units.length) problems.push(`option ${o.id}: totals.${word} is ${o.totals[word]} but ${units.length} are listed`);
+  // Only residential lots are sections. A road or access lot is land, not yield.
+  const counted = o.type === "subdivision" ? units.filter((u) => (u.kind || "residential") === "residential") : units;
+  const roads = units.filter((u) => u.kind === "road");
+  if (o.totals?.[word] && o.totals[word] !== counted.length) problems.push(`option ${o.id}: totals.${word} is ${o.totals[word]} but ${counted.length} ${o.type === "subdivision" ? "residential lots" : "homes"} are listed`);
+  if (o.totals?.road_lots != null && o.totals.road_lots !== roads.length) problems.push(`option ${o.id}: totals.road_lots is ${o.totals.road_lots} but ${roads.length} road lots are listed`);
+  for (const l of o.lots || []) if (!l.area_m2 && !l.note) warnings.push(`option ${o.id} ${l.id}: no area given; say why in note`);
+  if (o.totals?.yield_label === "verified-maximum" && !o.totals.yield_note) problems.push(`option ${o.id}: "verified-maximum" needs yield_note saying what supports it; otherwise use "highest-tested"`);
+  for (const c of o.checks || []) if (c.result === "fits" && c.evidence_status === "missing") problems.push(`option ${o.id} check "${c.test}": a result with missing evidence cannot be "fits"; use "not-tested"`);
   for (const id of o.open_item_ids || []) if (!openIds.has(id)) problems.push(`option ${o.id}: unknown open item ${id}`);
   for (const id of o.image_ids || []) if (!imageIds.has(id)) problems.push(`option ${o.id}: unknown image ${id}`);
   for (const h of o.homes || []) {
@@ -49,6 +59,20 @@ for (const o of opts) {
   }
   if (o.standing === "concept" && (o.checks || []).some((c) => c.result === "fails")) warnings.push(`option ${o.id}: a check fails but standing is "concept"; use "potential" or "conditional"`);
 }
+for (const r of pkg.level2?.planning?.rules_checked || []) if (r.result === "complies" && r.evidence_status === "missing") problems.push(`rule "${r.rule}": missing evidence cannot be "complies"; use "unknown"`);
+for (const img of allImages) {
+  const plan = PLAN_KINDS.includes(img.kind);
+  if (plan && img.artists_impression) problems.push(`image ${img.file}: a technical plan is not an artist's impression`);
+  if (plan && img.width_px && img.height_px && Math.max(img.width_px, img.height_px) < 2000) warnings.push(`image ${img.file}: ${Math.max(img.width_px, img.height_px)} px on the long side; plans need at least 2000 px, exported from the source, not enlarged`);
+}
+// Level 1 and Level 2 come from one run. Level 3 is separately commissioned.
+const [L1, L2] = [pkg.level1, pkg.level2];
+if (past(L2) && !past(L1)) warnings.push("Level 2 exists without Level 1: the Lite and detailed reports are generated together");
+if (past(L1) && past(L2) && L1.revision && L2.revision && L1.revision !== L2.revision) warnings.push(`Level 1 is revision ${L1.revision} but Level 2 is ${L2.revision}: they should come from the same run`);
+if (past(L1) && past(L2) && L1.run_id && L2.run_id && L1.run_id !== L2.run_id) problems.push("Level 1 and Level 2 have different run_id: they must come from one assessment run");
+if (L1?.report_pages > 1) warnings.push(`the Lite report is ${L1.report_pages} pages; it should be one page showing every option and every material hold`);
+if (past(l3) && !(pkg.job?.levels_ordered || []).includes(3)) warnings.push("Level 3 is present but was not ordered: it is separately commissioned, never produced from an address alone");
+for (const e of pkg.access?.entitlements || []) { const lv = pkg[`level${e.level}`]; if (lv?.revision && e.revision !== lv.revision) warnings.push(`entitlement is for Level ${e.level} revision ${e.revision} but the package holds ${lv.revision}`); }
 for (const img of allImages) for (const id of img.option_ids || []) if (!optIds.has(id)) problems.push(`image ${img.file} points at unknown option ${id}`);
 if (pkg.selection && !optIds.has(pkg.selection.option_id)) problems.push(`selection points at unknown option ${pkg.selection.option_id}`);
 if (opts.length > 1 && !pkg.selection && (l3?.residences?.length || l3?.totals)) problems.push("level3 has residences or totals but no option is selected: with several options, totals belong inside each option");
@@ -71,25 +95,31 @@ if (!process.argv.includes("--no-files")) {
   for (const f of files) if (!fs.existsSync(path.join(root, f))) problems.push(`missing file ${f}`);
 }
 
-// Four separate answers: is the data sound, is it signed off, is one option chosen, can it be published.
+// Separate answers: is the package well formed, are the reports released, is one option chosen, can a website be published.
 const levels = [1, 2, 3].map((n) => { const lv = pkg[`level${n}`]; return `L${n} ${lv?.status || "not-started"}${lv?.status === "issued" && !signed(lv) ? " (no sign-off)" : ""}`; }).join(" | ");
 console.log(`${pkg.job?.id || "?"}  ${levels}`);
-if (opts.length) console.log(`  options: ${opts.map((o) => `${o.id} ${o.type} ${(o.lots || o.homes).length} ${o.type === "subdivision" ? "lots" : "homes"} (${o.standing})`).join(" | ")}  [never added together]`);
+if (opts.length) console.log(`  options: ${opts.map((o) => { const res = (o.lots || []).filter((l) => (l.kind || "residential") === "residential").length; const other = (o.lots || []).length - res; return o.type === "subdivision" ? `${o.id} subdivision ${res} lots${other ? ` + ${other} road/other` : ""} (${o.standing})` : `${o.id} ${o.typology || o.type} ${o.homes.length} homes (${o.standing})`; }).join(" | ")}  [never added together]`);
 for (const w of warnings) console.log(`  warning: ${w}`);
 for (const p of problems) console.log(`  problem: ${p}`);
 if (!ok || problems.length) {
-  console.log(`NOT VALID: ${problems.length} problem(s)`);
+  console.log(`PACKAGE NOT VALID: ${problems.length} problem(s)`);
   process.exit(1);
 }
 const holds = [];
 for (const n of [1, 2, 3]) if (pkg[`level${n}`]?.status === "issued" && !signed(pkg[`level${n}`])) holds.push(`Level ${n} is marked issued but has no recorded sign-off (signed_off_by, signed_off_on)`);
 if (l3?.status !== "issued") holds.push("Level 3 (the development plan) is not issued");
 if (opts.length && !sel) holds.push("no option has been selected for the website");
+if (pkg.access?.publication && pkg.access.publication.permitted !== true) holds.push("publication of a public website has not been permitted (access.publication)");
 const blocking = (pkg.open_items || []).filter((i) => i.blocking !== false && (!sel || (sel.open_item_ids || []).includes(i.id) || !opts.some((o) => (o.open_item_ids || []).includes(i.id))));
 if (blocking.length) holds.push(`${blocking.length} blocking open item(s): ${blocking.map((i) => i.id).join(", ")}`);
-const hidden = allImages.filter((i) => i.public === false).length;
-if (hidden) console.log(`  note: ${hidden} image(s) are private and will be left out of every output`);
+const hidden = allImages.filter((i) => !isPublic(i)).length;
+if (hidden) console.log(`  note: ${hidden} image(s) are not public and will be left out of every public output`);
+// The report service is a separate question from the public website.
+const lite = signed(L1) ? "can be shown to the customer" : `not released (${L1?.status || "not-started"}; needs Paul's recorded sign-off)`;
+const detailed = signed(L2) ? "can be released to a customer entitled to it" : `not released (${L2?.status || "not-started"}; needs Paul's recorded sign-off)`;
+console.log(`  reports: Lite ${lite} | detailed ${detailed}`);
+console.log("  This is a package check only. It does not check the planning findings, and nothing here is an approval.");
 if (holds.length) {
-  console.log("VALID: the data is sound. Not ready to publish:");
+  console.log("PACKAGE VALID: the data is well formed. A public website cannot be built yet:");
   for (const h of holds) console.log(`  hold: ${h}`);
-} else console.log("READY: the website can be built and published from this package");
+} else console.log("PACKAGE READY: a public website can be built from this package");
