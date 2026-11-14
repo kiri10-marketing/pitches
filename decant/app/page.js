@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Town from '../components/Town';
+import MoveScene, { truckX } from '../components/MoveScene';
 import { Nav, Footer, Sticky, QuizButton, Arrow, useReveal, useParallax } from '../components/Chrome';
 import { HOMES, SUBURB_NAMES, BUDGETS, TIMELINES, fmtPrice } from '../lib/data';
 
@@ -178,116 +178,88 @@ function Familiar() {
   );
 }
 
-/* ---------------- journey (pinned, scroll-driven) ---------------- */
+/* ---------------- journey: drag the truck ---------------- */
 const STEPS = [
-  {
-    t: 'Start the quiz',
-    h: 'Tell us what you need.',
-    p: 'A friendly set of questions about your home now, your next one, and what you would rather avoid. Then we call you to talk it through.',
-    you: ['Your budget and timing', 'Where you want to be', 'What you must have, and what you don’t'],
-    we: ['Build your downsizing brief', 'Call you at a time that suits'],
-  },
-  {
-    t: 'See homes that fit',
-    h: 'Only homes that suit you.',
-    p: 'Single-level and downstairs-bedroom homes from developers we work with, plus off-market homes that are not on public sale.',
-    you: ['Which homes to see', 'Which one feels right'],
-    we: ['Match homes to your brief', 'Book viewings and come with you'],
-  },
-  {
-    t: 'Secure your next home',
-    h: 'Your next home, secured first.',
-    p: 'Nothing is sold until you know exactly where you are going. That is the certainty most downsizers are missing.',
-    you: ['The home you want', 'The terms you are happy with'],
-    we: ['Negotiate on your behalf', 'Line up dates with your sale'],
-  },
-  {
-    t: 'The quiet sale',
-    h: 'Sold quietly. No fuss.',
-    p: 'Your home is offered privately to qualified buyers. No signboard, no open homes, no neighbours wondering.',
-    you: ['Your price', 'Which offer to accept', 'Your settlement date'],
-    we: ['Present your home to qualified buyers', 'Handle every viewing and negotiation'],
-  },
-  {
-    t: 'The smooth move',
-    h: 'One move, with $3,000 towards it.',
-    p: 'We coordinate a trusted local removal company and put $3,000 towards the cost. You walk out of one home and into the next.',
-    you: ['Your moving day', 'What comes with you'],
-    we: ['Packing, moving and set-up', '$3,000 towards your move'],
-  },
+  { t: 'Take the quiz', p: 'Tell us what you need. Your concierge calls to talk it through.' },
+  { t: 'Secure your next home', p: 'We find single-level homes that suit, including off-market. You choose, and it is secured before anything is sold.' },
+  { t: 'Sell quietly', p: 'No signboard, no open homes. Your home is offered privately to qualified buyers.' },
+  { t: 'Move in', p: 'We coordinate the movers and put $3,000 towards your move.' },
 ];
+const STOPS = [0, 1 / 3, 2 / 3, 1];
 function Journey() {
-  const track = useRef(null);
-  const [step, setStep] = useState(0);
-  const [vanT, setVanT] = useState(0);
-  useEffect(() => {
-    const on = () => {
-      const el = track.current;
-      if (!el) return;
-      const r = el.getBoundingClientRect();
-      const total = el.offsetHeight - window.innerHeight;
-      const p = Math.min(0.999, Math.max(0, -r.top / total));
-      setStep(Math.floor(p * STEPS.length));
-    };
-    on();
-    window.addEventListener('scroll', on, { passive: true });
-    window.addEventListener('resize', on);
-    return () => { window.removeEventListener('scroll', on); window.removeEventListener('resize', on); };
-  }, []);
-  useEffect(() => {
-    if (step !== 4) { setVanT(0); return; }
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setVanT(1); return; }
-    let raf, t0;
+  const svgRef = useRef(null);
+  const [p, setP] = useState(0);
+  const [hint, setHint] = useState(true);
+  const [big, setBig] = useState(false);
+  const anim = useRef(0);
+  useEffect(() => { setBig(window.matchMedia('(max-width: 700px)').matches); }, []);
+  const step = Math.round(p * 3);
+
+  const tweenTo = (target) => {
+    cancelAnimationFrame(anim.current);
+    const from = p;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setP(target); return; }
+    const dur = 350 + Math.abs(target - from) * 900;
+    let t0;
     const tick = (t) => {
       if (!t0) t0 = t;
-      const p = Math.min(1, (t - t0) / 2600);
-      setVanT(p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2);
-      if (p < 1) raf = requestAnimationFrame(tick);
+      const k = Math.min(1, (t - t0) / dur);
+      const e = 1 - Math.pow(1 - k, 3);
+      setP(from + (target - from) * e);
+      if (k < 1) anim.current = requestAnimationFrame(tick);
     };
-    const d = setTimeout(() => (raf = requestAnimationFrame(tick)), 500);
-    return () => { clearTimeout(d); cancelAnimationFrame(raf); };
-  }, [step]);
-  const jump = (i) => {
-    const el = track.current;
-    const total = el.offsetHeight - window.innerHeight;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY + (total * (i + 0.5)) / STEPS.length, behavior: 'smooth' });
+    anim.current = requestAnimationFrame(tick);
   };
+
+  const toP = (clientX) => {
+    const svg = svgRef.current;
+    const pt = svg.createSVGPoint();
+    pt.x = clientX; pt.y = 0;
+    const x = pt.matrixTransform(svg.getScreenCTM().inverse()).x;
+    return Math.min(1, Math.max(0, (x - truckX(0)) / (truckX(1) - truckX(0))));
+  };
+
+  const onDown = (e) => {
+    e.preventDefault();
+    cancelAnimationFrame(anim.current);
+    setHint(false);
+    const move = (ev) => setP(toP(ev.clientX));
+    const up = (ev) => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      const q = toP(ev.clientX);
+      setP(q);
+      requestAnimationFrame(() => tweenTo(Math.round(q * 3) / 3));
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  const onKey = (e) => {
+    if (['ArrowRight', 'ArrowUp'].includes(e.key)) { e.preventDefault(); setHint(false); tweenTo(STOPS[Math.min(3, step + 1)]); }
+    if (['ArrowLeft', 'ArrowDown'].includes(e.key)) { e.preventDefault(); setHint(false); tweenTo(STOPS[Math.max(0, step - 1)]); }
+  };
+
   return (
-    <section className="journey" id="how">
-      <div className="j-track" ref={track} style={{ height: `${STEPS.length * 80 + 100}vh` }}>
-        <div className="j-sticky">
-          <div className="wrap" style={{ width: '100%', display: 'flex', flexDirection: 'column', height: '100%' }}>
-            <div className="j-head">
-              <span className="label">How it works</span>
-              <h2 style={{ marginTop: 10 }}>Certainty at every step.</h2>
-            </div>
-            <div className="j-steps" style={{ '--jp': step / (STEPS.length - 1) }}>
-              <span className="fill" />
-              {STEPS.map((s, i) => (
-                <button key={s.t} className={`j-step ${i === step ? 'on' : ''} ${i < step ? 'done' : ''}`} onClick={() => jump(i)} aria-current={i === step ? 'step' : undefined}>
-                  <span className="n">{i + 1}</span>
-                  <span className="t">{s.t}</span>
-                </button>
-              ))}
-            </div>
-            <div className="j-stage">
-              <div className="j-town"><Town step={step} vanT={vanT} /></div>
-              <div className="j-card" aria-live="polite">
-                {STEPS.map((s, i) => (
-                  <div key={s.t} className={`j-panel ${i === step ? 'on' : ''}`} aria-hidden={i !== step}>
-                    <span className="label">Step {i + 1} of 5</span>
-                    <h3>{s.h}</h3>
-                    <p>{s.p}</p>
-                    <div className="split">
-                      <div><h4>You decide</h4><ul>{s.you.map((x) => <li key={x}>{x}</li>)}</ul></div>
-                      <div><h4>We do</h4><ul>{s.we.map((x) => <li key={x}>{x}</li>)}</ul></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+    <section className="sec journey" id="how">
+      <div className="wrap">
+        <div className="head center rv">
+          <span className="label">How it works</span>
+          <h2>Four simple steps.</h2>
+          <p>Drag the truck along the road to see how a Decant move works.</p>
         </div>
+        <div className="m-stage rv d1">
+          <MoveScene p={p} step={step} hint={hint} big={big} svgRef={svgRef} onDown={onDown} onKey={onKey} stops={STOPS} />
+        </div>
+        <div className="m-steps rv d2">
+          {STEPS.map((s, i) => (
+            <button key={s.t} className={`m-step ${i === step ? 'on' : ''} ${i < step ? 'done' : ''}`} onClick={() => { setHint(false); tweenTo(STOPS[i]); }} aria-current={i === step ? 'step' : undefined}>
+              <span className="n">{i + 1}</span>
+              <b>{s.t}</b>
+              <span className="d">{s.p}</span>
+            </button>
+          ))}
+        </div>
+        <div className="rv d3" style={{ textAlign: 'center', marginTop: 44 }}><QuizButton className="btn btn-ink btn-lg" /></div>
       </div>
     </section>
   );
