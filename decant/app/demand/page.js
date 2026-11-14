@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import 'leaflet/dist/leaflet.css';
-import { Mark } from '../../components/Chrome';
+import { Wordmark } from '../../components/Chrome';
 import { SUBURBS, BUDGETS, TIMELINES, SELL_BANDS, sellBand, seedDemand, loadResponses, km } from '../../lib/data';
 import './demand.css';
 
@@ -214,7 +214,7 @@ export default function Demand() {
   return (
     <div className="dmd">
       <header className="d-top">
-        <Link href="/" className="brand"><Mark /> Decant</Link>
+        <Link href="/" className="brand" aria-label="Decant home"><Wordmark /></Link>
         <div className="d-title">Downsizer demand map <span>Christchurch</span></div>
         <span className="d-pill">Sample data{live ? ` + ${live} from this browser` : ''}</span>
       </header>

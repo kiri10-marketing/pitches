@@ -1,15 +1,24 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { WORD } from './logoPaths';
 
+// The Decant double A (version B): a smaller A settled inside the A.
 export function Mark({ size = 28, light = true }) {
-  // Decant: a larger form pouring into a smaller one
-  const s = light ? '#fff' : 'var(--ink)';
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-      <rect x="2.5" y="2.5" width="17" height="17" fill="none" stroke={s} strokeWidth="2" />
-      <rect x="18" y="18" width="11.5" height="11.5" fill="var(--mint)" />
-      <path d="M19.5 9 L25 9 L25 14.5" fill="none" stroke={s} strokeWidth="2" />
+    <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M12 86 L50 14 L88 86 L80.08 86 L50 29 L19.92 86 Z" fill={light ? '#fff' : 'var(--deep)'} />
+      <path d="M31 86 L50 50 L69 86 L61.08 86 L50 65 L38.92 86 Z" fill={light ? 'var(--mint)' : 'var(--green)'} />
+    </svg>
+  );
+}
+
+export function Wordmark({ light = true, className = '', title }) {
+  const ink = light ? '#fff' : 'var(--deep)';
+  return (
+    <svg className={`wm ${className}`} viewBox="5 24 352 54" role={title ? 'img' : undefined} aria-label={title} aria-hidden={title ? undefined : 'true'}>
+      {['D', 'E', 'C', 'A', 'N', 'T'].map((k) => <path key={k} d={WORD[k]} fill={ink} />)}
+      <path d={WORD.a} fill={light ? 'var(--mint)' : 'var(--green)'} />
     </svg>
   );
 }
@@ -80,7 +89,7 @@ export function Nav({ cta = true }) {
       <div className="wrap">
         <nav className="nav" aria-label="Main">
           <Link href="/" className="brand" aria-label="Decant home">
-            <Mark /> Decant
+            <Wordmark />
           </Link>
           <ul className="nav-links">
             {LINKS.map(([h, t]) => (
@@ -100,8 +109,8 @@ export function Footer() {
       <div className="wrap">
         <div className="foot-card">
           <div>
-            <Link href="/" className="brand" style={{ color: 'var(--ink)' }}>
-              <Mark light={false} /> Decant
+            <Link href="/" className="brand" aria-label="Decant home">
+              <Wordmark light={false} />
             </Link>
             <p>Downsizing made clear and simple. A concierge service for Christchurch homeowners moving to their next, smaller home.</p>
           </div>
@@ -134,7 +143,7 @@ export function Footer() {
           <span>Concept website. Homes, figures and photography are samples for discussion.</span>
         </div>
       </div>
-      <div className="wordmark" aria-hidden="true">Decant</div>
+      <div className="wordmark" aria-hidden="true"><Wordmark /></div>
     </footer>
   );
 }

@@ -2,68 +2,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import MoveScene, { truckX } from '../components/MoveScene';
+import DefineHero from '../components/DefineHero';
 import { Nav, Footer, Sticky, QuizButton, Arrow, useReveal, useParallax } from '../components/Chrome';
 import { HOMES, SUBURB_NAMES, BUDGETS, TIMELINES, fmtPrice } from '../lib/data';
 
 /* ---------------- hero ---------------- */
-function Typewriter({ text, delay = 350, speed = 95 }) {
-  const [n, setN] = useState(0);
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setN(text.length); return; }
-    let i = 0, t;
-    const tick = () => { i += 1; setN(i); if (i < text.length) t = setTimeout(tick, speed); };
-    t = setTimeout(tick, delay);
-    return () => clearTimeout(t);
-  }, [text, delay, speed]);
-  return (
-    <span className="typer" aria-label={text}>
-      <span aria-hidden="true">{text.slice(0, n)}</span>
-      <i className={`caret ${n >= text.length ? 'done' : ''}`} aria-hidden="true" />
-      <span aria-hidden="true" className="ghost">{text.slice(n)}</span>
-    </span>
-  );
-}
-
-// A large decanter pouring into a small glass: the brand idea in one picture.
-function Decanter() {
-  const A = 108; // tilt in degrees
-  const body = 'M-11 -128 L-11 -62 C-11 -42 -76 -14 -76 22 L-76 32 Q-76 42 -66 42 L66 42 Q76 42 76 32 L76 22 C76 -14 11 -42 11 -62 L11 -128 Z';
-  return (
-    <svg className="decanter" viewBox="0 0 340 300" role="img" aria-label="A large wine decanter pouring into a small glass">
-      <defs>
-        <clipPath id="dc-body"><path d={body} /></clipPath>
-        <clipPath id="dc-bowl"><path d="M222 196 L282 196 C282 232 266 248 252 248 C238 248 222 232 222 196 Z" /></clipPath>
-        <pattern id="dc-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
-          <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ink)" strokeWidth="0.6" opacity="0.35" />
-        </pattern>
-      </defs>
-      {/* table */}
-      <path d="M20 292 L320 292" stroke="var(--ink)" strokeWidth="1.6" />
-      <rect x="20" y="292" width="300" height="8" fill="url(#dc-hatch)" />
-      {/* the pour */}
-      <line className="dc-stream" x1="252" y1="147" x2="252" y2="240" stroke="var(--wine)" strokeWidth="5" strokeLinecap="round" />
-      {/* decanter, tilted */}
-      <g className="dc-tilt" style={{ transformOrigin: '118px 108px' }}>
-        <g transform={`translate(118 108) rotate(${A})`}>
-          <g clipPath="url(#dc-body)">
-            <rect x="-200" y="-260" width="400" height="400" fill="#fff" />
-            <g transform={`rotate(${-A})`}><rect x="-200" y="18" width="400" height="300" fill="var(--wine)" /></g>
-          </g>
-          <path d={body} fill="none" stroke="var(--ink)" strokeWidth="1.8" strokeLinejoin="round" />
-          <path d="M-16 -131 H16" stroke="var(--ink)" strokeWidth="3" strokeLinecap="square" />
-          <path d="M-56 26 Q-40 4 -24 -6" stroke="var(--ink)" strokeWidth="1.2" fill="none" opacity=".35" />
-        </g>
-      </g>
-      {/* small glass */}
-      <g>
-        <g clipPath="url(#dc-bowl)"><rect className="dc-fill" x="216" y="196" width="72" height="56" fill="var(--wine)" /></g>
-        <path d="M222 196 L282 196 C282 232 266 248 252 248 C238 248 222 232 222 196 Z" fill="none" stroke="var(--ink)" strokeWidth="1.8" strokeLinejoin="round" />
-        <path d="M252 248 V284 M232 291 Q252 282 272 291 Z" stroke="var(--ink)" strokeWidth="1.8" fill="#fff" strokeLinejoin="round" />
-      </g>
-    </svg>
-  );
-}
-
 function Hero() {
   const router = useRouter();
   const [suburb, setSuburb] = useState('');
@@ -76,40 +19,7 @@ function Hero() {
   };
   return (
     <section className="hero">
-      <div className="wrap">
-        <div className="hero-top">
-          <div>
-            <span className="hero-eyebrow">$3,000 towards your move</span>
-            <h1>
-              <span className="line type"><Typewriter text="Downsizing" /></span>
-              <span className="line"><span>made <em className="hl">clear</em></span></span>
-              <span className="line">
-                <span>and <em className="hl">simple</em>.</span>
-              </span>
-            </h1>
-            <p className="hero-lede">
-              A concierge for your next move. We find your next home first, sell yours quietly, and coordinate the move. Every decision is yours. We do the leg work.
-            </p>
-            <div className="hero-cta">
-              <QuizButton className="btn btn-ink btn-lg" />
-              <span>Takes about three minutes</span>
-            </div>
-          </div>
-          <div className="hero-side">
-            <Decanter />
-            <div className="offer-badge">
-              <b>$3,000</b>
-              <span>towards your move</span>
-              <small>when you move with Decant</small>
-            </div>
-            <div className="stats">
-              <div><b>1</b><span>move</span></div>
-              <div><b>0</b><span>open homes</span></div>
-              <div><b>0</b><span>signboards</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <DefineHero />
 
       <div className="hero-media">
         <div className="wrap">

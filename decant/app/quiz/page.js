@@ -2,7 +2,7 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Mark, Arrow } from '../../components/Chrome';
+import { Wordmark, Arrow } from '../../components/Chrome';
 import { SUBURB_NAMES, SUBURBS, BUDGETS, TIMELINES, match, fmtPrice, saveResponse } from '../../lib/data';
 import './quiz.css';
 
@@ -247,7 +247,7 @@ function Quiz() {
   return (
     <div className="quiz">
       <header className="q-top">
-        <Link href="/" className="brand"><Mark light={false} /> Decant</Link>
+        <Link href="/" className="brand" aria-label="Decant home"><Wordmark light={false} /></Link>
         <Link href="/" className="q-close">Close</Link>
       </header>
       {!done ? (
