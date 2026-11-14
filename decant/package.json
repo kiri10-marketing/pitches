@@ -1,0 +1,18 @@
+{
+  "name": "pitch-decant",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@fontsource-variable/figtree": "5.2.5",
+    "@fontsource-variable/inter-tight": "5.2.5",
+    "leaflet": "1.9.4",
+    "leaflet.heat": "0.2.0",
+    "next": "15.5.27",
+    "react": "19.1.1",
+    "react-dom": "19.1.1"
+  }
+}

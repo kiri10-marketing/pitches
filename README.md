@@ -4,7 +4,8 @@ Pitch websites, one folder per pitch. Each folder is a standalone Next.js app.
 
 | Folder | Style | Live link |
 |---|---|---|
-| downsize | Downsizing exchange concept ("Level" working name), light green, isometric line art | Private preview only |
+| downsize | First downsizing concept ("Level"), superseded by decant | Private preview only |
+| decant | Decant downsizing concierge: site, quiz, demand map | Private preview only |
 
 - Each folder deploys to its own Vercel project, `pitch-<folder>`, live at `https://pitch-<folder>.vercel.app`.
 - Pitch sites are noindex until the job is won.
