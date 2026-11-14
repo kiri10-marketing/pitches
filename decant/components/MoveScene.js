@@ -62,7 +62,7 @@ function Tree({ x, y, z = 0.06, k = 1 }) {
   );
 }
 
-function Tile({ x, y }) {
+function Tile({ x, y, on }) {
   const t = 0.06;
   const i = 0.1;
   return (
@@ -72,7 +72,8 @@ function Tile({ x, y }) {
       <Poly fill="#fff" p={pts([x, y, t], [x + 1, y, t], [x + 1, y + 1, t], [x, y + 1, t])} />
       <polygon
         points={pts([x + i, y + i, t], [x + 1 - i, y + i, t], [x + 1 - i, y + 1 - i, t], [x + i, y + 1 - i, t])}
-        fill="url(#hatch)"
+        fill={on ? 'url(#hatchOn)' : 'url(#hatch)'}
+        style={{ transition: 'fill .3s' }}
         stroke={INK}
         strokeWidth={1}
       />
@@ -125,7 +126,8 @@ function Pin({ x, y, children, stem = 46, className = '', style }) {
 
 function Chip({ x, y, text, show, align = 'middle', strong }) {
   const w = text.length * 12.4 + 40;
-  const x0 = align === 'middle' ? x - w / 2 : align === 'end' ? x - w : x;
+  let x0 = align === 'middle' ? x - w / 2 : align === 'end' ? x - w : x;
+  x0 = Math.max(12, Math.min(SCENE.w - 12 - w, x0));
   return (
     <g className={`chip ${show ? 'on' : ''}`}>
       <rect x={x0} y={y - 24} width={w} height={46} fill={strong ? 'var(--green)' : '#fff'} stroke={INK} strokeWidth={1.4} />
@@ -288,9 +290,10 @@ function Van({ x, y, flip }) {
 }
 
 
-// ---------- two-home move scene with a draggable truck ----------
-const HOME = [0, 0];
-const NEXT = [3.2, -3.2];
+// ---------- four-stop move scene with a draggable truck ----------
+// One tile per step, evenly spaced along a straight road.
+const A = 3.2 / 3;
+const T4 = [0, 1, 2, 3].map((i) => [i * A, -i * A]);
 const RD = 2.75; // x+y of the road centre line
 const onRoad = (sx) => {
   const xmy = (sx - OX) / (C * S);
@@ -299,9 +302,72 @@ const onRoad = (sx) => {
 export const SCENE = { w: 1170, h: 575 };
 const front = (o) => P(o[0] + 1, o[1] + 1, 0);
 const centre = (o) => P(o[0] + 0.5, o[1] + 0.5, 0.06);
-const X0 = front(HOME)[0] - 40;
-const X1 = front(NEXT)[0] + 40;
+const X0 = front(T4[0])[0];
+const X1 = front(T4[3])[0];
 export const truckX = (p) => X0 + (X1 - X0) * p;
+
+// SVG matrices that lay a flat drawing (in 1/100 tile units) onto a plane
+const k100 = (S / 100);
+const onLeftFace = (x, y, zTop) => { const [e, f] = P(x, y, zTop); return `matrix(${(C * k100).toFixed(3)} ${(0.5 * k100).toFixed(3)} 0 ${k100.toFixed(3)} ${e.toFixed(1)} ${f.toFixed(1)})`; };
+
+function Badge({ x, y, on, children }) {
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      <g className={`sign ${on ? 'on' : ''}`}>
+        <rect x={-17} y={-17} width={34} height={34} fill="var(--green)" stroke={INK} strokeWidth={1.4} />
+        {children}
+      </g>
+    </g>
+  );
+}
+
+// 1. the quiz: a clipboard with a short checklist
+function Clipboard({ o, step }) {
+  const [x, y] = o;
+  const bx = x + 0.24, by = y + 0.46, w = 0.52, d = 0.06, h = 0.62;
+  const rows = [16, 30, 44];
+  return (
+    <g>
+      <Box x={bx} y={by} z={0.06} w={w} d={d} h={h} />
+      <g transform={onLeftFace(bx, by + d, 0.06 + h)}>
+        <rect x={18} y={-3} width={16} height={7} fill={INK} />
+        {rows.map((r, i) => {
+          const on = i < 2 || step >= 1;
+          return (
+            <g key={r}>
+              <rect x={6} y={r - 4} width={8} height={8} fill={on ? 'var(--green)' : '#fff'} stroke={INK} strokeWidth={1.2} vectorEffect="non-scaling-stroke" style={{ transition: 'fill .3s' }} />
+              <line x1={19} y1={r} x2={i === 1 ? 38 : 46} y2={r} stroke={INK} strokeWidth={2.4} vectorEffect="non-scaling-stroke" />
+            </g>
+          );
+        })}
+      </g>
+      {/* a pencil leaning on it */}
+      <Box x={bx + w - 0.06} y={by + d + 0.02} z={0.06} w={0.04} d={0.04} h={0.4} right="#fff" top={INK} />
+    </g>
+  );
+}
+
+// 4. moving boxes
+function Crate({ x, y, z = 0.06, s, h }) {
+  const m = y + s / 2;
+  return (
+    <g>
+      <Box x={x} y={y} z={z} w={s} d={s} h={h} />
+      <polygon points={pts([x, m - 0.025, z + h], [x + s, m - 0.025, z + h], [x + s, m + 0.025, z + h], [x, m + 0.025, z + h])} fill="var(--green)" />
+      <polygon points={pts([x + s, m - 0.025, z + h], [x + s, m + 0.025, z + h], [x + s, m + 0.025, z + h - 0.07], [x + s, m - 0.025, z + h - 0.07])} fill="var(--green)" />
+    </g>
+  );
+}
+function Boxes({ o }) {
+  const [x, y] = o;
+  return (
+    <g>
+      <Crate x={x + 0.22} y={y + 0.22} s={0.34} h={0.24} />
+      <Crate x={x + 0.27} y={y + 0.27} z={0.3} s={0.26} h={0.2} />
+      <Crate x={x + 0.6} y={y + 0.52} s={0.24} h={0.18} />
+    </g>
+  );
+}
 
 function BigVan({ x, y, active, k = 1.55 }) {
   return (
@@ -326,19 +392,27 @@ function BigVan({ x, y, active, k = 1.55 }) {
   );
 }
 
+const PIN_Y = [190, 150, 236, 175];
+
 export default function MoveScene({ p = 0, step = 0, hint, svgRef, onDown, onKey, stops, big }) {
   const vx = truckX(p);
   const [, vy] = onRoad(vx);
-  const [la, lay] = onRoad(X0 - 90);
-  const [lb, lby] = onRoad(X1 + 90);
-  const moved = step >= 3;
-  const hc = centre(HOME), nc = centre(NEXT);
-  const pin = moved ? [nc[0], nc[1] - 150] : [hc[0], hc[1] - 236];
+  const [la, lay] = onRoad(X0 - 130);
+  const [lb, lby] = onRoad(X1 + 130);
+  const cs = T4.map(centre);
+  const pin = [cs[step][0], cs[step][1] - PIN_Y[step]];
+  const chipY = pin[1] - 92;
+  const [nbx, nby] = P(T4[1][0] + 0.84, T4[1][1] + 0.5, 0.2);
+  const [obx, oby] = P(T4[2][0] + 0.82, T4[2][1] + 0.47, 0.34);
   return (
-    <svg ref={svgRef} viewBox={`0 0 ${SCENE.w} ${SCENE.h}`} className="mscene" role="img" aria-label="Two homes on a street: the family home on the left and a single-level home on the right, with a moving truck on the road between them.">
+    <svg ref={svgRef} viewBox={`0 0 ${SCENE.w} ${SCENE.h}`} className="mscene" role="img" aria-label="Four stops along a road: a quiz clipboard, your next single-level home, your current home sold quietly, and moving boxes at the end. A moving truck travels between them.">
       <defs>
         <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
           <rect width="6" height="6" fill="var(--tile)" />
+          <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ink)" strokeWidth="0.6" opacity="0.45" />
+        </pattern>
+        <pattern id="hatchOn" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+          <rect width="6" height="6" fill="var(--mint)" />
           <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ink)" strokeWidth="0.6" opacity="0.45" />
         </pattern>
         <linearGradient id="shade" x1="0" x2="1" y1="0" y2="1">
@@ -353,24 +427,46 @@ export default function MoveScene({ p = 0, step = 0, hint, svgRef, onDown, onKey
       <line x1={X0} y1={onRoad(X0)[1]} x2={vx} y2={vy} stroke="var(--green)" strokeWidth={6} />
 
       {/* driveways */}
-      {[HOME, NEXT].map((o, i) => {
+      {T4.map((o, i) => {
         const [fx, fy] = front(o);
         return <line key={i} x1={fx} y1={fy} x2={fx} y2={onRoad(fx)[1] - 24} stroke={INK} strokeWidth={1.2} strokeDasharray="3 5" opacity="0.6" />;
       })}
 
-      <Tile x={HOME[0]} y={HOME[1]} />
-      <Tile x={NEXT[0]} y={NEXT[1]} />
-      <Tree x={HOME[0] + 0.12} y={HOME[1] + 0.14} />
-      <Tree x={HOME[0] + 0.88} y={HOME[1] + 0.12} />
-      <Tree x={NEXT[0] + 0.88} y={NEXT[1] + 0.1} />
-      <FamilyHome o={HOME} sold={step >= 2} />
-      <SingleLevel o={NEXT} variant={1} matched={step >= 1} chosen={step >= 1} />
-      <Tree x={HOME[0] + 0.1} y={HOME[1] + 0.9} k={0.85} />
-      <Tree x={NEXT[0] + 0.12} y={NEXT[1] + 0.86} k={0.85} />
+      {/* 1. quiz */}
+      <Tile x={T4[0][0]} y={T4[0][1]} on={step >= 0} />
+      <Tree x={T4[0][0] + 0.86} y={T4[0][1] + 0.14} k={0.85} />
+      <Clipboard o={T4[0]} step={step} />
+      <Tree x={T4[0][0] + 0.12} y={T4[0][1] + 0.88} k={0.75} />
+
+      {/* 2. next home, secured first */}
+      <Tile x={T4[1][0]} y={T4[1][1]} on={step >= 1} />
+      <Tree x={T4[1][0] + 0.88} y={T4[1][1] + 0.1} />
+      <SingleLevel o={T4[1]} variant={1} matched={step >= 1} chosen={step >= 1} />
+      <Tree x={T4[1][0] + 0.12} y={T4[1][1] + 0.86} k={0.85} />
+      <Badge x={nbx + 30} y={nby} on={step >= 1}>
+        <path d="M-8 0 l5 5 l10 -11" stroke="#fff" strokeWidth={3} fill="none" />
+      </Badge>
+
+      {/* 3. current home, sold quietly */}
+      <Tile x={T4[2][0]} y={T4[2][1]} on={step >= 2} />
+      <Tree x={T4[2][0] + 0.12} y={T4[2][1] + 0.14} />
+      <Tree x={T4[2][0] + 0.88} y={T4[2][1] + 0.12} />
+      <FamilyHome o={T4[2]} sold={false} />
+      <Tree x={T4[2][0] + 0.1} y={T4[2][1] + 0.9} k={0.85} />
+      <Badge x={obx + 26} y={oby} on={step >= 2}>
+        <rect x={-7} y={-3} width={14} height={11} fill="#fff" />
+        <path d="M-4.5 -3 v-4 a4.5 4.5 0 0 1 9 0 v4" stroke="#fff" strokeWidth={2} fill="none" />
+      </Badge>
+
+      {/* 4. move in */}
+      <Tile x={T4[3][0]} y={T4[3][1]} on={step >= 3} />
+      <Tree x={T4[3][0] + 0.86} y={T4[3][1] + 0.12} />
+      <Boxes o={T4[3]} />
+      <Tree x={T4[3][0] + 0.12} y={T4[3][1] + 0.88} k={0.85} />
 
       {/* the downsizers */}
       <g className="mover" style={{ transform: `translate(${pin[0]}px, ${pin[1]}px)` }}>
-        <g className={step === 0 ? 'bob' : ''}>
+        <g className="bob">
           <path d="M0 34 L-12 22 A26 26 0 1 1 12 22 Z" fill="var(--green)" stroke={INK} strokeWidth={1.6} strokeLinejoin="round" />
           <clipPath id="moverclip2"><circle cx={0} cy={4} r={21} /></clipPath>
           <g clipPath="url(#moverclip2)">
@@ -394,10 +490,10 @@ export default function MoveScene({ p = 0, step = 0, hint, svgRef, onDown, onKey
         );
       })}
 
-      <Chip x={hc[0]} y={hc[1] - 300} text="4 bedrooms. Two storeys. Big garden." show={step === 0} />
-      <Chip x={nc[0]} y={nc[1] - 210} text="Your next home. Secured first." show={step === 1} strong />
-      <Chip x={hc[0]} y={hc[1] - 300} text="Sold quietly. No signs, no open homes." show={step === 2} strong />
-      <Chip x={nc[0]} y={nc[1] - 214} text="Home. $3,000 towards the move." show={step === 3} strong />
+      <Chip x={cs[0][0]} y={chipY} text="Tell us what suits you." show={step === 0} />
+      <Chip x={cs[1][0]} y={chipY} text="Your next home. Secured first." show={step === 1} strong />
+      <Chip x={cs[2][0]} y={chipY} text="Sold quietly. No signs, no open homes." show={step === 2} strong />
+      <Chip x={cs[3][0]} y={chipY} text="Moved in. $3,000 towards the move." show={step === 3} strong />
 
       <g
         className="truck"
