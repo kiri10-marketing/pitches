@@ -57,3 +57,24 @@
 }
 
 .d-leaflet .leaflet-tile-pane { filter: grayscale(1) sepia(.12) hue-rotate(60deg) brightness(1.06) contrast(.88); }
+
+/* buying and selling pins */
+.d-key { display: inline-block; width: 11px; height: 11px; flex: none; vertical-align: 0; margin-right: 8px; }
+.d-side h2 .d-key { margin-right: 10px; }
+.d-mode { display: grid; gap: 0; margin-top: 14px; }
+.d-mode button { appearance: none; display: flex; align-items: center; gap: 0; width: 100%; height: 46px; padding: 0 14px; border: 1.5px solid var(--ink); background: #fff; font: inherit; font-size: 15.5px; font-weight: 500; color: var(--ink); cursor: pointer; text-align: left; }
+.d-mode button + button { border-top: 0; }
+.d-mode button .d-key + .d-key { margin-left: -4px; }
+.d-mode button[aria-pressed='true'] { background: var(--ink); color: #fff; }
+.d-mode button[aria-pressed='true'] .d-key { outline: 1.5px solid #fff; }
+.d-legend { display: grid; gap: 12px; margin-top: 18px; }
+.d-legend > div { display: flex; align-items: flex-start; gap: 4px; transition: opacity .3s; }
+.d-legend > div.off { opacity: .35; }
+.d-legend .d-key { width: 14px; height: 14px; margin-top: 6px; }
+.d-legend b { font-size: 26px; font-weight: 600; letter-spacing: -0.03em; margin-right: 6px; }
+.d-legend span { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.35; }
+.d-kpis { grid-template-columns: repeat(auto-fit, minmax(0, 1fr)); }
+.d-net { font-size: 14px; margin-top: 12px; padding: 10px 12px; background: var(--sage); line-height: 1.4; }
+.d-net b { font-weight: 600; }
+.d-pin { background: none; border: 0; }
+.d-pin svg { display: block; filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }

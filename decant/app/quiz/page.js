@@ -224,8 +224,9 @@ function Quiz() {
     if (last) {
       const target = a.where === 'family' ? a.targetSuburb : a.suburb;
       const [la, lo] = SUBURBS[target] || SUBURBS.Merivale;
+      const [fla, flo] = SUBURBS[a.suburb] || [la, lo];
       // contact details stay out of the demand data
-      saveResponse({ id: `q${Date.now()}`, targetSuburb: target, lat: la + (Math.random() - 0.5) * 0.01, lng: lo + (Math.random() - 0.5) * 0.014, budget: a.budget, timeline: a.timeline, beds: a.beds, garage: a.garage, stairs: a.stairs, pets: a.pets, lockup: a.lockup === 'yes', sellToBuy: a.sellToBuy, at: new Date().toISOString() });
+      saveResponse({ id: `q${Date.now()}`, targetSuburb: target, lat: la + (Math.random() - 0.5) * 0.01, lng: lo + (Math.random() - 0.5) * 0.014, fromSuburb: a.suburb, sellLat: fla + (Math.random() - 0.5) * 0.01, sellLng: flo + (Math.random() - 0.5) * 0.014, budget: a.budget, timeline: a.timeline, beds: a.beds, garage: a.garage, stairs: a.stairs, pets: a.pets, lockup: a.lockup === 'yes', sellToBuy: a.sellToBuy, at: new Date().toISOString() });
       setDone(true);
       window.scrollTo(0, 0);
     } else {

@@ -47,6 +47,14 @@ export const BUDGETS = [
   { id: 'b4', label: '$1.5m to $2m', min: 1500, max: 2000 },
   { id: 'b5', label: '$2m and above', min: 2000, max: 3200 },
 ];
+export const SELL_BANDS = [
+  { id: 'v1', label: 'Under $900k', min: 0, max: 900 },
+  { id: 'v2', label: '$900k to $1.2m', min: 900, max: 1200 },
+  { id: 'v3', label: '$1.2m to $1.6m', min: 1200, max: 1600 },
+  { id: 'v4', label: '$1.6m to $2.2m', min: 1600, max: 2200 },
+  { id: 'v5', label: '$2.2m and above', min: 2200, max: 99999 },
+];
+export const sellBand = (v) => (v ? SELL_BANDS.find((b) => v >= b.min && v < b.max)?.id : undefined);
 export const TIMELINES = [
   { id: 'asap', label: 'As soon as possible' },
   { id: '6m', label: 'Within six months' },
@@ -124,18 +132,30 @@ export function seedDemand(n = 320) {
     for (const k of names) { x -= SUBURBS[k][2]; if (x <= 0) return k; }
     return names[0];
   };
+  const near = (s) => names.filter((k) => k !== s).sort((a, b) => km(SUBURBS[a], SUBURBS[s]) - km(SUBURBS[b], SUBURBS[s])).slice(0, 4);
   const pickW = (arr, w) => { let x = r() * w.reduce((a, b) => a + b, 0); for (let i = 0; i < arr.length; i++) { x -= w[i]; if (x <= 0) return arr[i]; } return arr[0]; };
   const out = [];
   for (let i = 0; i < n; i++) {
     const s = pick();
     const [la, lo, w] = SUBURBS[s];
     const rich = w >= 7;
+    // most downsizers sell close to where they want to buy
+    const x = r();
+    const from = x < 0.58 ? s : x < 0.9 ? near(s)[Math.floor(r() * 4)] : pick();
+    const [fla, flo, fw] = SUBURBS[from];
+    const sellBeds = pickW(['3', '4', '5'], [3, 5, 2]);
+    const sellValue = Math.round((560 + fw * 95 + (Number(sellBeds) - 3) * 210 + (r() - 0.5) * 380) / 10) * 10;
     out.push({
       id: `s${i}`,
       sample: true,
       targetSuburb: s,
       lat: la + (r() - 0.5) * 0.014,
       lng: lo + (r() - 0.5) * 0.02,
+      fromSuburb: from,
+      sellLat: fla + (r() - 0.5) * 0.014,
+      sellLng: flo + (r() - 0.5) * 0.02,
+      sellBeds,
+      sellValue,
       budget: pickW(['b1', 'b2', 'b3', 'b4', 'b5'], rich ? [1, 3, 5, 4, 2] : [4, 5, 3, 1, 0.3]),
       timeline: pickW(['asap', '6m', '12m', 'explore'], [1, 2.4, 3, 3.2]),
       beds: pickW(['2', '3', '4'], [2.2, 5.5, 1.4]),
