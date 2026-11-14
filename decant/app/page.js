@@ -6,15 +6,72 @@ import { Nav, Footer, Sticky, QuizButton, Arrow, useReveal, useParallax } from '
 import { HOMES, SUBURB_NAMES, BUDGETS, TIMELINES, fmtPrice } from '../lib/data';
 
 /* ---------------- hero ---------------- */
+function Typewriter({ text, delay = 350, speed = 95 }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setN(text.length); return; }
+    let i = 0, t;
+    const tick = () => { i += 1; setN(i); if (i < text.length) t = setTimeout(tick, speed); };
+    t = setTimeout(tick, delay);
+    return () => clearTimeout(t);
+  }, [text, delay, speed]);
+  return (
+    <span className="typer" aria-label={text}>
+      <span aria-hidden="true">{text.slice(0, n)}</span>
+      <i className={`caret ${n >= text.length ? 'done' : ''}`} aria-hidden="true" />
+      <span aria-hidden="true" className="ghost">{text.slice(n)}</span>
+    </span>
+  );
+}
+
+// A large decanter pouring into a small glass: the brand idea in one picture.
+function Decanter() {
+  const A = 108; // tilt in degrees
+  const body = 'M-11 -128 L-11 -62 C-11 -42 -76 -14 -76 22 L-76 32 Q-76 42 -66 42 L66 42 Q76 42 76 32 L76 22 C76 -14 11 -42 11 -62 L11 -128 Z';
+  return (
+    <svg className="decanter" viewBox="0 0 340 300" role="img" aria-label="A large wine decanter pouring into a small glass">
+      <defs>
+        <clipPath id="dc-body"><path d={body} /></clipPath>
+        <clipPath id="dc-bowl"><path d="M222 196 L282 196 C282 232 266 248 252 248 C238 248 222 232 222 196 Z" /></clipPath>
+        <pattern id="dc-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)">
+          <line x1="0" y1="0" x2="0" y2="6" stroke="var(--ink)" strokeWidth="0.6" opacity="0.35" />
+        </pattern>
+      </defs>
+      {/* table */}
+      <path d="M20 292 L320 292" stroke="var(--ink)" strokeWidth="1.6" />
+      <rect x="20" y="292" width="300" height="8" fill="url(#dc-hatch)" />
+      {/* the pour */}
+      <line className="dc-stream" x1="252" y1="147" x2="252" y2="240" stroke="var(--wine)" strokeWidth="5" strokeLinecap="round" />
+      {/* decanter, tilted */}
+      <g className="dc-tilt" style={{ transformOrigin: '118px 108px' }}>
+        <g transform={`translate(118 108) rotate(${A})`}>
+          <g clipPath="url(#dc-body)">
+            <rect x="-200" y="-260" width="400" height="400" fill="#fff" />
+            <g transform={`rotate(${-A})`}><rect x="-200" y="18" width="400" height="300" fill="var(--wine)" /></g>
+          </g>
+          <path d={body} fill="none" stroke="var(--ink)" strokeWidth="1.8" strokeLinejoin="round" />
+          <path d="M-16 -131 H16" stroke="var(--ink)" strokeWidth="3" strokeLinecap="square" />
+          <path d="M-56 26 Q-40 4 -24 -6" stroke="var(--ink)" strokeWidth="1.2" fill="none" opacity=".35" />
+        </g>
+      </g>
+      {/* small glass */}
+      <g>
+        <g clipPath="url(#dc-bowl)"><rect className="dc-fill" x="216" y="196" width="72" height="56" fill="var(--wine)" /></g>
+        <path d="M222 196 L282 196 C282 232 266 248 252 248 C238 248 222 232 222 196 Z" fill="none" stroke="var(--ink)" strokeWidth="1.8" strokeLinejoin="round" />
+        <path d="M252 248 V284 M232 291 Q252 282 272 291 Z" stroke="var(--ink)" strokeWidth="1.8" fill="#fff" strokeLinejoin="round" />
+      </g>
+    </svg>
+  );
+}
+
 function Hero() {
   const router = useRouter();
-  const [who, setWho] = useState('me');
   const [suburb, setSuburb] = useState('');
   const [budget, setBudget] = useState('');
   const [when, setWhen] = useState('');
   const go = (e) => {
     e.preventDefault();
-    const q = new URLSearchParams({ for: who, ...(suburb && { suburb }), ...(budget && { budget }), ...(when && { when }) });
+    const q = new URLSearchParams({ ...(suburb && { suburb }), ...(budget && { budget }), ...(when && { when }) });
     router.push(`/quiz?${q}`);
   };
   return (
@@ -24,10 +81,10 @@ function Hero() {
           <div>
             <span className="hero-eyebrow">$3,000 towards your move</span>
             <h1>
-              <span className="line"><span>Downsizing</span></span>
-              <span className="line"><span>made clear</span></span>
+              <span className="line type"><Typewriter text="Downsizing" /></span>
+              <span className="line"><span>made <em className="hl">clear</em></span></span>
               <span className="line">
-                <span>and simple.</span>
+                <span>and <em className="hl">simple</em>.</span>
               </span>
             </h1>
             <p className="hero-lede">
@@ -39,6 +96,7 @@ function Hero() {
             </div>
           </div>
           <div className="hero-side">
+            <Decanter />
             <div className="offer-badge">
               <b>$3,000</b>
               <span>towards your move</span>
@@ -60,11 +118,6 @@ function Hero() {
           </div>
         </div>
         <form className="quizbar" onSubmit={go} aria-label="Start the quiz">
-          <div className="qb-tabs" role="group" aria-label="Who is the move for">
-            <button type="button" aria-pressed={who === 'me'} onClick={() => setWho('me')}>For me</button>
-            <button type="button" aria-pressed={who === 'couple'} onClick={() => setWho('couple')}>For us</button>
-            <button type="button" aria-pressed={who === 'parent'} onClick={() => setWho('parent')}>For a parent</button>
-          </div>
           <div className="qb-body">
             <div className="field">
               <label htmlFor="qb-s">Where do you live now?</label>
@@ -98,7 +151,7 @@ function Hero() {
 /* ---------------- statement ---------------- */
 function About() {
   const ref = useRef(null);
-  const text = 'Decant means to pour from something bigger into something smaller, carefully, so nothing of value is lost. That is how we move you.';
+  const text = 'To pour from something bigger into something smaller, carefully, so nothing of value is lost.';
   const words = text.split(' ');
   const [lit, setLit] = useState(0);
   useEffect(() => {
@@ -118,14 +171,35 @@ function About() {
         <div className="about-grid">
           <span className="label">Why Decant</span>
           <div>
-            <h2 ref={ref} aria-label={text}>
-              {words.map((w, i) => <span key={i} aria-hidden="true" className={`w ${i < lit ? 'lit' : ''}`}>{w} </span>)}
-            </h2>
+            <div className="dict rv">
+              <div className="dict-head">
+                <b>de·cant</b>
+                <span className="dict-say">/dɪˈkænt/</span>
+                <span className="dict-pos">verb</span>
+              </div>
+              <ol>
+                <li>
+                  <h2 ref={ref} aria-label={text}>
+                    {words.map((w, i) => <span key={i} aria-hidden="true" className={`w ${i < lit ? 'lit' : ''} ${w.startsWith('smaller') ? 'key' : ''}`}>{w} </span>)}
+                  </h2>
+                </li>
+                <li>
+                  <p className="dict-two">To move from the family home to a smaller, easier one, with a person who does the leg work and keeps every decision yours.</p>
+                  <p className="dict-eg">“We decanted from Fendalton to a single-level home in Merivale.”</p>
+                </li>
+              </ol>
+            </div>
             <div className="about-sub">
               <p className="rv">
                 Most people know it is time long before they move. The garden has become a job, the stairs are getting harder, and there is equity that could help the kids. What is missing is a clear path. Decant gives you one, with certainty at every step and a person to walk it with you.
               </p>
-              <img className="clip" src="/img/oldhome.jpg" alt="A two-storey family home in Christchurch with a large lawn and garden" />
+              <div className="pains clip">
+                <img src="/img/oldhome.jpg" alt="A two-storey family home in Christchurch with a large lawn and garden" />
+                <span className="pain p1">Garden too big</span>
+                <span className="pain p2">Bedrooms upstairs</span>
+                <span className="pain p3">Maintenance bills too much</span>
+                <span className="pain p4">Single glazed</span>
+              </div>
             </div>
           </div>
         </div>
@@ -158,7 +232,7 @@ function Familiar() {
         <div className="head-row">
           <div className="rv">
             <span className="label">Sound familiar?</span>
-            <h2 style={{ fontSize: 'clamp(38px, 5vw, 66px)', marginTop: 14, letterSpacing: '-0.04em' }}>You know it is time. The path just is not clear.</h2>
+            <h2 style={{ fontSize: 'clamp(38px, 5vw, 66px)', marginTop: 14, letterSpacing: '-0.04em' }}>You know it is time. The path just is not <em className="hl">clear</em>.</h2>
           </div>
           <p className="rv d1">These are the reasons we hear most from Christchurch homeowners in their 60s and 70s. If two or three ring true, the quiz takes a few minutes.</p>
         </div>
@@ -181,8 +255,8 @@ function Familiar() {
 /* ---------------- journey: drag the truck ---------------- */
 const STEPS = [
   { t: 'Take the quiz', p: 'Tell us what you need. Your concierge calls to talk it through.' },
-  { t: 'Secure your next home', p: 'We find single-level homes that suit, including off-market. You choose, and it is secured before anything is sold.' },
-  { t: 'Sell quietly', p: 'No signboard, no open homes. Your home is offered privately to qualified buyers.' },
+  { t: 'Secure your next home', p: 'We find you the best new home for your needs, from trusted developers. You choose, and it is secured before anything is sold.' },
+  { t: 'Sell quietly', p: 'No signboard, no open homes. Your home is offered privately to qualified buyers. Or on the market. You choose.' },
   { t: 'Move in', p: 'We coordinate the movers and put $3,000 towards your move.' },
 ];
 const STOPS = [0, 1 / 3, 2 / 3, 1];
@@ -276,7 +350,7 @@ function Homes() {
         <div className="head-row">
           <div className="rv">
             <span className="label">The kind of homes we find</span>
-            <h2 style={{ fontSize: 'clamp(38px, 5vw, 66px)', marginTop: 14, letterSpacing: '-0.04em' }}>The right size for your next step.</h2>
+            <h2 style={{ fontSize: 'clamp(38px, 5vw, 66px)', marginTop: 14, letterSpacing: '-0.04em' }}>Find the <em className="hl u">rightsize</em> for your next step.</h2>
           </div>
           <p className="rv d1">Not a shoebox, and not a retirement village. Single-level and downstairs-bedroom homes with room for the grandchildren to stay, many of them never advertised.</p>
         </div>
@@ -322,6 +396,7 @@ function Quiet() {
     ['No open homes', 'No strangers through your house every weekend. Private viewings only, at times that suit you.'],
     ['Qualified buyers only', 'Your home is shown to registered buyers who have their finance and timing in order.'],
     ['Only after you have secured your next home', 'Unless you do not need to sell to buy, your sale waits until you know where you are going.'],
+    ['Or a full campaign, if you prefer', 'Either way, we keep the time between your sale and your move short, so you only move once.'],
   ];
   return (
     <section className="quiet" id="quiet">
@@ -332,7 +407,7 @@ function Quiet() {
         </div>
         <div className="quiet-copy">
           <span className="label rv">The quiet sale</span>
-          <h2 className="rv d1">Your home, sold quietly.</h2>
+          <h2 className="rv d1">Your home, sold <em className="hl">quietly</em>.</h2>
           <p className="rv d2">Every Decant sale runs through a licensed real estate agency as a quiet listing. It is discreet, calm and on your terms.</p>
           <div className="qlist">
             {items.map(([b, s], i) => (
@@ -350,7 +425,7 @@ function Quiet() {
 
 /* ---------------- local ---------------- */
 const Tick = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" fill="var(--green)" /><path d="M5 10.2 L8.4 13.5 L15 6.5" stroke="#fff" strokeWidth="2" fill="none" /></svg>
+  <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect width="20" height="20" fill="var(--green)" /><path className="tk" d="M5 10.2 L8.4 13.5 L15 6.5" stroke="#fff" strokeWidth="2" fill="none" /></svg>
 );
 function Local() {
   return (
@@ -362,14 +437,14 @@ function Local() {
         </div>
         <div>
           <span className="label rv">Stay local</span>
-          <h2 className="rv d1" style={{ fontSize: 'clamp(38px, 5vw, 64px)', marginTop: 14, letterSpacing: '-0.04em' }}>Stay where the barista knows your name.</h2>
+          <h2 className="rv d1" style={{ fontSize: 'clamp(38px, 5vw, 64px)', marginTop: 14, letterSpacing: '-0.04em' }}>Stay where the barista knows your <em className="hl">name</em>.</h2>
           <p className="rv d2" style={{ color: 'var(--ink-2)', marginTop: 20 }}>
             Downsizing should not mean moving out to a satellite town. Your GP, your supermarket, your friends and your routines matter as much as the house.
           </p>
-          <ul className="ticks rv d3">
-            <li><Tick />We look in your suburb and the ones next door first</li>
-            <li><Tick />Homes sized for your next step, with room for family to stay</li>
-            <li><Tick />Easy-care gardens, warm and dry, lock up and leave</li>
+          <ul className="ticks">
+            <li className="rv d1"><Tick />We look in your suburb and the ones next door first</li>
+            <li className="rv d3"><Tick />Homes sized for your next step, with room for family to stay</li>
+            <li className="rv d5"><Tick />Easy-care gardens, warm and dry, lock up and leave</li>
           </ul>
         </div>
       </div>
@@ -384,7 +459,7 @@ function Concierge() {
       <div className="wrap conc-grid">
         <div>
           <span className="label rv">A concierge, not a salesperson</span>
-          <h2 className="rv d1" style={{ fontSize: 'clamp(38px, 5vw, 64px)', marginTop: 14, letterSpacing: '-0.04em' }}>One person, start to finish.</h2>
+          <h2 className="rv d1" style={{ fontSize: 'clamp(38px, 5vw, 64px)', marginTop: 14, letterSpacing: '-0.04em' }}><em className="hl">One person</em>, start to finish.</h2>
           <p className="rv d2" style={{ color: 'var(--ink-2)', marginTop: 20, maxWidth: '46ch' }}>
             Your Decant concierge listens first, then does the leg work: finding homes, booking viewings, coordinating your sale and organising the move. You are never rushed, and nothing happens without your say-so.
           </p>
@@ -445,7 +520,7 @@ function Faq() {
       <div className="wrap">
         <div className="head center rv">
           <span className="label">Questions</span>
-          <h2>Good questions to ask.</h2>
+          <h2>Good <em className="hl">questions</em> to ask.</h2>
         </div>
         <div className="faq">
           {[0, 1].map((col) => (
@@ -471,7 +546,7 @@ function Offer() {
       <img className="px" src="/img/movers.jpg" alt="" />
       <div>
         <span className="label">The Decant offer</span>
-        <h2>$3,000 towards your move.</h2>
+        <h2><em className="hl">$3,000</em> towards your move.</h2>
         <p>Start with a few friendly questions. We will call you to talk through what you need, with no obligation.</p>
         <QuizButton className="btn btn-white btn-lg" />
       </div>
@@ -494,7 +569,6 @@ export default function Home() {
         <Quiet />
         <Local />
         <Concierge />
-        <Costs />
         <Faq />
         <Offer />
       </main>

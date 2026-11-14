@@ -14,6 +14,7 @@
   --green: #2f6b4a;
   --green-2: #24573b;
   --deep: #17271e;
+  --wine: #6d2235;
   --max: 1240px;
   --g: clamp(20px, 4vw, 48px);
   --ease: cubic-bezier(.2, .7, .1, 1);
@@ -122,9 +123,9 @@ img { display: block; max-width: 100%; }
 .about h2 { font-size: clamp(30px, 3.7vw, 50px); letter-spacing: -0.035em; line-height: 1.14; font-weight: 500; }
 .about h2 .w { color: #b9c1bb; transition: color .4s; }
 .about h2 .w.lit { color: var(--ink); }
-.about-sub { display: grid; grid-template-columns: 1fr 300px; gap: 50px; margin-top: 56px; align-items: start; }
+.about-sub { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 50px; margin-top: 56px; align-items: start; }
 .about-sub p { max-width: 50ch; color: var(--ink-2); margin-top: 6px; }
-.about-sub img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.about-sub img { width: 100%; aspect-ratio: 4 / 3.4; object-fit: cover; display: block; }
 @media (max-width: 860px) { .about-grid, .about-sub { grid-template-columns: 1fr; gap: 24px; } }
 
 /* section heads */
@@ -315,8 +316,8 @@ img { display: block; max-width: 100%; }
 .foot-card a { text-decoration: none; font-size: 16.5px; color: var(--ink-2); }
 .foot-card a:hover { color: var(--green); }
 .foot-card p { font-size: 16px; color: var(--ink-2); margin-top: 14px; max-width: 34ch; }
-.wordmark { font-size: clamp(110px, 25vw, 380px); font-weight: 600; letter-spacing: -0.07em; line-height: .78; text-align: center; color: #fff; margin-top: -20px; padding-bottom: 0; transform: translateY(18%); user-select: none; opacity: .96; }
-.legal { position: relative; z-index: 1; font-size: 14px; color: #9fb2a6; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: -20px; padding-bottom: 26px; }
+.wordmark { font-size: clamp(84px, 18vw, 290px); font-weight: 600; letter-spacing: -0.06em; line-height: .9; text-align: center; color: #fff; margin: 0; padding: 4px 0 clamp(18px, 3vw, 40px); user-select: none; opacity: .96; white-space: nowrap; }
+.legal { position: relative; z-index: 1; font-size: 14px; color: #9fb2a6; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: -30px; padding-bottom: 10px; }
 @media (max-width: 900px) { .foot-card { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 520px) { .foot-card { grid-template-columns: 1fr; } }
 
@@ -400,4 +401,60 @@ img { display: block; max-width: 100%; }
   .m-step { padding: 16px; }
   .m-step b { font-size: 17px; margin-top: 10px; }
   .m-step .d { font-size: 14.5px; }
+}
+
+/* ---- sticky-note round 1 ---- */
+em.hl { font-style: normal; color: var(--green); }
+em.hl.u { text-decoration: underline; text-decoration-thickness: .07em; text-underline-offset: .12em; }
+.offer em.hl { color: var(--mint); }
+.hero h1 .line.type > span { transform: none; animation: none; }
+.hero h1 .line:nth-child(2) > span { animation-delay: 1.25s; }
+.hero h1 .line:nth-child(3) > span { animation-delay: 1.35s; }
+.typer .ghost { visibility: hidden; }
+.typer .caret { display: inline-block; width: .055em; height: .78em; margin: 0 .02em 0 .03em; background: var(--green); vertical-align: -.02em; animation: blink .9s steps(1) infinite; }
+.typer .caret.done { animation: blink .9s steps(1) 3, gone .3s 2.7s forwards; }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes gone { to { opacity: 0; width: 0; margin: 0; } }
+
+.decanter { display: block; width: min(300px, 100%); height: auto; }
+.dc-tilt { animation: tilt 5.2s 1s var(--ease) both; }
+@keyframes tilt { 0% { transform: rotate(-18deg); } 20%, 78% { transform: rotate(0); } 100% { transform: rotate(-12deg); } }
+.dc-stream { stroke-dasharray: 12 7; animation: pour 5.2s 1s linear both, flow .45s linear infinite; }
+@keyframes pour { 0%, 20% { opacity: 0; } 24%, 74% { opacity: 1; } 78%, 100% { opacity: 0; } }
+@keyframes flow { to { stroke-dashoffset: -19; } }
+.dc-fill { transform-box: fill-box; transform: translateY(100%); animation: fill 5.2s 1s var(--ease) both; }
+@keyframes fill { 0%, 24% { transform: translateY(100%); } 76%, 100% { transform: translateY(38%); } }
+@media (max-width: 900px) { .decanter { width: 200px; } }
+
+.dict-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding-bottom: 18px; border-bottom: 1px solid var(--line-2); }
+.dict-head b { font-size: clamp(48px, 6vw, 84px); font-weight: 600; letter-spacing: -0.045em; line-height: 1; }
+.dict-say { font-size: clamp(20px, 2vw, 26px); color: var(--muted); }
+.dict-pos { font-size: 14px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--green); border: 1.5px solid var(--green); padding: 3px 8px; }
+.dict ol { margin: 26px 0 0; padding: 0 0 0 1.5em; display: grid; gap: 22px; }
+.dict li::marker { color: var(--green); font-weight: 700; font-size: 22px; }
+.dict-two { font-size: clamp(21px, 2.2vw, 28px); letter-spacing: -0.02em; line-height: 1.3; color: var(--ink); max-width: 36ch; }
+.dict-eg { margin-top: 10px; color: var(--muted); font-size: 18px; }
+.about h2 .w.key.lit { color: var(--green); }
+
+.pains { position: relative; }
+.pain { position: absolute; display: inline-flex; align-items: center; gap: 8px; background: #fff; color: var(--ink); font-size: 15px; font-weight: 600; padding: 9px 13px; box-shadow: 0 14px 28px -14px rgba(0,0,0,.5); opacity: 0; transform: translateY(10px) scale(.92); transition: opacity .5s var(--ease), transform .6s cubic-bezier(.2,1.4,.4,1); white-space: nowrap; }
+.pain::before { content: ''; width: 9px; height: 9px; background: var(--wine); flex: none; }
+.pains.in .pain { opacity: 1; transform: none; }
+.pain.p1 { left: 5%; bottom: 9%; transition-delay: .6s; }
+.pain.p2 { right: 5%; top: 9%; transition-delay: .9s; }
+.pain.p3 { left: 7%; top: 30%; transition-delay: 1.2s; }
+.pain.p4 { right: 7%; top: 54%; transition-delay: 1.5s; }
+@media (max-width: 520px) { .pain { font-size: 13px; padding: 7px 10px; } }
+
+.ticks .tk { stroke-dasharray: 16; stroke-dashoffset: 16; transition: stroke-dashoffset .5s .4s var(--ease); }
+.ticks li.in .tk { stroke-dashoffset: 0; }
+.ticks li.d3 .tk { transition-delay: .6s; }
+.ticks li.d5 .tk { transition-delay: .8s; }
+@media (prefers-reduced-motion: reduce) {
+  .dc-tilt, .dc-fill, .dc-stream { animation: none; }
+  .dc-fill { transform: translateY(38%); }
+  .dc-stream { opacity: 0; }
+  .ticks .tk { stroke-dashoffset: 0; }
+  .pain { opacity: 1; transform: none; }
+  .typer .caret { display: none; }
 }

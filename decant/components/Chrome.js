@@ -64,7 +64,6 @@ export function useParallax(selector, k = 0.12) {
 const LINKS = [
   ['/#how', 'How it works'],
   ['/#quiet', 'The quiet sale'],
-  ['/#costs', 'Costs'],
   ['/#questions', 'Questions'],
 ];
 
@@ -111,7 +110,6 @@ export function Footer() {
             <ul>
               <li><Link href="/#how">How it works</Link></li>
               <li><Link href="/#quiet">The quiet sale</Link></li>
-              <li><Link href="/#costs">Costs</Link></li>
               <li><Link href="/#questions">Questions</Link></li>
             </ul>
           </div>
@@ -148,7 +146,9 @@ export function Sticky() {
       const j = document.getElementById('how');
       const r = j?.getBoundingClientRect();
       const inJourney = r && r.top < window.innerHeight && r.bottom > 0;
-      setOn(window.scrollY > 600 && !inJourney);
+      const ft = document.querySelector('.foot')?.getBoundingClientRect();
+      const inFoot = ft && ft.top < window.innerHeight - 40;
+      setOn(window.scrollY > 600 && !inJourney && !inFoot);
     };
     f();
     window.addEventListener('scroll', f, { passive: true });
