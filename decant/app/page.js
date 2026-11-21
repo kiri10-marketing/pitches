@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import MoveScene, { truckX } from '../components/MoveScene';
 import DefineHero from '../components/DefineHero';
+import MoveHero from '../components/MoveHero';
 import { Nav, Footer, Sticky, QuizButton, Arrow, useReveal, useParallax } from '../components/Chrome';
 import { HOMES, SUBURB_NAMES, BUDGETS, TIMELINES, fmtPrice } from '../lib/data';
 
@@ -18,15 +19,7 @@ function Hero() {
     router.push(`/quiz?${q}`);
   };
   return (
-    <section className="hero">
-      <DefineHero />
-
-      <div className="hero-media">
-        <div className="wrap">
-          <div className="hero-img">
-            <img src="/img/deck.jpg" alt="A couple in their late sixties relaxing on the sunny deck of their new single-level home in Christchurch" className="px" />
-          </div>
-        </div>
+    <MoveHero>
         <form className="quizbar" onSubmit={go} aria-label="Start the quiz">
           <div className="qb-body">
             <div className="field">
@@ -53,51 +46,22 @@ function Hero() {
             <button className="btn btn-ink" type="submit">Start the quiz <Arrow /></button>
           </div>
         </form>
-      </div>
-    </section>
+    </MoveHero>
   );
 }
 
 /* ---------------- statement ---------------- */
 function About() {
-  const ref = useRef(null);
-  const text = 'To pour from something bigger into something smaller, carefully, so nothing of value is lost.';
-  const words = text.split(' ');
-  const [lit, setLit] = useState(0);
-  useEffect(() => {
-    const on = () => {
-      const r = ref.current?.getBoundingClientRect();
-      if (!r) return;
-      const vh = window.innerHeight;
-      setLit(Math.round(Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.3))) * words.length));
-    };
-    on();
-    window.addEventListener('scroll', on, { passive: true });
-    return () => window.removeEventListener('scroll', on);
-  }, [words.length]);
   return (
     <section className="about">
+      <DefineHero />
       <div className="wrap">
-        <div className="about-grid">
-          <span className="label">Why Decant</span>
+        <div className="about-grid about-after">
+          <span className="label">In practice</span>
           <div>
             <div className="dict rv">
-              <div className="dict-head">
-                <b>de·cant</b>
-                <span className="dict-say">/dɪˈkænt/</span>
-                <span className="dict-pos">verb</span>
-              </div>
-              <ol>
-                <li>
-                  <h2 ref={ref} aria-label={text}>
-                    {words.map((w, i) => <span key={i} aria-hidden="true" className={`w ${i < lit ? 'lit' : ''} ${w.startsWith('smaller') ? 'key' : ''}`}>{w} </span>)}
-                  </h2>
-                </li>
-                <li>
-                  <p className="dict-two">To move from the family home to a smaller, easier one, with a person who does the leg work and keeps every decision yours.</p>
-                  <p className="dict-eg">“We decanted from Fendalton to a single-level home in Merivale.”</p>
-                </li>
-              </ol>
+              <p className="dict-two">To move from the family home to a smaller, easier one, with a person who does the leg work and keeps every decision yours.</p>
+              <p className="dict-eg">“We decanted from Fendalton to a single-level home in Merivale.”</p>
             </div>
             <div className="about-sub">
               <p className="rv">

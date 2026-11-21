@@ -507,3 +507,37 @@ em.hl.u { text-decoration: underline; text-decoration-thickness: .07em; text-und
 }
 .dh-head h1 { text-transform: none; }
 .foot { overflow: visible; }
+
+/* ---------- hero: the family home to the next home ---------- */
+.mh-top { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: clamp(26px, 5vw, 72px); align-items: end; }
+.mh h1 { font-size: clamp(40px, 5.7vw, 84px); font-weight: 500; letter-spacing: -0.045em; line-height: 1; text-transform: none; max-width: 15ch; opacity: 0; animation: fade .9s .25s var(--ease) forwards; }
+.mh h1 em { font-style: normal; color: var(--green); }
+.mh-offer { display: inline-flex; background: var(--green); color: #fff; font-size: 15px; font-weight: 600; padding: 8px 12px; margin-bottom: 22px; opacity: 0; animation: fade .8s .1s var(--ease) forwards; }
+.mh-lede { font-size: clamp(18px, 1.5vw, 21px); color: var(--ink-2); max-width: 42ch; opacity: 0; animation: fade .9s .45s var(--ease) forwards; }
+.mh .hero-cta { margin-top: 24px; }
+.mh-compare { --p: 100%; background: var(--deep); }
+.mh-compare img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: none; }
+.mh-new { position: absolute; inset: 0; clip-path: inset(0 0 0 var(--p)); }
+.mh-handle { position: absolute; top: 0; bottom: 0; left: var(--p); width: 2px; margin-left: -1px; background: #fff; z-index: 2; pointer-events: none; }
+.mh-handle svg { position: absolute; top: 40%; left: 50%; width: 48px; height: 48px; padding: 13px; margin: -24px 0 0 -24px; background: #fff; color: var(--deep); box-shadow: 0 8px 24px -10px rgba(10, 20, 14, .6); }
+.mh-tag { position: absolute; top: 18px; z-index: 2; font-size: 14px; font-weight: 600; color: #fff; padding: 7px 11px; transition: opacity .45s var(--ease); pointer-events: none; }
+.mh-tag-old { left: 18px; background: rgba(23, 39, 30, .84); }
+.mh-tag-new { right: 18px; background: var(--green); }
+.mh-compare.is-new .mh-tag-old, .mh-compare.is-old .mh-tag-new { opacity: 0; }
+.mh-range { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; z-index: 3; touch-action: pan-y; }
+.mh-compare:has(.mh-range:focus-visible) { outline: 3px solid var(--green); outline-offset: 3px; }
+@media (max-width: 900px) {
+  .mh-top { grid-template-columns: 1fr; align-items: start; gap: 18px; }
+  .mh h1 { max-width: none; }
+  .mh-tag { top: 12px; font-size: 13px; }
+  .mh-tag-old { left: 12px; } .mh-tag-new { right: 12px; }
+  .mh-compare.lean-new .mh-tag-old, .mh-compare.lean-old .mh-tag-new { opacity: 0; }
+  .mh-handle svg { top: 34%; width: 42px; height: 42px; padding: 11px; margin: -21px 0 0 -21px; }
+}
+@media (prefers-reduced-motion: reduce) { .mh h1, .mh-offer, .mh-lede { animation: none; opacity: 1; } }
+
+/* ---------- the pour, now inside Why Decant ---------- */
+.dh .label { display: inline-block; margin-bottom: 20px; }
+.dh-head h2 { font-size: clamp(54px, 7vw, 104px); font-weight: 600; letter-spacing: -0.05em; line-height: .95; text-transform: none; }
+.about-after { margin-top: clamp(48px, 7vw, 96px); }
+.about-after .dict-two { margin-top: 0; }

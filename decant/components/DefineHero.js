@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { WORD } from './logoPaths';
-import { QuizButton } from './Chrome';
 
 /*
-  The header: one continuous piece of motion, played once on load.
+  The pour: one continuous piece of motion, played once when it scrolls into view.
+  It sits in the "Why Decant" section as the picture of going from larger to smaller.
   Left: the dictionary entry for "decant", typed out word by word.
   Right: the big A from the wordmark. As the definition reaches "bigger" the view
   pushes in, on "smaller" the green inner A fills up inside it like a pour, and on
@@ -132,6 +132,8 @@ export default function DefineHero() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) { clock.current = T_DONE; paint(T_DONE); return; }
     clock.current = 0;
+    // run 0 is the resting state before the section has been scrolled into view
+    if (run === 0) { paint(0); return; }
     let last;
     const tick = (now) => {
       // clamp each frame so a background tab does not skip the story
@@ -144,6 +146,17 @@ export default function DefineHero() {
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
   }, [run]);
+
+  // the story waits until the stage is on screen
+  useEffect(() => {
+    const el = stage.current;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setRun((r) => r || 1); io.disconnect(); } },
+      { threshold: 0.35 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   // render the definition word by word so the key word can turn green
   const words = [];
@@ -166,12 +179,12 @@ export default function DefineHero() {
     <div className="wrap">
       <div className={`dh ${done ? 'done' : ''}`}>
         <div className="dh-copy">
-          <span className="dh-offer">$3,000 towards your move</span>
+          <span className="label">Why Decant</span>
           <div className="dh-head">
-            <h1>
+            <h2>
               <span aria-hidden="true">de·cant</span>
-              <span className="sr">Decant. Downsizing made clear and simple.</span>
-            </h1>
+              <span className="sr">Decant</span>
+            </h2>
             <span className="dict-say">/dɪˈkænt/</span>
             <span className="dict-pos">verb</span>
           </div>
@@ -181,12 +194,8 @@ export default function DefineHero() {
             </span>
           </p>
           <p className="dh-lede">
-            Downsizing made <em className="hl">clear</em> and <em className="hl">simple</em>. We find your next home first, sell yours quietly, and coordinate the move. Every decision is yours.
+            That is the whole idea behind the name. You move from the family home into a smaller, easier one, and everything that matters comes with you.
           </p>
-          <div className="hero-cta">
-            <QuizButton className="btn btn-ink btn-lg" />
-            <span>Takes about three minutes</span>
-          </div>
         </div>
 
         <figure className="dh-stage" ref={stage}>
