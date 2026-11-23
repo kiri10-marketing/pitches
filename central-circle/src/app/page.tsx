@@ -242,7 +242,7 @@ export default function Home() {
           </div>
           <div className="rule my-10" />
           <p className="text-sm leading-relaxed">{footer.disclaimer}</p>
-          <p className="mt-6 text-sm">© {new Date().getFullYear()} The Central Circle · Circle Living</p>
+          <p className="mt-6 text-sm">© {new Date().getFullYear()} The Central Circle · Circle Living · <a href="/marketing.html" className="underline underline-offset-4 hover:text-white">Marketing</a></p>
         </div>
       </footer>
     </>

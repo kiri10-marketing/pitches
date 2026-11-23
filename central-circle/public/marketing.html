@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>The Central Circle Ad Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Jost:wght@400;500;600&display=swap">
+<style>
+/* Jost from Google Fonts misplaces Māori macrons, so macron vowels come from Figtree. */
+@font-face { font-family: "MacronFix"; font-weight: 400; font-display: swap; src: url(https://cdn.jsdelivr.net/npm/@fontsource/figtree@5.0.19/files/figtree-latin-ext-400-normal.woff2) format("woff2"); unicode-range: U+0100-0101, U+0112-0113, U+012A-012B, U+014C-014D, U+016A-016B; }
+@font-face { font-family: "MacronFix"; font-weight: 500; font-display: swap; src: url(https://cdn.jsdelivr.net/npm/@fontsource/figtree@5.0.19/files/figtree-latin-ext-500-normal.woff2) format("woff2"); unicode-range: U+0100-0101, U+0112-0113, U+012A-012B, U+014C-014D, U+016A-016B; }
+@font-face { font-family: "MacronFix"; font-weight: 600; font-display: swap; src: url(https://cdn.jsdelivr.net/npm/@fontsource/figtree@5.0.19/files/figtree-latin-ext-600-normal.woff2) format("woff2"); unicode-range: U+0100-0101, U+0112-0113, U+012A-012B, U+014C-014D, U+016A-016B; }
+/* A review board: sticky filters, ads at true proportions, then the go-to-market plan as a brief. */
+:root {
+  --bg: #f2eee6; --surface: #faf8f3; --ink: #1d2620; --muted: #4a4740; --line: #d9cfbf;
+  --olive: #21382a; --bronze: #7a5a22; --pick: #2f5d3a; --chip: #e8e1d6;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "MacronFix", "Jost", "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #171512; --surface: #221f1b; --ink: #f1ece4; --muted: #c9bfb2; --line: #3a352e; --bronze: #c9a77d; --pick: #6fb07f; --chip: #2c2823; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #171512; --surface: #221f1b; --ink: #f1ece4; --muted: #c9bfb2; --line: #3a352e; --bronze: #c9a77d; --pick: #6fb07f; --chip: #2c2823; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 20px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; letter-spacing: .06em; line-height: 1.15; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.eyebrow { font-weight: 500; font-size: 13px; letter-spacing: .26em; text-transform: uppercase; color: var(--bronze); }
+header.top { padding-block: 48px 30px; display: grid; gap: 16px; text-align: center; justify-items: center; }
+header.top h1 { font-size: clamp(32px, 5vw, 54px); }
+header.top .lede { max-width: 70ch; color: var(--muted); font-size: 18px; }
+.jump { display: flex; gap: 22px; flex-wrap: wrap; justify-content: center; }
+.jump a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--bronze); text-transform: uppercase; letter-spacing: .18em; font-size: 13px; padding-bottom: 3px; }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-block: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; padding-block: 12px; }
+.group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.group > span { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; margin-right: 2px; }
+.chipbtn { border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 6px 12px; font: 500 14px var(--font-body); cursor: pointer; }
+.chipbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chipbtn:focus-visible, .pickbtn:focus-visible, .copy:focus-visible { outline: 2px solid var(--bronze); outline-offset: 2px; }
+.picks { margin-left: auto; display: flex; gap: 10px; align-items: center; }
+.count { font-variant-numeric: tabular-nums; font-weight: 600; }
+.copy { background: var(--ink); color: var(--bg); border: 0; padding: 10px 18px; font: 500 13px var(--font-body); letter-spacing: .18em; text-transform: uppercase; cursor: pointer; }
+.status { font-size: 13px; color: var(--muted); min-height: 1em; }
+#copyFallback { width: 100%; font: 13px var(--font-body); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 22px; padding-block: 26px 40px; align-items: start; }
+.card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.card[hidden] { display: none; }
+.card.picked { border-color: var(--pick); box-shadow: 0 0 0 2px var(--pick); }
+.stage { background: var(--chip); padding: 14px; display: flex; justify-content: center; align-items: center; min-height: 120px; }
+.frame { position: relative; overflow: hidden; box-shadow: 0 6px 20px -8px rgba(0,0,0,.35); max-width: 100%; }
+.meta { padding: 14px 16px 16px; display: grid; gap: 8px; min-width: 0; }
+.metaTop { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.num { font-family: var(--font-display); font-size: 24px; font-variant-numeric: tabular-nums; }
+.tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 500; background: var(--chip); padding: 2px 8px; color: var(--ink); }
+.tag.angle { background: color-mix(in srgb, var(--bronze) 18%, var(--surface)); }
+dl.spec { margin: 0; display: grid; gap: 6px; font-size: 14px; }
+dl.spec div { display: grid; gap: 1px; }
+dl.spec dt { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+dl.spec dd { margin: 0; overflow-wrap: anywhere; }
+.pickbtn { justify-self: start; border: 1px solid var(--ink); background: transparent; color: var(--ink); padding: 6px 16px; font: 500 13px var(--font-body); letter-spacing: .16em; text-transform: uppercase; cursor: pointer; }
+.card.picked .pickbtn { background: var(--pick); border-color: var(--pick); color: #fff; }
+
+/* The ads: fixed brand colours, they are artwork not page chrome */
+.ad { position: absolute; top: 0; left: 0; transform-origin: top left; font-family: "MacronFix", "Jost", Arial, sans-serif; color: #fff; background: #21382a; overflow: hidden; }
+.ad img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.ad .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(18,30,22,.88) 0%, rgba(18,30,22,.4) 40%, rgba(18,30,22,0) 64%); }
+.ad .shadeTop { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(18,30,22,.6) 0%, rgba(18,30,22,0) 30%); }
+.ad .brand { font-family: "Cormorant Garamond", serif; font-weight: 400; text-transform: uppercase; letter-spacing: .3em; }
+.ad .h { font-family: "Cormorant Garamond", serif; font-weight: 400; text-transform: uppercase; letter-spacing: .05em; line-height: 1.08; }
+.ad .btn { display: inline-flex; align-items: center; justify-content: center; background: #e3bd58; color: #1d2620; font-weight: 500; text-transform: uppercase; letter-spacing: .2em; white-space: nowrap; }
+.ad .fine { color: rgba(255,255,255,.85); letter-spacing: .14em; text-transform: uppercase; }
+.ad .agent { display: flex; align-items: center; }
+.ad .logo { display: block; height: auto; }
+.ad .lead { font-family: "MacronFix", "Jost", Arial, sans-serif; color: rgba(255,255,255,.92); line-height: 1.35; }
+
+/* Plan */
+.plan { padding-block: 44px 70px; border-top: 1px solid var(--line); display: grid; gap: 46px; }
+.plan h2 { font-size: clamp(28px, 4vw, 42px); }
+.plan section { display: grid; gap: 16px; }
+.plan h3 { font-size: 24px; }
+.plan .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.box { background: var(--surface); border: 1px solid var(--line); padding: 20px; display: grid; gap: 8px; min-width: 0; }
+.plan ul { margin: 0; padding-left: 20px; display: grid; gap: 6px; }
+.note { color: var(--muted); font-size: 15px; max-width: 78ch; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
+th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+thead th { font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: .12em; background: var(--chip); }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.flow .step { background: var(--surface); border: 1px solid var(--line); padding: 14px; display: grid; gap: 4px; }
+.flow .step b { font-family: var(--font-display); font-weight: 500; font-size: 20px; text-transform: uppercase; letter-spacing: .05em; }
+.flow .step small { color: var(--bronze); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; }
+.mock { display: grid; gap: 10px; margin: 0; min-width: 0; }
+.mock img { width: 100%; height: auto; border: 1px solid var(--line); display: block; }
+.mock figcaption { font-size: 15px; color: var(--muted); }
+.mock figcaption b { color: var(--ink); }
+.mocks { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 22px; }
+.mock.wide { grid-column: 1 / -1; }
+footer.end { padding-block: 24px 50px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+@media (max-width: 640px) { .picks { margin-left: 0; width: 100%; } }
+@media (max-width: 900px) { .bar { position: static; } }
+@media (max-width: 520px) { .flow { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <p class="eyebrow">The Central Circle · 208 Kilmore Street · Marketing with Circle Living</p>
+    <h1>100 ad concepts and a go-to-market plan</h1>
+    <p class="lede">Static lead-generation ads for Meta and Google, built from the site's renders, typography and palette. Every ad has its own headline and primary text, and every ad sends people to "Register interest". Tap <b>Pick</b> on the ones you like, then <b>Copy my picks</b> and send the numbers back. The finished ads will be made in Higgsfield at exact sizes.</p>
+    <nav class="jump" aria-label="Jump to"><a href="/">Back to the website</a><a href="#ads">Ad concepts</a><a href="#plan">Go-to-market plan</a><a href="#traditional">Billboards and print</a></nav>
+  </header>
+</div>
+
+<div class="bar" id="ads">
+  <div class="wrap">
+    <div class="group" role="group" aria-label="Platform"><span>Platform</span>
+      <button class="chipbtn" data-pf="all" aria-pressed="true">All</button>
+      <button class="chipbtn" data-pf="Meta" aria-pressed="false">Meta</button>
+      <button class="chipbtn" data-pf="Google" aria-pressed="false">Google</button>
+    </div>
+    <div class="group" role="group" aria-label="Angle" id="angleGroup"><span>Angle</span></div>
+    <div class="group" role="group" aria-label="Show"><span>Show</span>
+      <button class="chipbtn" id="onlyPicked" aria-pressed="false">Picked only</button>
+    </div>
+    <div class="picks">
+      <span><span class="count" id="count">0</span> picked</span>
+      <button class="copy" id="copyBtn">Copy my picks</button>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+    <textarea id="copyFallback" rows="2" hidden aria-label="Your picks, ready to copy"></textarea>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="wrap">
+<article class="plan" id="plan">
+  <header style="display:grid;gap:10px">
+    <p class="eyebrow">Go-to-market plan</p>
+    <h2>Filling a village on Kilmore Street with Circle Living</h2>
+    <p class="note">The Central Circle sells a way of living before it sells a floor plan: your own front door, a shared garden and neighbours you know, in the middle of Christchurch. Cohousing is new to most buyers, so the campaign has two jobs: explain it simply, and grow a list of interested households who come to an Open Hour and join the Founding Circle before pre-sales open. Pricing is still to be released and the concept is not yet designed in detail or consented, so no ad shows a price or a completion date, and every render is labelled as an artist's impression. Figures marked "estimate" are starting assumptions to test.</p>
+  </header>
+
+  <section>
+    <h3>Perfect customer</h3>
+    <div class="two">
+      <div class="box"><p class="eyebrow">Primary</p><h3>Right-sizers who don't want to be alone</h3>
+        <p>Owners aged 55 to 78 in larger Christchurch homes (Merivale, St Albans, Fendalton, Cashmere, Sumner), with equity and grown children, often living alone or as a couple.</p>
+        <ul><li><b>Trigger:</b> the house and section are too much, a partner has died, or friends are moving away.</li><li><b>Wants:</b> a smaller home of their own, a garden without the upkeep, company when they want it, walkable to town.</li><li><b>Objections:</b> "is it a commune?", stairs, body corporate costs, buying before consent.</li></ul></div>
+      <div class="box"><p class="eyebrow">Primary</p><h3>Young families who want a village</h3>
+        <p>Couples aged 28 to 45 with young children, renting or in a first home, who want the central city without losing a garden and safe places to play.</p>
+        <ul><li><b>Trigger:</b> a new baby, starting school, or feeling isolated in a suburb.</li><li><b>Wants:</b> a two- or three-bedroom townhouse, other kids nearby, trusted neighbours.</li><li><b>Objections:</b> price, timing, school zones, space.</li></ul></div>
+      <div class="box"><p class="eyebrow">Secondary</p><h3>Cohousing-curious singles and couples</h3>
+        <p>People aged 30 to 65 who already follow cohousing, intentional community, sustainability or slow-living ideas, including Circle Living's existing followers and waiting lists.</p>
+        <ul><li><b>Objections:</b> how decisions are made and what is shared; answered by the Open Hour and Kōwhai's track record.</li></ul></div>
+      <div class="box"><p class="eyebrow">Secondary</p><h3>Multi-generational families</h3>
+        <p>Grandparents and their adult children who want to live close, each in their own home, around one garden.</p>
+        <ul><li><b>Objections:</b> securing homes side by side; answered by joining the Founding Circle together.</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Channels and targeting</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Channel</th><th scope="col">Targeting</th><th scope="col">Role</th></tr></thead>
+      <tbody>
+        <tr><td><b>Meta</b> (Instagram and Facebook)</td><td>Christchurch, Selwyn and Waimakariri. Interests: cohousing, intentional community, community gardens, sustainable living, grandparenting, parenting and downsizing. Lookalikes from registrations once there are about 50. Retarget site visitors with the garden and Founding Circle ads.</td><td>Explain cohousing, build the list</td></tr>
+        <tr><td><b>Google Search</b></td><td>"cohousing Christchurch", "cohousing New Zealand", "apartments Christchurch central", "townhouses Christchurch central", "downsizing Christchurch", plus Circle Living and The Central Circle brand terms.</td><td>Highest-intent buyers</td></tr>
+        <tr><td><b>Google Display and Demand Gen</b></td><td>In-market for residential property in Canterbury; YouTube with the scroll-through film once it's made.</td><td>Retargeting and reach</td></tr>
+        <tr><td><b>Circle Living channels</b></td><td>Circle Living's newsletter, Instagram, Facebook and LinkedIn, and anyone already on a Christchurch waiting list.</td><td>Fastest warm registrations</td></tr>
+        <tr><td><b>Open Hours and socials</b></td><td>Free online Open Hours and in-person community socials, promoted in every ad's follow-up.</td><td>Turns interest into Founding Circle members</td></tr>
+        <tr><td><b>Portals and press</b></td><td>realestate.co.nz and Trade Me Property project listings; a story pitch to The Press and Stuff on cohousing coming to the central city.</td><td>Credibility and search traffic</td></tr>
+        <tr><td><b>Community partners</b></td><td>Community gardens, Avon-Ōtākaro Network, central city residents' groups, retirement planners and parenting groups.</td><td>Word of mouth</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Meta treats housing ads as a special ad category, which limits age, gender and postcode targeting. Lean on creative that speaks to each audience, interest-led lookalikes and retargeting. The audiences written under each ad are who the ad is written for; on Meta, some can only be reached through the creative itself.</p>
+  </section>
+
+  <section>
+    <h3>Funnel</h3>
+    <div class="flow">
+      <div class="step"><small>Step 1</small><b>Ad</b><p>One idea: your own front door, a village around it.</p></div>
+      <div class="step"><small>Step 2</small><b>Website</b><p>A walk through the garden, the homes and the common house.</p></div>
+      <div class="step"><small>Step 3</small><b>Register</b><p>Name, contact, home of interest and household type.</p></div>
+      <div class="step"><small>Step 4</small><b>Welcome</b><p>An email the same day with the next Open Hour and a link to book a free 30-minute call.</p></div>
+      <div class="step"><small>Step 5</small><b>Open Hour</b><p>How cohousing works, the costs, and the Founding Circle.</p></div>
+      <div class="step"><small>Step 6</small><b>Founding Circle</b><p>Early households meet, shape the neighbourhood and get first option on pre-sales.</p></div>
+      <div class="step"><small>Step 7</small><b>Retarget</b><p>Visitors who didn't register see garden and explainer ads for 30 days.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h3>Launch timeline</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">When</th><th scope="col">What happens</th></tr></thead>
+      <tbody>
+        <tr><td class="n">Week 0</td><td>Site live with a lead webhook to Circle Living's CRM. Pixel, Conversions API, Google tag and GA4 tested with a real registration. Announce to Circle Living's newsletter and social followers.</td></tr>
+        <tr><td class="n">Week 1</td><td>Test 15 to 20 picked ads on Instagram and Facebook, at least one from each angle, plus Google Search, spending evenly.</td></tr>
+        <tr><td class="n">Weeks 2 to 4</td><td>Keep the best three angles, cut the rest, write fresh copy in the winning angles. Promote the first Open Hour.</td></tr>
+        <tr><td class="n">Month 2 onward</td><td>Lookalikes, retargeting, YouTube with the film, an in-person community social, the press story.</td></tr>
+        <tr><td class="n">Pre-sales open</td><td>Founding Circle members get first option, then registered households, before any public release. Dates to be confirmed by Circle Living.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section>
+    <h3>Budget and targets</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Item</th><th scope="col">Starting point (estimate)</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly digital budget</td><td class="n">NZ$4,000: Meta $2,200, Google Search $1,000, YouTube, Display and retargeting $800</td></tr>
+        <tr><td>Cost per registration</td><td class="n">Aim for NZ$25 to $70</td></tr>
+        <tr><td>Landing page conversion rate</td><td class="n">Aim for 4 to 8% of visitors</td></tr>
+        <tr><td>Registration to Open Hour attendance</td><td class="n">Aim for 25 to 35%</td></tr>
+        <tr><td>Cost per Founding Circle household</td><td class="n">Aim for under NZ$600</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Replace these estimates with real figures after the first two weeks. The register goal depends on the final number of homes, which is still being designed.</p>
+  </section>
+
+  <section>
+    <h3>Tracking</h3>
+    <ul>
+      <li><b>Meta Pixel and Conversions API:</b> a "Lead" event on successful registration, browser and server, deduplicated.</li>
+      <li><b>Google Ads conversion tag and GA4:</b> a "generate_lead" event with home of interest and household type as parameters.</li>
+      <li><b>UTM tags</b> on every ad, so each registration shows its platform, angle and ad number.</li>
+      <li><b>Weekly report:</b> spend, registrations, cost per registration, Open Hour bookings and the best ads.</li>
+    </ul>
+  </section>
+
+  <section id="traditional">
+    <h3>Traditional media: billboards, print and outdoor</h3>
+    <p class="note">For a cohousing neighbourhood, traditional media should feel local and warm: site hoarding on Kilmore Street, one digital billboard on a central city route, a few print insertions, and community noticeboards. Every piece carries Circle Living, one call to action and the web address.</p>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Medium</th><th scope="col">What you get</th><th scope="col">Indicative cost (NZD, estimate)</th><th scope="col">Lead time</th></tr></thead>
+      <tbody>
+        <tr><td><b>Site hoarding</b></td><td>A full-frontage fence wrap at 208 Kilmore Street with the twilight garden render</td><td class="n">$4,000 to $10,000</td><td>2 to 3 weeks, subject to council rules</td></tr>
+        <tr><td><b>Digital billboard</b></td><td>A share of a rotating screen on Fitzgerald Avenue, Bealey Avenue or near Te Kaha, 1 to 2 week slots</td><td class="n">$2,500 to $8,000 per site, 2 weeks</td><td>1 to 2 weeks</td></tr>
+        <tr><td><b>Street posters</b></td><td>Backlit panels in the central city, Merivale, St Albans and Richmond</td><td class="n">$3,000 to $8,000, 2 to 4 weeks</td><td>2 to 3 weeks</td></tr>
+        <tr><td><b>Newspaper</b></td><td>A full page in The Press weekend property pages, ideally beside the cohousing story</td><td class="n">$3,000 to $6,000 per insertion</td><td>About 1 week</td></tr>
+        <tr><td><b>Lifestyle magazine</b></td><td>A full page in a monthly Christchurch magazine</td><td class="n">$2,000 to $5,000 per issue</td><td>4 to 6 weeks</td></tr>
+        <tr><td><b>Community noticeboards and flyers</b></td><td>Community gardens, libraries, cafés and the Riverside Market</td><td class="n">$300 to $1,000 in print</td><td>About 1 week</td></tr>
+        <tr><td><b>Community social</b></td><td>An in-person evening with renders, the material board and Circle Living</td><td class="n">$2,000 to $6,000</td><td>3 to 4 weeks</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Rough planning estimates; suppliers don't publish NZ rate cards, so get written quotes before booking.</p>
+  </section>
+
+  <section>
+    <h3>Rules for every ad</h3>
+    <ul>
+      <li>Label renders as artist's impressions and the project as a concept subject to design and consent, in line with the Fair Trading Act.</li>
+      <li>No prices or completion dates until Circle Living releases them. Walking times are approximate and say so where there's room.</li>
+      <li>Circle Living's logo on every ad. Figures about Circle Living (34 homes lived in, 69 residents, Kōwhai since 2023) come from circleliving.nz and should be re-checked before launch.</li>
+    </ul>
+  </section>
+</article>
+</div>
+<div class="wrap"><footer class="end">Prepared for The Central Circle by Circle Living, 208–218 Kilmore Street, Christchurch Central. All images are artist's impressions and indicative only. Ads are concepts for selection, not final artwork.</footer></div>
+
+<script>
+(function () {
+  const SIZES = [
+    { p: "Meta", n: "Feed square", w: 1080, h: 1080 },
+    { p: "Meta", n: "Feed portrait", w: 1080, h: 1350 },
+    { p: "Meta", n: "Stories / Reels", w: 1080, h: 1920 },
+    { p: "Google", n: "Medium rectangle", w: 300, h: 250 },
+    { p: "Google", n: "PMax / Demand Gen landscape", w: 1200, h: 628 },
+    { p: "Meta", n: "Feed square", w: 1080, h: 1080 },
+    { p: "Meta", n: "Feed portrait", w: 1080, h: 1350 },
+    { p: "Google", n: "Large rectangle", w: 336, h: 280 },
+    { p: "Google", n: "Leaderboard", w: 728, h: 90 },
+    { p: "Google", n: "Half page", w: 300, h: 600 },
+    { p: "Google", n: "PMax / Demand Gen square", w: 1200, h: 1200 },
+    { p: "Meta", n: "Stories / Reels", w: 1080, h: 1920 },
+    { p: "Google", n: "Mobile banner", w: 320, h: 50 }
+  ];
+  const ANGLES = [
+    { key: "village", name: "Village: your own front door, a village around it", short: "A village at your door",
+      heads: ["Your own front door. A village around it.", "Know your neighbours' names again", "A neighbourhood, not just an address", "Private home. Shared village.", "City living with people who wave back", "Where hello turns into dinner", "The street you wish you grew up on", "Come home to people you know", "A village in the middle of Christchurch", "Close the door, or open the gate"],
+      prim: ["The Central Circle by Circle Living: private homes around a shared garden and common house on Kilmore Street, Christchurch Central. Register your interest.",
+        "Every home has its own kitchen, bathroom and front door. Beyond it are a garden, a long table and neighbours you'll actually know. Register for updates.",
+        "A cohousing neighbourhood of apartments, townhouses and two original villas, set around one shared garden in the central city.",
+        "Own your home outright and share the things that make a neighbourhood work: gardens, a common house, tools and time. Register free.",
+        "Brick and sage homes around a lit garden on the quiet north-east edge of the central city. Hear first when plans and pricing are released.",
+        "Shared meals when you want company, a closed door when you don't. The Central Circle, Kilmore Street. Register your interest.",
+        "Children wandering between friends' homes, herbs picked for dinner, a table set for anyone. Be part of it from the start.",
+        "Kilmore Street is getting a village. Register with Circle Living to hear first about homes, Open Hours and the Founding Circle.",
+        "Private homes, shared gardens and a common house, about ten minutes' walk from the Town Hall. Register your interest.",
+        "Your space, your pace, with a garden full of neighbours on the other side of the gate. Registering is free and doesn't commit you."],
+      btn: ["Register interest", "Learn more", "Sign up"], imgs: ["hero-twilight", "aerial-day", "garden-twilight"],
+      aud: "Christchurch adults 30 to 75; interests in community, cohousing, neighbourhood life and central city living" },
+    { key: "garden", name: "Garden: evenings in the shared garden", short: "Evenings in the garden",
+      heads: ["Evenings belong to the garden", "Dinner's at the long table tonight", "Pick the herbs on your way home", "A garden you don't have to mow alone", "Raised beds. Fruit trees. Good company.", "Low lights, long table, easy evenings", "Grow food with the people next door", "A shared backyard, and better for it", "The garden is the heart of it", "Twilight, tomatoes and a long table"],
+      prim: ["A winding path between vegetable beds, timber tables and low lights, from the villas to the common house. The Central Circle, Kilmore Street.",
+        "The common house has a dining hall and a shared kitchen for meals together, whenever anyone feels like company. Register your interest.",
+        "Raised vegetable beds and fruit trees sit at the heart of The Central Circle, cared for by the people who live there.",
+        "Owners share the gardens through the body corporate, so the work is shared too. Private homes, shared ground, central Christchurch.",
+        "Food gardens, a play area and timber tables where neighbours meet. Register to hear first about homes and pricing.",
+        "When the light goes, the garden glows. See the homes around it on The Central Circle website.",
+        "Swap seedlings, share a harvest, borrow a ladder. Cohousing on Kilmore Street by Circle Living. Register free.",
+        "Every home opens onto the same shared garden, so the best part of the neighbourhood is right outside your door.",
+        "A garden made for picking, playing and lingering, in the middle of the city. Register your interest with Circle Living.",
+        "Someone's watering the beds, someone's setting the table. Come and see how cohousing works at a free online Open Hour."],
+      btn: ["Register interest", "See the garden", "Learn more"], imgs: ["garden-twilight", "crop-kitchen", "aerial-day"],
+      aud: "Canterbury adults 30 to 75; interests in gardening, home-grown food, community gardens and outdoor dining" },
+    { key: "city", name: "Location: the central city on foot", short: "City life, on foot",
+      heads: ["The central city, on foot", "Five minutes to the Avon", "Walk to the game at Te Kaha", "Leave the car. Walk to town.", "Margaret Mahy Playground, five minutes away", "Tūranga, the Town Hall and home", "City on your doorstep. Garden at your door.", "Kilmore Street, Christchurch Central", "Matchday? It's a 15-minute walk.", "Riverside walks before breakfast"],
+      prim: ["From 208 Kilmore Street it's about five minutes' walk to the Ōtākaro Avon River and the Margaret Mahy Playground, and about ten to the Town Hall.",
+        "The river path is a few minutes from your front door, and a shared garden is waiting when you get back. Register your interest.",
+        "Te Kaha stadium is about a 15-minute walk away, then home to a quiet garden and neighbours you know. Register your interest.",
+        "A cohousing neighbourhood in the central city, an easy walk to concerts, cafés and the river. Register for updates.",
+        "Kids to the Margaret Mahy Playground, you to the river path, everyone home for dinner. The Central Circle by Circle Living.",
+        "About 12 minutes' walk to Tūranga library and 14 to Cathedral Square. Register your interest in The Central Circle.",
+        "City living without the anonymity: private homes around a shared garden on Kilmore Street. Hear first when plans are released.",
+        "The Central Circle sits on the quiet north-east edge of the central city, near the Avon Loop. Register with Circle Living.",
+        "Walk to the game, walk home, and catch your neighbours at the garden table on the way in. Walking times are approximate.",
+        "Riverside Market, Victoria Square and the Avon are all within walking distance of your own front door. Register free."],
+      btn: ["Register interest", "See the location", "Learn more"], imgs: ["aerial-day", "hero-twilight", "crop-townhouses"],
+      aud: "Christchurch and Canterbury adults 25 to 70 working or socialising in the central city; interests in walkable living, the arts, sport and cycling" },
+    { key: "homes", name: "Homes: apartments, townhouses and villas", short: "Homes around a garden",
+      heads: ["Apartments, townhouses and two villas", "One, two or three bedrooms", "A gabled townhouse on Kilmore Street", "Garden apartments with balconies", "Three ways to live. One garden.", "Ground floor, straight onto the garden", "Living downstairs, bedrooms upstairs", "Lock up and travel", "Room for the family, close to town", "Find the home that fits your life"],
+      prim: ["The Central Circle offers garden apartments, a terrace of Kilmore Street townhouses and two original villas, all around one shared garden.",
+        "One-, two- and three-bedroom homes, each with its own kitchen, bathroom and front door. Sizes are indicative and still being designed.",
+        "A row of gabled two-storey homes facing Kilmore Street, each with a street entry, a front garden and a back gate to the shared garden.",
+        "Three-level apartment blocks with balconies over the vegetable beds. Warm brick below, sage cladding above. Artist's impression.",
+        "An apartment, a townhouse or a character villa: choose your home and share the garden. Register to hear first about plans and pricing.",
+        "Ground-floor apartments open straight onto the shared garden. Register your interest in The Central Circle.",
+        "The Kilmore Townhouses put living downstairs and bedrooms upstairs, with the common house a short walk across the garden.",
+        "A garden apartment you can lock up and leave, knowing your neighbours are close. Pricing to be released.",
+        "Two- and three-bedroom homes for families who want room and a village around them, in the central city.",
+        "Tell us which home interests you and Circle Living will send plans as they're released. Registering is free."],
+      btn: ["See the homes", "Register interest", "Learn more"], imgs: ["crop-apartments", "crop-townhouses", "crop-villa"],
+      aud: "Christchurch home buyers 25 to 75; in-market for apartments and townhouses; first-home buyers and downsizers" },
+    { key: "explain", name: "Explainer: own your home, share the rest", short: "Own it. Share the rest.",
+      heads: ["Own your home. Share the rest.", "What is cohousing, really?", "Not a commune. Not an apartment block.", "Your home is private. The garden is shared.", "A guest room for when family visits", "Share the mower, keep your weekends", "Learn cohousing in a free Open Hour", "New to cohousing? Start here.", "The common house, explained", "Why share a workshop?"],
+      prim: ["At The Central Circle you own your home outright. The gardens, common house and tools are shared through the body corporate.",
+        "Cohousing means private, self-contained homes plus shared spaces that neighbours look after together. Register to find out more.",
+        "Every home is fully self-contained. Shared meals and gardens are there when you want them. Register your interest.",
+        "Your own kitchen, bathroom and front door, with a garden, play area and common house beyond it. The Central Circle, Kilmore Street.",
+        "The common house has a guest room for visiting family, so your own home doesn't need a spare bedroom. Register to hear more.",
+        "A shared workshop and shed with tools, mowers, bikes and storage, so not every household has to own everything. Register free.",
+        "Circle Living runs free online Open Hours on how cohousing works, including the costs. Register and we'll send the next one.",
+        "Buying into cohousing is a little different, and Circle Living explains everything up front. Book a free 30-minute call.",
+        "A dining hall, a shared kitchen and a guest room, owned together by the neighbours. See The Central Circle.",
+        "Shared tools and storage mean less clutter at home and more reasons to say hello. Register your interest with Circle Living."],
+      btn: ["Learn more", "Register interest", "Book a call"], imgs: ["crop-commonhouse", "aerial-day", "crop-kitchen"],
+      aud: "New Zealand adults 28 to 70; interests in cohousing, intentional community, tiny homes, sustainable living and the sharing economy" },
+    { key: "founding", name: "Early access: join the Founding Circle", short: "Join the Founding Circle",
+      heads: ["Join the Founding Circle", "Meet your neighbours before you move in", "Help shape the neighbourhood", "First option when pre-sales open", "Be part of it from the start", "Pricing to be released. Register first.", "Find your future neighbours", "Hear first. Choose first.", "Early households get first choice", "Start the friendships now"],
+      prim: ["Founding Circle members meet the other early households, help shape the neighbourhood and get first option when pre-sales open.",
+        "Get to know the people you'll live beside long before moving day. Register your interest in The Central Circle.",
+        "The earliest households help shape how the gardens, common house and shared life work. Register to hear about the Founding Circle.",
+        "Register, join the Founding Circle, and get first option on a home when pre-sales open. Registering is free and non-binding.",
+        "Registering is free and doesn't commit you to anything. You'll hear first about Open Hours, socials, pricing and the Founding Circle.",
+        "Plans and pricing for The Central Circle haven't been released yet. Registered households hear first.",
+        "Community socials and Open Hours are where future neighbours first meet. Register to get the invitations.",
+        "Be first to see plans, prices and community events for The Central Circle, Kilmore Street. Register free.",
+        "When pre-sales open, Founding Circle members get first option. Register your interest with Circle Living.",
+        "Cohousing starts with people, not bricks. Join the Founding Circle and start the friendships now."],
+      btn: ["Register interest", "Sign up", "Get updates"], imgs: ["hero-twilight", "garden-twilight", "crop-kitchen"],
+      aud: "Retargeting site visitors and engaged video viewers; lookalikes of registrations; Circle Living followers" },
+    { key: "family", name: "Families: kids who know the neighbours", short: "Raise kids with a village",
+      heads: ["Kids who know the neighbours", "A play area outside the back gate", "Room to roam, right in town", "More grown-ups in your corner", "Grandparents next door, by choice", "Raising kids with a village", "Friends' houses, one garden away", "Garden paths, busy beds, happy kids", "A family home in the central city", "Every generation at one table"],
+      prim: ["Children wander between friends' homes through a shared garden, with a play area and familiar faces all around. The Central Circle.",
+        "A play area, vegetable beds and timber tables, all on the other side of your back gate. Register your interest.",
+        "Family homes in the central city, about five minutes' walk from the Margaret Mahy Playground. Register with Circle Living.",
+        "Cohousing means neighbours who'll take in a parcel, share a meal or keep an eye out. Register to hear first.",
+        "Multi-generational families can live close, each in their own home, around one shared garden. Register your interest.",
+        "It takes a village, so Circle Living is planning one on Kilmore Street. Private homes, shared gardens, a common house.",
+        "Two- and three-bedroom homes where the kids' friends are across the garden, not across town. Register free.",
+        "Raised beds to tend, paths to wander and neighbours to wave to. The Central Circle by Circle Living.",
+        "Townhouses with living downstairs, bedrooms upstairs, a front garden and a gate to the shared garden. Pricing to be released.",
+        "Circle Living's first neighbourhood is home to everyone from toddlers to great-grandparents. Christchurch is next."],
+      btn: ["Register interest", "Learn more", "See the homes"], imgs: ["aerial-day", "garden-twilight", "crop-townhouses"],
+      aud: "Canterbury parents 28 to 45 with young children; grandparents 55 to 75; interests in parenting, family activities and multi-generational living" },
+    { key: "rightsize", name: "Right-sizers: less house, more neighbours", short: "Right-size, not alone",
+      heads: ["Right-size without going it alone", "Less house. More neighbours.", "Keep the garden, lose the lawnmower", "Lock up and visit the grandkids", "Your next home, with company built in", "Downsizing to the central city", "A smaller home and a bigger life", "Company when you want it", "Trade the big section for a shared one", "Neighbours who notice"],
+      prim: ["A one- or two-bedroom home of your own, with a shared garden, common house and neighbours close by. The Central Circle, Kilmore Street.",
+        "Swap upkeep for community: owners share the gardens and common house through the body corporate. Register your interest.",
+        "Pick vegetables from the shared beds without mowing a lawn on your own. Register to hear first about homes and pricing.",
+        "A garden apartment you can lock up and leave, knowing your neighbours are close. Register with Circle Living.",
+        "Shared meals in the common house when you feel like company, your own front door when you don't. Register free.",
+        "Walk to the Town Hall, Tūranga and the river from your own home on Kilmore Street. Register your interest.",
+        "Private homes around a shared garden, a guest room for visiting family and a workshop full of shared tools.",
+        "A long table, a garden path and people you know, right outside your door. Come to a free online Open Hour.",
+        "Keep your love of gardening and share the work. The Central Circle by Circle Living, Christchurch Central.",
+        "When you're away, the people next door know. When you're home, they're there for a cuppa. Register your interest."],
+      btn: ["Register interest", "Book a call", "Learn more"], imgs: ["crop-kitchen", "crop-apartments", "garden-twilight"],
+      aud: "Christchurch homeowners 55 to 78 in larger homes (Merivale, St Albans, Fendalton, Cashmere, Sumner); interests in downsizing, retirement planning and travel" },
+    { key: "character", name: "Character: two original villas and a quiet palette", short: "Two villas, kept",
+      heads: ["Two original villas, kept and cared for", "Bay windows and a century of character", "Brick, sage and weathered timber", "New homes that respect the old street", "Materials that sit quietly in the landscape", "Kilmore Street's villas, given a future", "Warm brick. Muted sage. Aged bronze.", "Heritage at the gate, garden beyond", "Designed to let the planting talk", "Old houses, new neighbours"],
+      prim: ["Two of Kilmore Street's original weatherboard villas are kept at The Central Circle, set among the new homes. Their final use is still being designed.",
+        "Bay windows and high ceilings sit beside new brick and sage homes, all opening onto one garden. Artist's impression.",
+        "Sand and clay brick below, muted sage metal above, with bronze, charcoal and timber in the details. Register for updates.",
+        "The palette ties the new homes to the original villas, so The Central Circle feels like it belongs on Kilmore Street.",
+        "Mineral paving, weathered timber tables and planting everywhere. Register your interest in The Central Circle.",
+        "Rather than clearing the street's history, The Central Circle keeps two original villas at its heart. Register to follow the design.",
+        "A warm, quiet material palette for a quieter kind of city living. See the design on The Central Circle website.",
+        "Walk past the bay-windowed villa and into a garden full of neighbours. Register with Circle Living.",
+        "Gabled roofs, balconies over the garden and a palette chosen to let the planting do the talking. Artist's impression.",
+        "Character homes and new homes around one shared garden in Christchurch Central. Register your interest."],
+      btn: ["See the design", "Register interest", "Learn more"], imgs: ["crop-villa", "hero-twilight", "materials"],
+      aud: "Canterbury adults 35 to 75; interests in heritage homes, villas, architecture, interior design and design magazines" },
+    { key: "trust", name: "Trust: Circle Living has done it before", short: "From the makers of Kōwhai",
+      heads: ["From Circle Living, makers of Kōwhai", "Home to 69 people already", "Cohousing that's already working", "Proven in Tākaka. Planned for Christchurch.", "Talk to Circle Living first", "Questions? Book a free 30-minute call", "Kōwhai showed it works", "34 homes lived in. Christchurch is next.", "Costs explained up front", "Made by people who've done it"],
+      prim: ["Circle Living's first neighbourhood, Kōwhai in Tākaka, has been home to everyone from toddlers to great-grandparents since 2023.",
+        "Circle Living neighbourhoods are home to 69 residents across 34 homes. The Central Circle brings the idea to Kilmore Street.",
+        "Private homes and shared spaces, lived in at Kōwhai in Tākaka and now planned for central Christchurch. Register your interest.",
+        "Kōwhai in Tākaka has been lived in since 2023. The Central Circle is Circle Living's Christchurch neighbourhood. Register free.",
+        "Book a free 30-minute call with Circle Living, or email kiaora@circleliving.nz, to ask anything about The Central Circle.",
+        "Not sure cohousing is for you? A free 30-minute call with Circle Living is the easiest way to find out.",
+        "Since 2023, Kōwhai has shown how private homes and shared gardens work together. Now it's Christchurch's turn.",
+        "Circle Living has 34 homes lived in and six upcoming neighbourhoods, including The Central Circle on Kilmore Street.",
+        "Buying into cohousing is a little different, so Circle Living explains everything up front, including the costs. Register to learn more.",
+        "Circle Living brings people together to create thoughtfully designed neighbourhoods. Register your interest in The Central Circle."],
+      btn: ["Book a call", "Register interest", "Learn more"], imgs: ["aerial-day", "crop-commonhouse", "garden-twilight"],
+      aud: "Lookalikes of Circle Living followers and registrations; New Zealand adults interested in cohousing; retargeting" }
+  ];
+  const IMGALT = {
+    "hero-twilight": "an artist's impression of the homes and villas around the lit garden at dusk",
+    "garden-twilight": "an artist's impression of the shared garden at twilight with a long table",
+    "aerial-day": "an artist's impression of the neighbourhood from above in afternoon light",
+    "crop-apartments": "an artist's impression of the brick and sage apartment blocks",
+    "crop-townhouses": "an artist's impression of the gabled townhouses on Kilmore Street",
+    "crop-villa": "an artist's impression of a retained bay-windowed villa",
+    "crop-kitchen": "an artist's impression of neighbours at the common house table",
+    "crop-commonhouse": "an artist's impression of the glazed common house",
+    "materials": "the material palette of brick, sage cladding, bronze and timber"
+  };
+
+  const ads = [];
+  for (let i = 0; i < 100; i++) {
+    const a = ANGLES[i % 10], s = SIZES[i % 13], r = Math.floor(i / 10);
+    ads.push({ n: i + 1, angle: a, size: s, head: a.heads[r], prim: a.prim[r], btn: a.btn[r % 3], img: a.imgs[r % 3], aud: a.aud });
+  }
+
+  const logo = (w) => `<img class="logo" src="/media/circle-living-logo-reversed.png" alt="Circle Living" style="width:${w}px">`;
+  function adMarkup(ad) {
+    const { w, h } = ad.size, ratio = w / h, img = "/media/" + ad.img + ".jpg";
+    if (h <= 90) { // banners
+      const small = h <= 50;
+      return `<img class="bg" src="${img}" alt="" style="width:${small ? 64 : 180}px;left:0;right:auto">
+        <div style="position:absolute;inset:0 0 0 ${small ? 64 : 180}px;background:#21382a;display:flex;align-items:center;justify-content:space-between;gap:${small ? 6 : 16}px;padding:0 ${small ? 8 : 18}px">
+          <div style="min-width:0;flex:1"><div class="brand" style="font-size:${small ? 8 : 12}px;color:#e3bd58;white-space:nowrap;letter-spacing:.2em">THE CENTRAL CIRCLE${small ? "" : " · CIRCLE LIVING"}</div><div class="h" style="font-size:${small ? 10.5 : 21}px;white-space:nowrap;letter-spacing:.03em">${ad.angle.short}</div></div>
+          <span class="btn" style="font-size:${small ? 8 : 13}px;padding:${small ? "6px 8px" : "12px 18px"}">${small ? ad.btn.replace(" interest", "") : ad.btn}</span></div>`;
+    }
+    if (ratio > 1.4) { // landscape
+      return `<img class="bg" src="${img}" alt=""><div class="shadeTop"></div><div class="shade"></div>
+        <div class="brand" style="position:absolute;top:34px;left:0;right:0;text-align:center;font-size:30px">The Central Circle</div>
+        <div style="position:absolute;left:56px;right:56px;bottom:44px;display:flex;justify-content:space-between;align-items:flex-end;gap:30px">
+          <div style="display:grid;gap:18px;max-width:720px"><div class="h" style="font-size:54px">${ad.head}</div>
+          <div class="fine" style="font-size:15px">Kilmore Street · Christchurch Central · Artist's impression</div></div>
+          <div style="display:grid;gap:18px;justify-items:end">${logo(250)}<span class="btn" style="font-size:20px;padding:18px 32px">${ad.btn}</span></div></div>`;
+    }
+    const sm = w <= 336, tall = h / w > 1.6, tiny = sm && h < 400;
+    const pad = sm ? 14 : 72, hs = sm ? (h >= 600 ? 30 : 20) : (h >= 1900 ? 96 : 80), bs = sm ? 10 : 26, bp = sm ? "8px 12px" : "24px 44px", br = sm ? 13 : 34, fs = sm ? 8 : 18;
+    const big = ad.angle.key === "trust";
+    const logoW = sm ? (big ? 130 : 100) : (big ? 480 : 340);
+    return `<img class="bg" src="${img}" alt="" style="object-position:${tall ? "55% 50%" : "50% 50%"}"><div class="shadeTop"></div><div class="shade"></div>
+      <div class="brand" style="position:absolute;top:${pad}px;left:0;right:0;text-align:center;font-size:${br}px">The Central Circle</div>
+      <div style="position:absolute;left:${pad}px;right:${pad}px;bottom:${tall && !sm ? 260 : pad}px;display:grid;gap:${sm ? 8 : 30}px;text-align:center;justify-items:center">
+        ${tiny ? "" : `<div class="fine" style="font-size:${sm ? 8 : 20}px">Kilmore Street · Christchurch Central</div>`}
+        <div class="h" style="font-size:${hs}px">${ad.head}</div>
+        <div><span class="btn" style="font-size:${bs}px;padding:${bp}">${ad.btn}</span></div>
+        ${logo(logoW)}
+        <div class="fine" style="font-size:${fs}px;opacity:.85">${tiny ? "Artist's impression" : "Artist's impression · Concept, subject to design and consent"}</div>
+      </div>`;
+  }
+
+  let picks = new Set();
+  try { const s = localStorage.getItem("central-circle-picks"); if (s) picks = new Set(JSON.parse(s)); } catch (e) {}
+  const save = () => { try { localStorage.setItem("central-circle-picks", JSON.stringify([...picks])); } catch (e) {} };
+  let pf = "all", ang = "all", onlyPicked = false;
+
+  const angleGroup = document.getElementById("angleGroup");
+  [{ key: "all", name: "All" }].concat(ANGLES).forEach((a) => {
+    const b = document.createElement("button");
+    b.className = "chipbtn"; b.dataset.ang = a.key;
+    b.textContent = a.key === "all" ? "All" : a.name.split(":")[0];
+    b.title = a.name; b.setAttribute("aria-pressed", a.key === "all" ? "true" : "false");
+    angleGroup.appendChild(b);
+  });
+
+  const grid = document.getElementById("grid");
+  ads.forEach((ad) => {
+    const c = document.createElement("article");
+    c.className = "card"; c.dataset.n = ad.n; c.dataset.pf = ad.size.p; c.dataset.ang = ad.angle.key;
+    c.innerHTML = `<div class="stage"><div class="frame" style="aspect-ratio:${ad.size.w}/${ad.size.h}"><div class="ad" style="width:${ad.size.w}px;height:${ad.size.h}px" role="img" aria-label="Ad ${ad.n}: ${ad.head.replace(/"/g, "")}, on ${IMGALT[ad.img]}">${adMarkup(ad)}</div></div></div>
+      <div class="meta">
+        <div class="metaTop"><span class="num">No. ${ad.n}</span><button class="pickbtn" aria-pressed="false">Pick</button></div>
+        <div class="tags"><span class="tag">${ad.size.p} · ${ad.size.n} · ${ad.size.w}×${ad.size.h}</span><span class="tag angle">${ad.angle.name}</span></div>
+        <dl class="spec">
+          <div><dt>Headline</dt><dd>${ad.head}</dd></div>
+          <div><dt>Primary text</dt><dd>${ad.prim}</dd></div>
+          <div><dt>Button</dt><dd>${ad.btn}</dd></div>
+          <div><dt>Audience</dt><dd>${ad.aud}</dd></div>
+        </dl>
+      </div>`;
+    grid.appendChild(c);
+  });
+  window.__ADS = ads.map((a) => ({ n: a.n, platform: a.size.p, size: a.size.n + " " + a.size.w + "x" + a.size.h, angle: a.angle.name, headline: a.head, primary: a.prim, button: a.btn, image: a.img, audience: a.aud }));
+
+  function fit() {
+    document.querySelectorAll(".card").forEach((c) => {
+      if (c.hidden) return;
+      const stage = c.querySelector(".stage"), frame = c.querySelector(".frame"), ad = c.querySelector(".ad");
+      const w = +ad.style.width.replace("px", ""), h = +ad.style.height.replace("px", "");
+      const avail = stage.clientWidth - 28, maxH = 420;
+      let scale = Math.min(avail / w, maxH / h, 1);
+      frame.style.width = Math.round(w * scale) + "px";
+      frame.style.height = Math.round(h * scale) + "px";
+      ad.style.transform = `scale(${scale})`;
+    });
+  }
+
+  function render() {
+    let n = 0;
+    document.querySelectorAll(".card").forEach((c) => {
+      const num = +c.dataset.n, picked = picks.has(num);
+      c.classList.toggle("picked", picked);
+      const b = c.querySelector(".pickbtn"); b.setAttribute("aria-pressed", picked ? "true" : "false"); b.textContent = picked ? "Picked" : "Pick";
+      c.hidden = !((pf === "all" || c.dataset.pf === pf) && (ang === "all" || c.dataset.ang === ang) && (!onlyPicked || picked));
+      if (picked) n++;
+    });
+    document.getElementById("count").textContent = n;
+    fit();
+  }
+
+  document.addEventListener("click", (e) => {
+    const t = e.target.closest("button"); if (!t) return;
+    if (t.classList.contains("pickbtn")) { const n = +t.closest(".card").dataset.n; picks.has(n) ? picks.delete(n) : picks.add(n); save(); render(); }
+    else if (t.dataset.pf) { pf = t.dataset.pf; document.querySelectorAll("[data-pf].chipbtn").forEach((b) => b.setAttribute("aria-pressed", b === t ? "true" : "false")); render(); }
+    else if (t.dataset.ang) { ang = t.dataset.ang; angleGroup.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", b === t ? "true" : "false")); render(); }
+    else if (t.id === "onlyPicked") { onlyPicked = !onlyPicked; t.setAttribute("aria-pressed", onlyPicked ? "true" : "false"); render(); }
+    else if (t.id === "copyBtn") {
+      const list = [...picks].sort((a, b) => a - b);
+      const status = document.getElementById("status"), fb = document.getElementById("copyFallback");
+      if (!list.length) { status.textContent = "Pick at least one ad first."; return; }
+      const text = "The Central Circle ad picks: " + list.map((n) => "#" + n).join(", ");
+      const fallback = () => { fb.hidden = false; fb.value = text; fb.focus(); fb.select(); status.textContent = "Copy the text below and send it back."; };
+      try { navigator.clipboard.writeText(text).then(() => { status.textContent = "Copied " + list.length + " picks. Paste them into a message to us."; fb.hidden = true; }, fallback); } catch (err) { fallback(); }
+    }
+  });
+  window.addEventListener("resize", fit);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  render();
+})();
+</script>
+</body>
+</html>
