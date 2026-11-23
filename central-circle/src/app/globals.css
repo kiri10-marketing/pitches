@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Jost misplaces Māori macrons, so macron vowels come from Figtree (self-hosted, macrons only). */
+@font-face { font-family: "MacronFix"; font-weight: 400; font-display: swap; src: url(/fonts/figtree-macrons-400.woff2) format("woff2"); unicode-range: U+0100-0101, U+0112-0113, U+012A-012B, U+014C-014D, U+016A-016B; }
+@font-face { font-family: "MacronFix"; font-weight: 500; font-display: swap; src: url(/fonts/figtree-macrons-500.woff2) format("woff2"); unicode-range: U+0100-0101, U+0112-0113, U+012A-012B, U+014C-014D, U+016A-016B; }
+
+
 /* The Central Circle: The Rise's quiet luxury system, retuned to the K06 palette and Circle Living.
    Warm stone and ink, deep Circle Living green for dark sections, sage from the cladding, and a
    bronze-gold accent drawn from the Circle Living ring. Text stays large and high-contrast. */
@@ -28,7 +33,7 @@
   --color-olive-2: var(--olive-2);
   --color-sage: var(--sage);
   --color-line: var(--line);
-  --font-sans: var(--font-body);
+  --font-sans: "MacronFix", var(--font-body);
   --font-display: var(--font-display);
 }
 
@@ -38,7 +43,7 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--stone);
   color: var(--body);
-  font-family: var(--font-body), "Helvetica Neue", Arial, sans-serif;
+  font-family: "MacronFix", var(--font-body), "Helvetica Neue", Arial, sans-serif;
   font-size: 18px;
   font-weight: 400;
   line-height: 1.7;
@@ -62,7 +67,7 @@ body {
 
 /* Small letterspaced labels, Graya style, kept at a readable 14px. */
 .eyebrow {
-  font-family: var(--font-body), Arial, sans-serif;
+  font-family: "MacronFix", var(--font-body), Arial, sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.28em;
