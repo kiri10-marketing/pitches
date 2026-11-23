@@ -1,10 +1,9 @@
 import Image from "next/image";
-import { site, hero, intro, facts, homes, garden, shared, design, steps, location, agent, form, footer } from "@/content/copy";
+import { site, hero, intro, facts, homes, garden, shared, design, steps, location, agent, form, footer, brochure } from "@/content/copy";
 import SiteHeader from "@/components/SiteHeader";
 import HomeTabs from "@/components/HomeTabs";
 import EnquiryForm from "@/components/EnquiryForm";
 import Reveal from "@/components/Reveal";
-import LiveRender from "@/components/LiveRender";
 
 function jsonLd() {
   return [
@@ -36,11 +35,11 @@ export default function Home() {
       <Reveal />
 
       <main>
-        {/* Hero: drone film, rising from the street, day to night */}
+        {/* Hero: the original render, slowly turning from day to dusk as the camera rises to the Port Hills */}
         <section id="top" className="relative overflow-hidden bg-ink pt-[68px] sm:h-[100svh] sm:min-h-[560px] sm:pt-0">
           <div className="relative h-[100vw] max-h-[58svh] overflow-hidden sm:absolute sm:inset-0 sm:h-auto sm:max-h-none">
-            <Image src={hero.filmPoster} alt={hero.imageAlt} fill priority sizes="100vw" className="object-cover" />
-            <video className="hero-video absolute inset-0 h-full w-full object-cover" src={hero.video} poster={hero.filmPoster} autoPlay muted loop playsInline preload="auto" aria-hidden="true" />
+            <Image src={hero.dayImage} alt={hero.imageAlt} fill priority sizes="100vw" className="hero-pan object-cover" />
+            <Image src={hero.nightImage} alt="" aria-hidden="true" fill priority sizes="100vw" className="hero-pan hero-dusk object-cover" />
             <div className="absolute inset-x-0 bottom-0 h-1/4 bg-[linear-gradient(to_bottom,rgba(29,38,32,0),#1d2620)] sm:hidden" />
             <span className="render-tag sm:hidden">{hero.renderNote}</span>
           </div>
@@ -96,7 +95,6 @@ export default function Home() {
           <div className="mx-auto grid max-w-[1400px] gap-10 px-6 sm:px-8 lg:grid-cols-[1.25fr_1fr] lg:items-end">
             <div className="reveal relative aspect-[3/2]">
               <Image src={garden.image} alt={garden.imageAlt} fill sizes="(min-width:1024px) 55vw, 100vw" className="object-cover" />
-              <LiveRender src={garden.film} poster={garden.image} />
               <span className="render-tag">Artist&apos;s impression</span>
             </div>
             <div className="reveal lg:pb-8">
@@ -121,7 +119,6 @@ export default function Home() {
           <div className="reveal mx-auto grid max-w-[1400px] gap-4 sm:px-8 lg:grid-cols-[1.6fr_1fr]">
             <div className="relative aspect-[3/2]">
               <Image src={shared.image} alt={shared.imageAlt} fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover" />
-              <LiveRender src={shared.film} poster={shared.image} />
               <span className="render-tag">Artist&apos;s impression</span>
             </div>
             <div className="relative hidden aspect-[3/2] lg:block lg:aspect-auto">
@@ -224,6 +221,8 @@ export default function Home() {
                 {agent.socials.map((s) => <a key={s.href} href={s.href} target="_blank" rel="noopener" className="hover:text-ink">{s.label}</a>)}
               </p>
               <p className="mt-6 text-sm">{agent.company}</p>
+              <a href={brochure.href} download className="btn mt-10">{brochure.label}</a>
+              <p className="mt-3 text-sm">{brochure.note}</p>
             </div>
             <div className="reveal">
               <p className="eyebrow">{form.eyebrow}</p>
@@ -246,7 +245,7 @@ export default function Home() {
           </div>
           <div className="rule my-10" />
           <p className="text-sm leading-relaxed">{footer.disclaimer}</p>
-          <p className="mt-6 text-sm">© {new Date().getFullYear()} The Central Circle · Circle Living · <a href="/marketing.html" className="underline underline-offset-4 hover:text-white">Marketing</a></p>
+          <p className="mt-6 text-sm">© {new Date().getFullYear()} The Central Circle · Circle Living · <a href={brochure.href} download className="underline underline-offset-4 hover:text-white">Brochure (PDF)</a> · <a href="/marketing.html" className="underline underline-offset-4 hover:text-white">Ad concepts</a></p>
         </div>
       </footer>
     </>

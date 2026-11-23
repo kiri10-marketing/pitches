@@ -31,8 +31,8 @@ export const hero = {
   status: "Private homes · Shared gardens · A common house · Two original villas retained",
   cta: "Register interest",
   image: "/media/hero-twilight.jpg", // still used for social previews
-  video: "/media/hero-film.mp4", // Higgsfield: drone rises from second-storey height, arcs 45°, day to night, stadium and Port Hills beyond
-  filmPoster: "/media/hero-film-poster.jpg", // first frame of the film
+  dayImage: "/media/hero-day.jpg", // original render relit for day, Port Hills added above the horizon (homes unchanged)
+  nightImage: "/media/hero-dusk.jpg", // original dusk render, pixel for pixel below the skyline, Port Hills added
   imageAlt: "Artist's impression of The Central Circle at dusk: brick and sage-green homes around a lit shared garden, with two original villas on Kilmore Street",
   renderNote: "Artist's impression",
 };
@@ -83,7 +83,6 @@ export const homes = {
       size: "75–100 m²", // [PLACEHOLDER] to confirm against K06 schedule
       beds: "2–3 bedrooms",
       image: "/media/crop-townhouses.jpg",
-      film: "/media/live-townhouses.mp4", // Higgsfield: dusk on the street with people passing
       imageAlt: "Artist's impression of the row of gabled two-storey townhouses facing Kilmore Street at dusk",
       points: [
         "A row of gabled two-storey homes facing Kilmore Street",
@@ -120,7 +119,6 @@ export const garden = {
   body: "A paved path winds between raised vegetable beds, weathered timber tables and low lights, from the villas to the common house. Children wander between friends' homes, someone is picking herbs for dinner, and the long table is set when anyone feels like company.",
   image: "/media/garden-twilight.jpg",
   imageAlt: "Artist's impression of the shared garden at twilight: a timber table, raised vegetable beds, a lit path and neighbours dining in the common house",
-  film: "/media/live-garden.mp4", // Higgsfield: people moving through the twilight garden
   image2: "/media/crop-kitchen.jpg",
   image2Alt: "Artist's impression of neighbours at the long table in the glazed common house kitchen",
 };
@@ -137,7 +135,6 @@ export const shared = {
   ],
   image: "/media/aerial-day.jpg",
   imageAlt: "Artist's impression of The Central Circle from above in afternoon light, showing the homes, common house, gardens and play area",
-  film: "/media/live-aerial.mp4", // Higgsfield: residents strolling the village from above
   image2: "/media/crop-commonhouse.jpg",
   image2Alt: "Artist's impression of the glazed common house beside the shared garden",
 };
@@ -233,6 +230,12 @@ export const form = {
   submit: "Register",
   success: "Thank you. The Circle Living team will be in touch.",
   error: "Sorry, that didn't send. Please email kiaora@circleliving.nz.",
+};
+
+export const brochure = {
+  href: "/brochure/The-Central-Circle-Brochure.pdf",
+  label: "Download the brochure",
+  note: "PDF · 10 pages · 2.9 MB",
 };
 
 export const footer = {

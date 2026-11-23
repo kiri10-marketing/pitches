@@ -116,7 +116,17 @@ body {
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .marquee { animation: none; flex-wrap: wrap; width: auto; } }
 
-@media (prefers-reduced-motion: reduce) { .hero-video { display: none; } }
+/* Hero: one slow move. The camera rises a few metres towards the Port Hills
+   while the day render gives way to the dusk render. The homes are the
+   original render in both frames; only the light and the sky change. */
+.hero-pan { object-position: 50% 20%; animation: hero-rise 26s cubic-bezier(.45,.05,.35,1) both; will-change: transform; }
+.hero-dusk { animation: hero-rise 26s cubic-bezier(.45,.05,.35,1) both, hero-dusk 26s ease-in-out both; }
+@keyframes hero-rise {
+  from { object-position: 50% 100%; transform: scale(1.1) translateY(4.5%); }
+  to   { object-position: 50% 20%; transform: scale(1) translateY(0); }
+}
+@keyframes hero-dusk { 0%, 12% { opacity: 0; } 100% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .hero-pan, .hero-dusk { animation: none; } }
 
 /* Form fields: underline only, like the Graya register form, but large. */
 .field { display: grid; gap: 6px; }
@@ -138,4 +148,3 @@ body {
 /* A thin dotted ring, a quiet nod to the Circle Living mark. */
 .ring { width: 56px; height: 56px; border-radius: 9999px; border: 1px dashed var(--bronze); margin: 0 auto; }
 .on-dark .ring { border-color: var(--bronze-soft); }
-@media (prefers-reduced-motion: reduce) { .live-render { display: none; } }

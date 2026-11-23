@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { useState } from "react";
 import { homes } from "@/content/copy";
-import LiveRender from "@/components/LiveRender";
 
 export default function HomeTabs() {
   const [active, setActive] = useState(homes.tabs[1].key);
@@ -29,7 +28,6 @@ export default function HomeTabs() {
       <div role="tabpanel" id={`panel-${tab.key}`} aria-labelledby={`tab-${tab.key}`} className="mt-12 grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:items-center">
         <figure className="relative aspect-[3/2] w-full overflow-hidden">
           <Image key={tab.image} src={tab.image} alt={tab.imageAlt} fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover" />
-          {"film" in tab && tab.film ? <LiveRender key={tab.film} src={tab.film} poster={tab.image} /> : null}
           <span className="render-tag">Artist&apos;s impression</span>
         </figure>
         <div>
