@@ -133,3 +133,4 @@ body {
 /* A thin dotted ring, a quiet nod to the Circle Living mark. */
 .ring { width: 56px; height: 56px; border-radius: 9999px; border: 1px dashed var(--bronze); margin: 0 auto; }
 .on-dark .ring { border-color: var(--bronze-soft); }
+@media (prefers-reduced-motion: reduce) { .live-render { display: none; } }
