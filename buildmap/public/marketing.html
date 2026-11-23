@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>BuildMap Meta Ads</title>
+<link rel="icon" href="/brand/buildmap-favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* A review board for the launch ads: filters, every ad at its true proportions with a download, the Reels, then the plan. */
+:root {
+  --navy: #0B1B33; --blue: #1257D6; --sky: #7FB0FF; --mist: #F3F6FB; --paper: #FCFCFD;
+  --ink2: #4A5870; --line: #DDE4EF; --white: #FFFFFF;
+  --bg: var(--paper); --surface: var(--white); --ink: var(--navy); --muted: var(--ink2); --accent: var(--blue); --chip: var(--mist);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #07111F; --surface: #0E1F38; --ink: #F3F6FB; --muted: #AFC0D8; --line: #22385A; --accent: var(--sky); --chip: #132845; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #07111F; --surface: #0E1F38; --ink: #F3F6FB; --muted: #AFC0D8; --line: #22385A; --accent: var(--sky); --chip: #132845; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Figtree", system-ui, sans-serif; font-size: 17px; line-height: 1.6; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-inline: 16px; }
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.02em; line-height: 1.12; text-wrap: balance; margin: 0; }
+p { margin: 0; }
+a { color: var(--accent); }
+.eyebrow { font-weight: 600; font-size: 14px; letter-spacing: .02em; color: var(--accent); }
+header.top { padding-block: 40px 28px; display: grid; gap: 14px; }
+header.top .logo { height: 36px; width: auto; }
+header.top h1 { font-size: clamp(32px, 5vw, 52px); }
+header.top .lede { max-width: 72ch; color: var(--muted); font-size: 18px; }
+.jump { display: flex; gap: 8px 22px; flex-wrap: wrap; font-size: 15px; font-weight: 600; }
+.jump a { text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 2px; }
+
+.bar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-block: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; padding-block: 12px; }
+.group { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.group > span { font-size: 13px; font-weight: 600; color: var(--muted); margin-right: 2px; }
+.chipbtn { font: inherit; font-size: 14px; font-weight: 500; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 6px 12px; border-radius: 2px; cursor: pointer; }
+.chipbtn[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.picks { margin-left: auto; display: flex; gap: 10px; align-items: center; font-size: 15px; }
+.copy, .dl { font: inherit; font-size: 15px; font-weight: 600; border: 0; border-radius: 2px; padding: 8px 14px; cursor: pointer; }
+.copy { background: var(--blue); color: #fff; }
+.status { width: 100%; font-size: 14px; color: var(--muted); min-height: 0; }
+.status:empty { display: none; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 28px 22px; padding-block: 28px 56px; }
+.card { display: grid; gap: 12px; align-content: start; }
+.card[hidden] { display: none; }
+.stage { background: var(--chip); border: 1px solid var(--line); padding: 14px; display: grid; place-items: center; min-height: 200px; }
+.stage canvas, .stage video { display: block; width: 100%; height: auto; max-height: 560px; object-fit: contain; box-shadow: 0 1px 3px rgba(11,27,51,.12); background: #fff; }
+.meta { display: flex; justify-content: space-between; gap: 10px; align-items: center; font-size: 14px; color: var(--muted); }
+.meta b { color: var(--ink); font-weight: 600; }
+.tag { display: inline-block; font-size: 13px; font-weight: 600; background: var(--chip); border: 1px solid var(--line); padding: 2px 8px; border-radius: 2px; color: var(--ink); }
+.fields { display: grid; gap: 6px; font-size: 15px; }
+.fields dt { font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+.fields dd { margin: 0 0 4px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.dl { background: var(--surface); color: var(--ink); border: 1px solid var(--line); font-weight: 500; font-size: 14px; padding: 7px 12px; }
+.pickbtn { font: inherit; font-size: 14px; font-weight: 600; border: 1px solid var(--accent); color: var(--accent); background: transparent; border-radius: 2px; padding: 7px 12px; cursor: pointer; }
+.pickbtn[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+
+section.block { border-top: 1px solid var(--line); padding-block: 44px; display: grid; gap: 22px; }
+section.block h2 { font-size: clamp(26px, 3.5vw, 38px); }
+section.block h3 { font-size: 21px; }
+.note { color: var(--muted); max-width: 78ch; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+.box { background: var(--surface); border: 1px solid var(--line); padding: 20px; display: grid; gap: 10px; align-content: start; }
+.box ul { margin: 0; padding-left: 20px; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; background: var(--surface); }
+th, td { text-align: left; padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; color: var(--muted); font-weight: 600; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: 10px; }
+.step { background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--blue); padding: 14px; display: grid; gap: 4px; font-size: 15px; }
+.step small { color: var(--muted); font-weight: 600; }
+footer { border-top: 1px solid var(--line); padding-block: 28px 48px; color: var(--muted); font-size: 14px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <img class="logo" src="/brand/buildmap-logo.svg" alt="BuildMap">
+    <p class="eyebrow">Launch ads · Meta (Facebook and Instagram)</p>
+    <h1>BuildMap Meta ads for landowners, architects and agents</h1>
+    <p class="lede">Nine angles, three for each audience, with every ad drawn at Meta's exact sizes so it's ready to download and upload, plus three short Reels. The pictures were made in Higgsfield (Nano Banana for stills, Kling for video) and the words follow the BuildMap voice. Tap <b>Pick</b> on the ones you like, then <b>Copy my picks</b> and send the numbers back.</p>
+    <nav class="jump" aria-label="Jump to"><a href="/">Back to the website</a><a href="#ads">Static ads</a><a href="#reels">Reels</a><a href="#plan">Launch plan</a><a href="#rules">Rules for every ad</a></nav>
+  </header>
+</div>
+
+<div class="bar" id="ads">
+  <div class="wrap">
+    <div class="group" role="group" aria-label="Audience" id="audGroup"><span>Audience</span></div>
+    <div class="group" role="group" aria-label="Size" id="sizeGroup"><span>Size</span></div>
+    <div class="group" role="group" aria-label="Show"><span>Show</span>
+      <button class="chipbtn" id="onlyPicked" aria-pressed="false">Picked only</button>
+    </div>
+    <div class="picks">
+      <span><b id="count">0</b> picked</span>
+      <button class="copy" id="copyBtn">Copy my picks</button>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="grid" id="grid"></div>
+
+  <section class="block" id="reels">
+    <p class="eyebrow">Reels and Stories · 9:16</p>
+    <h2>Three Reels, one for each audience</h2>
+    <p class="note">Five-second Kling clips made from the same stills, with the BuildMap panel held at the bottom for the last two seconds. <b>Download Reel</b> records the finished cut in your browser (about 7 seconds, so give it a moment). The plain clip is there too if you'd rather add text in Meta's own editor.</p>
+    <div class="grid" id="reelGrid" style="padding-block:0"></div>
+  </section>
+
+  <section class="block" id="plan">
+    <p class="eyebrow">Launch plan</p>
+    <h2>Getting BuildMap in front of the people who make property happen</h2>
+    <p class="note">One campaign per audience, so each gets its own budget and its own landing page. Every ad leads to the free first Lite report, because it costs the person nothing to try and it shows the product better than anything we can say in an ad. Figures marked "estimate" are starting points to replace with real results after the first fortnight.</p>
+    <div class="two">
+      <div class="box"><p class="eyebrow">Audience 1</p><h3>Homeowners and landowners</h3>
+        <p>People in Christchurch, Selwyn and Waimakariri on bigger sections, often 45 to 70, who've wondered whether their back lawn could be a second home or a few townhouses.</p>
+        <ul><li><b>Lands on:</b> <a href="/landowners">/landowners</a></li><li><b>Hook:</b> find out what your section could become, first report free.</li><li><b>Worry to answer:</b> "It'll be complicated and expensive to find out." The Lite report is free and in plain words.</li></ul></div>
+      <div class="box"><p class="eyebrow">Audience 2</p><h3>Architects and designers</h3>
+        <p>Small to mid-size Christchurch practices doing residential and multi-unit work, who lose hours on early planning homework and on clients whose sites can't carry the brief.</p>
+        <ul><li><b>Lands on:</b> <a href="/builders">/builders</a> for now (the closest page: reports in your own branding). A dedicated architects page would lift conversion.</li><li><b>Hook:</b> start sketching from what the site allows, and offer feasibility as your own service.</li><li><b>Worry to answer:</b> "Can I trust the rules?" Planning oversight from LG Consulting.</li></ul></div>
+      <div class="box"><p class="eyebrow">Audience 3</p><h3>Real estate agents</h3>
+        <p>Residential and land agents in Canterbury, especially those listing older homes on large or corner sections in medium-density zones.</p>
+        <ul><li><b>Lands on:</b> <a href="/agents">/agents</a> (with the commission calculator)</li><li><b>Hook:</b> walk into the appraisal with a plan, and pitch the on-sale of every home on the site.</li><li><b>Worry to answer:</b> "Will vendors care?" Vendors pick the agent who shows them the most their land can do.</li></ul></div>
+    </div>
+
+    <h3>Targeting in Meta</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Campaign</th><th scope="col">Location</th><th scope="col">Who</th><th scope="col">Placements</th></tr></thead>
+      <tbody>
+        <tr><td><b>BM · Landowners</b></td><td>Christchurch City, Selwyn and Waimakariri</td><td>Broad (Advantage+ audience) with interest suggestions: home improvement, property investment, real estate, gardening, renovation. Exclude people who've already ordered.</td><td>Feed, Stories and Reels</td></tr>
+        <tr><td><b>BM · Architects</b></td><td>Canterbury, then all of New Zealand once it works</td><td>Job titles and interests: architect, architectural designer, residential design, ArchiCAD, Revit, NZIA, ADNZ, Architectural Designers NZ. Small audience, so keep it broad within those.</td><td>Feed first, then Reels</td></tr>
+        <tr><td><b>BM · Agents</b></td><td>Canterbury, then all of New Zealand</td><td>Job titles and employers: real estate agent, salesperson, licensed agent, Harcourts, Ray White, Bayleys, LJ Hooker, Barfoot, Tall Poppy, Professionals. Retarget visitors to /agents.</td><td>Feed, Stories and Reels</td></tr>
+        <tr><td><b>BM · Retargeting</b></td><td>Everywhere the three run</td><td>Site visitors and Reel viewers in the last 30 days who haven't ordered</td><td>Feed and Stories</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">The landowner ads talk about homes and land, so Meta may ask for them to run under the <b>Housing</b> special ad category. If it does, age, gender and postcode targeting are switched off and the location radius has a 15 km minimum, so lean on the creative and on retargeting. BuildMap is a report service rather than a home for sale, so it may not apply, but tick it if Meta flags the ad rather than appealing.</p>
+
+    <h3>Funnel</h3>
+    <div class="flow">
+      <div class="step"><small>Step 1</small><b>Ad</b><p>One idea for one audience.</p></div>
+      <div class="step"><small>Step 2</small><b>Audience page</b><p>Speaks their language, with the calculator for agents.</p></div>
+      <div class="step"><small>Step 3</small><b>Address in</b><p>The free Lite report with a BuildMap account.</p></div>
+      <div class="step"><small>Step 4</small><b>Lite report</b><p>Back to them, with a call from the team.</p></div>
+      <div class="step"><small>Step 5</small><b>Upgrade</b><p>Technical report, development plan or the full package.</p></div>
+      <div class="step"><small>Step 6</small><b>Retarget</b><p>Visitors who didn't send an address see the Reels for 30 days.</p></div>
+    </div>
+
+    <h3>Budget and targets</h3>
+    <div class="tablewrap"><table>
+      <thead><tr><th scope="col">Item</th><th scope="col">Starting point (estimate)</th></tr></thead>
+      <tbody>
+        <tr><td>Monthly Meta budget</td><td class="n">NZ$3,000: landowners $1,400, agents $800, architects $500, retargeting $300</td></tr>
+        <tr><td>First fortnight</td><td>All nine angles live at the 4:5 size plus the Reels, spending evenly, then keep the best two angles per audience</td></tr>
+        <tr><td>Cost per address sent (free Lite report)</td><td class="n">Aim for NZ$15 to $40 for landowners, $30 to $80 for agents and architects</td></tr>
+        <tr><td>Landing page conversion</td><td class="n">Aim for 4 to 8% of visitors sending an address</td></tr>
+        <tr><td>Lite report to paid report</td><td class="n">Aim for 1 in 10 within 30 days</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Tracking before launch</h3>
+    <ul>
+      <li><b>Meta Pixel and Conversions API</b> on the site, with a <b>Lead</b> event when the order form succeeds, sent from the browser and the server and deduplicated. The site doesn't have the Pixel yet, so this is the one job to do before switching ads on.</li>
+      <li><b>UTM tags</b> are already on every landing link below, so each order shows its audience, angle and size.</li>
+      <li><b>Weekly check:</b> spend, addresses sent, cost per address, paid upgrades and the best three ads.</li>
+    </ul>
+  </section>
+
+  <section class="block" id="rules">
+    <p class="eyebrow">Rules for every ad</p>
+    <h2>What every ad must keep to</h2>
+    <ul>
+      <li>Every ad carries "Concept only. Subject to council consent." We map the route; the council and the market make the calls, so no ad promises a consent, a yield, a price or a sale result.</li>
+      <li>Ads talk about zoning, rules, hazards and planning oversight. They never sell or suggest third-party property data such as sales records or valuations, and none of it is offered for resale.</li>
+      <li>Prices match the site: first Lite report free with an account, technical report $499 within 24 hours, full development plan $2,499 plus GST within 48 hours, full package $4,999 plus GST within 5 working days.</li>
+      <li>Pictures are illustrations made with AI tools, not real projects or real clients. The plans on them are artwork, not BuildMap drawings.</li>
+      <li>Voice: plain, calm and conversational, no exclamation marks, no "revolutionary" or "AI-powered" headlines.</li>
+    </ul>
+  </section>
+</main>
+
+<footer><div class="wrap">BuildMap · Launch ads for review · Not for public release</div></footer>
+
+<script>
+(function () {
+  // Higgsfield files are served through the site's own /hf/ path, so the canvas can export them.
+  const HF = "/hf/";
+  const IMG = {
+    "h-section": "hf_20261123_005540_c7e89c0c-c6b1-4d49-9a67-1189207dc143.png",
+    "h-kitchen": "hf_20261123_005540_a6e97021-06f9-4b72-8cd1-2aa17ffef621.png",
+    "h-pegs": "hf_20261123_005540_5509cb9d-e31a-4a38-a8b0-f7fbfc8c68a3.png",
+    "a-desk": "hf_20261123_005645_dd39ba68-4d5d-4867-8353-ea4654a72b4b.png",
+    "a-studio": "hf_20261123_005540_295d4fef-378c-40c3-8c1e-fd7bdc6727aa.png",
+    "a-model": "hf_20261123_005540_63ab00cd-2dd5-49b3-8616-6bdadd2cd313.png",
+    "r-appraisal": "hf_20261123_005541_d98dc856-901d-46a4-b06a-b316b99fac40.png",
+    "r-sign": "hf_20261123_005644_df163ece-5d4d-4cee-a125-82b1f3fc6b46.png",
+    "r-phone": "hf_20261123_005541_d0220b0a-29f8-4aba-b8f7-3b19b46fa4a7.png"
+  };
+  const SITE = "https://pitch-buildmap.vercel.app";
+  const SIZES = [
+    { key: "sq", name: "Feed 1:1", w: 1080, h: 1080 },
+    { key: "pt", name: "Feed 4:5", w: 1080, h: 1350 },
+    { key: "st", name: "Stories and Reels 9:16", w: 1080, h: 1920 }
+  ];
+  const AUD = {
+    land: { name: "Landowners", chip: "For landowners", page: "/landowners" },
+    arch: { name: "Architects", chip: "For architects", page: "/builders" },
+    agent: { name: "Agents", chip: "For agents", page: "/agents" }
+  };
+  // Each angle: the words on the image (head, sub, btn) and the Meta fields typed in Ads Manager.
+  const ANGLES = [
+    { id: "L1", aud: "land", img: "h-section", fy: .48,
+      head: "What could your section become?", sub: "Find out free, in plain words.", btn: "Get my free report",
+      primary: "Pop in your address and we'll work out what your section can take under the zoning, from a second home out the back to a row of townhouses, and flag any hazards worth knowing about. Your first Lite report is on us.",
+      primary2: "Plenty of people with a big back lawn wonder what it could be, and never find out because the planning side looks like hard work. We'll do that part and send it back in plain words, and the first one's free.",
+      mhead: "Your first Lite report is free", desc: "Zoning, options and hazards for your address", cta: "Learn more" },
+    { id: "L2", aud: "land", img: "h-kitchen", fy: .55,
+      head: "Talk it over with the facts on the table", sub: "Your first report is on us.", btn: "Send my address",
+      primary: "Before you call a builder or an agent, it helps to know what your land can actually do. We'll set out the zone, what you could build and the hazards to be aware of, so you can talk it over at the kitchen table before you spend a cent.",
+      primary2: "Your section might carry a second home, a subdivision or a few townhouses, or it might be best left as it is. A free Lite report tells you which, in words you won't need to look up.",
+      mhead: "Know your options before you spend a cent", desc: "Free Lite report with a BuildMap account", cta: "Learn more" },
+    { id: "L3", aud: "land", img: "h-pegs", fy: .5,
+      head: "Know what you can build before you start", sub: "Technical report back within 24 hours.", btn: "See how it works",
+      primary: "Before you pay for drawings, it's worth knowing the rules your site has to work within. We check the zone, the height-to-boundary and setback rules, the consent pathway and the hazards on record, and the technical report comes back within 24 hours for $499.",
+      primary2: "Start with the free Lite report to see your options, then step up to the technical report when you're ready to decide. Both come with planning oversight from LG Consulting, Christchurch town planners.",
+      mhead: "Map the route from section to consent", desc: "Lite report free, technical report $499", cta: "Learn more" },
+    { id: "A1", aud: "arch", img: "a-desk", fy: .5,
+      head: "The planning homework, done before the first sketch", sub: "Zone, rules and hazards in one report.", btn: "Try it free",
+      primary: "Get the zone, the key rules and the hazards for a client's site set out in one report, so you start sketching from what the site allows rather than finding out at consent. Technical reports come back within 24 hours.",
+      primary2: "Early planning checks eat into fees you can't always charge for. Send us the address and we'll send back what the site can take, with the rules and their sources, so your first sketch is already on the right footing.",
+      mhead: "Start the design from what the site allows", desc: "First Lite report free, technical report in 24 hours", cta: "Learn more" },
+    { id: "A2", aud: "arch", img: "a-studio", fy: .55,
+      head: "Feasibility your clients can hold, with your name on it", sub: "Reports prepared in your branding.", btn: "Brand my reports",
+      primary: "Offer early site feasibility as your own service. We prepare the report in your branding, you present it and set your own price, and you start the design with a client who already knows what their site can take.",
+      primary2: "Clients often arrive with a brief their site can't carry. A BuildMap report in your branding sorts that out in the first meeting, and it's a paid service rather than unbilled hours.",
+      mhead: "Add feasibility to your services", desc: "Your logo, your colours, your price", cta: "Learn more" },
+    { id: "A3", aud: "arch", img: "a-model", fy: .52,
+      head: "Know the envelope before you design to it", sub: "With planning oversight from LG Consulting.", btn: "See a sample",
+      primary: "Every BuildMap report has planning oversight from LG Consulting, Christchurch town planners who specialise in resource consents, so the height-to-boundary, setbacks and coverage you design to have been looked at by people who do this every day.",
+      primary2: "If something on the site still needs checking, the report says so plainly rather than glossing over it, so you know which questions to take to council before you've drawn too much.",
+      mhead: "Rules checked, gaps called out", desc: "Technical report within 24 hours, $499", cta: "Learn more" },
+    { id: "R1", aud: "agent", img: "r-appraisal", fy: .55,
+      head: "One listing, or seven?", sub: "Bring the plan to the appraisal.", btn: "Run an address free",
+      primary: "Walk into the appraisal already knowing what the site can carry. Show the vendor the concept plan and the yield, and you're pitching the on-sale of every home on it as well as the land. Your first Lite report is free.",
+      primary2: "Other agents bring comparable sales. You can bring a plan for the site and how you'd sell every home on it, and that's the conversation that wins the listing.",
+      mhead: "Win the listing with a plan", desc: "First Lite report free for agents", cta: "Learn more" },
+    { id: "R2", aud: "agent", img: "r-sign", fy: .55,
+      head: "“Maybe subdividable” doesn't sell land", sub: "A technical report does.", btn: "See how it works",
+      primary: "Buyers bid with more confidence when they can see what a site can become. A BuildMap technical report sets out the zoning, the consent pathway and what still needs checking, within 24 hours for $499, ready to hand over for their due diligence.",
+      primary2: "Swap “buyer to check” for a technical report on the listing. It answers the questions buyers' advisers ask first, so the good ones stay in the race.",
+      mhead: "Sell land with certainty", desc: "Technical report within 24 hours, $499", cta: "Learn more" },
+    { id: "R3", aud: "agent", img: "r-phone", fy: .5,
+      head: "Launch the project with the website already made", sub: "Website, brochure and ads in 5 working days.", btn: "See the package",
+      primary: "Once you win the listing, we'll have the project website, the sales brochure and the ads ready within 5 working days, in your branding, so you can start taking enquiries well before the first home is built.",
+      primary2: "The full package takes a site from the development plan to a sale-ready project website, brochure and marketing, for $4,999 plus GST, and enquiries go straight to your inbox.",
+      mhead: "Sale-ready in 5 working days", desc: "Full package $4,999 plus GST", cta: "Learn more" }
+  ];
+
+  const utm = (a, s) => `${SITE}${AUD[a.aud].page}?utm_source=meta&utm_medium=paid_social&utm_campaign=buildmap_${a.aud}&utm_content=${a.id}-${s}`;
+
+  // Load fonts and pictures once.
+  const cache = {};
+  const loadImg = (src) => cache[src] || (cache[src] = new Promise((res, rej) => { const i = new Image(); i.onload = () => res(i); i.onerror = rej; i.src = src; }));
+  const fontsReady = Promise.all(["400 30px Figtree", "600 70px Figtree", "700 30px Figtree"].map((f) => document.fonts.load(f))).catch(() => {});
+
+  function wrap(ctx, text, maxW) {
+    const words = text.split(" "), lines = []; let line = "";
+    for (const w of words) { const t = line ? line + " " + w : w; if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = w; } else line = t; }
+    if (line) lines.push(line); return lines;
+  }
+  function cover(ctx, img, x, y, w, h, fy) {
+    const r = Math.max(w / img.width, h / img.height), sw = w / r, sh = h / r;
+    const sx = (img.width - sw) / 2, sy = Math.min(Math.max(img.height * fy - sh / 2, 0), img.height - sh);
+    ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+  }
+  function roundRect(ctx, x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+
+  // Draws the BuildMap panel (logo, headline, line, button, fine print) from panelTop down. Shared by statics and Reels.
+  function drawPanel(ctx, a, W, H, panelTop, logo, opts = {}) {
+    const pad = 72, story = H / W > 1.6;
+    const bottomSafe = story ? 330 : 0;
+    ctx.fillStyle = "#FCFCFD"; ctx.fillRect(0, panelTop, W, H - panelTop);
+    // three thin layers, like the mark
+    const ly = panelTop; ctx.fillStyle = "#1257D6"; ctx.fillRect(0, ly, W, 6);
+    ctx.fillStyle = "#7FB0FF"; ctx.fillRect(0, ly + 6, W * .62, 4);
+    ctx.fillStyle = "#0B1B33"; ctx.fillRect(0, ly + 10, W * .3, 3);
+    const sq = H === W, lh = story ? 64 : sq ? 44 : 50; const top0 = panelTop + (sq ? 44 : 56); ctx.drawImage(logo, pad, top0, lh * logo.width / logo.height, lh);
+    // Headline shrinks until the headline, line and button fit above the bottom edge (and the Stories safe zone).
+    const subSize = story ? 42 : sq ? 32 : 36, gapTop = sq ? 30 : 40;
+    const limit = H - bottomSafe - (sq ? 40 : 56);
+    let hs = story ? 80 : sq ? 58 : 70, lines;
+    for (;;) {
+      ctx.font = `600 ${hs}px Figtree`; lines = wrap(ctx, a.head, W - pad * 2);
+      const end = top0 + lh + gapTop + lines.length * hs * 1.1 + 12 + subSize * 1.3 + 36 + 84;
+      if (end <= limit || hs <= 44) break; hs -= 2;
+    }
+    ctx.fillStyle = "#0B1B33"; ctx.textBaseline = "top";
+    let y = top0 + lh + gapTop;
+    lines.forEach((l) => { ctx.fillText(l, pad, y); y += hs * 1.1; });
+    ctx.fillStyle = "#4A5870"; ctx.font = `400 ${subSize}px Figtree`;
+    ctx.fillText(a.sub, pad, y + 12);
+    const contentEnd = y + 12 + subSize * 1.3;
+    // button and fine print sit on the bottom edge (above the Stories safe zone)
+    const by = Math.max(contentEnd + 36, H - bottomSafe - (sq ? 56 : 72) - 84);
+    ctx.font = "600 32px Figtree"; const bw = ctx.measureText(a.btn).width + 72;
+    ctx.fillStyle = "#1257D6"; roundRect(ctx, pad, by, bw, 84, 4); ctx.fill();
+    ctx.fillStyle = "#FFFFFF"; ctx.textBaseline = "middle"; ctx.fillText(a.btn, pad + 36, by + 43);
+    ctx.fillStyle = "#4A5870"; ctx.font = "400 22px Figtree"; ctx.textAlign = "right";
+    ctx.fillText("Concept only.", W - pad, by + 28); ctx.fillText("Subject to council consent.", W - pad, by + 58);
+    ctx.textAlign = "left"; ctx.textBaseline = "top";
+  }
+  function drawChip(ctx, a, top) {
+    const t = AUD[a.aud].chip; ctx.font = "600 28px Figtree"; const w = ctx.measureText(t).width + 44;
+    ctx.fillStyle = "rgba(252,252,253,.94)"; roundRect(ctx, 56, top, w, 56, 4); ctx.fill();
+    ctx.fillStyle = "#0B1B33"; ctx.textBaseline = "middle"; ctx.fillText(t, 78, top + 29); ctx.textBaseline = "top";
+  }
+  // Where the picture stops and the panel starts, per size.
+  const panelTopFor = (W, H) => H === 1080 ? 560 : H === 1350 ? 790 : 960;
+
+  async function drawStatic(canvas, a, s) {
+    await fontsReady;
+    const [img, logo] = await Promise.all([loadImg(HF + IMG[a.img]), loadImg("/brand/buildmap-logo.svg")]);
+    const { w: W, h: H } = s, ctx = canvas.getContext("2d");
+    canvas.width = W; canvas.height = H;
+    const pt = panelTopFor(W, H);
+    cover(ctx, img, 0, 0, W, pt, a.fy);
+    drawChip(ctx, a, H / W > 1.6 ? 290 : 56);
+    drawPanel(ctx, a, W, H, pt, logo);
+  }
+
+  // Build the board.
+  const ads = [];
+  ANGLES.forEach((a) => SIZES.forEach((s) => ads.push({ n: ads.length + 1, a, s })));
+
+  let picks = new Set();
+  try { const v = localStorage.getItem("buildmap-ad-picks"); if (v) picks = new Set(JSON.parse(v)); } catch (e) {}
+  const save = () => { try { localStorage.setItem("buildmap-ad-picks", JSON.stringify([...picks])); } catch (e) {} };
+  let aud = "all", size = "all", onlyPicked = false;
+
+  function chips(groupId, items, onPick) {
+    const g = document.getElementById(groupId);
+    items.forEach(([k, label]) => {
+      const b = document.createElement("button"); b.className = "chipbtn"; b.textContent = label; b.dataset.k = k;
+      b.setAttribute("aria-pressed", k === "all" ? "true" : "false");
+      b.onclick = () => { g.querySelectorAll(".chipbtn").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false")); onPick(k); filter(); };
+      g.appendChild(b);
+    });
+  }
+  chips("audGroup", [["all", "All"]].concat(Object.entries(AUD).map(([k, v]) => [k, v.name])), (k) => (aud = k));
+  chips("sizeGroup", [["all", "All"]].concat(SIZES.map((s) => [s.key, s.name.split(" ").pop()])), (k) => (size = k));
+  document.getElementById("onlyPicked").onclick = (e) => { onlyPicked = !onlyPicked; e.currentTarget.setAttribute("aria-pressed", String(onlyPicked)); filter(); };
+
+  const grid = document.getElementById("grid");
+  const cards = ads.map((ad) => {
+    const { a, s } = ad, label = `${a.id}-${s.key}`;
+    const c = document.createElement("article"); c.className = "card"; c.dataset.aud = a.aud; c.dataset.size = s.key; c.dataset.n = label;
+    c.innerHTML = `<div class="stage"><canvas role="img" aria-label="Ad ${label}: ${a.head.replace(/"/g, "")}" width="${s.w}" height="${s.h}"></canvas></div>
+      <div class="meta"><span><b>${label}</b> · ${s.name} · ${s.w}×${s.h}</span><span class="tag">${AUD[a.aud].name}</span></div>
+      <dl class="fields">
+        <dt>Primary text</dt><dd>${a.primary}</dd>
+        <dt>Primary text, variation</dt><dd>${a.primary2}</dd>
+        <dt>Headline</dt><dd>${a.mhead}</dd>
+        <dt>Description</dt><dd>${a.desc}</dd>
+        <dt>Button · Landing page</dt><dd>${a.cta} · <a href="${utm(a, s.key)}" target="_blank" rel="noopener">${AUD[a.aud].page}</a></dd>
+      </dl>
+      <div class="actions"><button class="pickbtn" aria-pressed="${picks.has(label)}">Pick</button><button class="dl" data-act="png">Download PNG</button><button class="dl" data-act="copy">Copy ad text</button></div>`;
+    const canvas = c.querySelector("canvas");
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); drawStatic(canvas, a, s).catch(() => {}); } }, { rootMargin: "600px" });
+    io.observe(c);
+    c.querySelector(".pickbtn").onclick = (e) => { picks.has(label) ? picks.delete(label) : picks.add(label); e.currentTarget.setAttribute("aria-pressed", String(picks.has(label))); save(); count(); if (onlyPicked) filter(); };
+    c.querySelector('[data-act="png"]').onclick = async () => {
+      await drawStatic(canvas, a, s);
+      canvas.toBlob((b) => { const u = URL.createObjectURL(b); const l = document.createElement("a"); l.href = u; l.download = `buildmap-${label}-${s.w}x${s.h}.png`; l.click(); setTimeout(() => URL.revokeObjectURL(u), 4000); }, "image/png");
+    };
+    c.querySelector('[data-act="copy"]').onclick = () => copyText(`${label}\nPrimary text: ${a.primary}\nPrimary text (variation): ${a.primary2}\nHeadline: ${a.mhead}\nDescription: ${a.desc}\nButton: ${a.cta}\nURL: ${utm(a, s.key)}`, "Ad text copied.");
+    grid.appendChild(c);
+    return c;
+  });
+
+  function filter() { cards.forEach((c) => { c.hidden = !((aud === "all" || c.dataset.aud === aud) && (size === "all" || c.dataset.size === size) && (!onlyPicked || picks.has(c.dataset.n))); }); }
+  function count() { document.getElementById("count").textContent = picks.size; }
+  const status = document.getElementById("status");
+  async function copyText(t, msg) {
+    try { await navigator.clipboard.writeText(t); status.textContent = msg; }
+    catch (e) { status.textContent = "Couldn't reach the clipboard. Here it is to copy: " + t; }
+  }
+  document.getElementById("copyBtn").onclick = () => copyText(picks.size ? "BuildMap ad picks: " + [...picks].sort().join(", ") : "", picks.size ? "Your picks are copied. Paste them into a message." : "Pick a few ads first.");
+  count(); filter();
+
+  // Reels: Kling clips with the BuildMap panel rising in for the last two seconds.
+  const REELS = [
+    { id: "L1", file: "hf_20261123_005811_c41f1e88-e139-437c-9452-c1eaf72cfe7a.mp4", angle: "L1" },
+    { id: "A3", file: "hf_20261123_005811_faa54f76-dda9-489e-839d-5c9f78cd2030.mp4", angle: "A3" },
+    { id: "R2", file: "hf_20261123_005812_abedf574-f29a-43b5-8a54-eee8aedda95a.mp4", angle: "R2" }
+  ];
+  const reelGrid = document.getElementById("reelGrid");
+  REELS.forEach((r) => {
+    const a = ANGLES.find((x) => x.id === r.angle);
+    const c = document.createElement("article"); c.className = "card";
+    c.innerHTML = `<div class="stage"><canvas width="1080" height="1920" role="img" aria-label="Reel ${r.id} preview"></canvas></div>
+      <div class="meta"><span><b>Reel ${r.id}</b> · 9:16 · 1080×1920 · about 7 s</span><span class="tag">${AUD[a.aud].name}</span></div>
+      <dl class="fields"><dt>Primary text</dt><dd>${a.primary}</dd><dt>Headline · Button</dt><dd>${a.mhead} · ${a.cta}</dd></dl>
+      <div class="actions"><button class="pickbtn" aria-pressed="${picks.has("Reel-" + r.id)}">Pick</button><button class="dl" data-act="play">Play</button><button class="dl" data-act="rec">Download Reel</button><a class="dl" href="${HF + r.file}" download style="text-decoration:none">Plain clip</a></div>`;
+    const canvas = c.querySelector("canvas"), ctx = canvas.getContext("2d");
+    const video = document.createElement("video"); video.src = HF + r.file; video.muted = true; video.playsInline = true; video.preload = "auto";
+    let logo; loadImg("/brand/buildmap-logo.svg").then((l) => (logo = l));
+    const END = 2; // seconds the panel holds after the clip
+    function frame(t, dur) {
+      ctx.fillStyle = "#0B1B33"; ctx.fillRect(0, 0, 1080, 1920);
+      if (video.readyState >= 2) cover(ctx, video, 0, 0, 1080, 1920, .5);
+      drawChip(ctx, a, 290);
+      const k = Math.min(Math.max((t - (dur - 1.2)) / .6, 0), 1); // panel rises in over 0.6 s, 1.2 s before the clip ends
+      if (k > 0 && logo) { const e = 1 - Math.pow(1 - k, 3); const top = 1920 - (1920 - 960) * e; ctx.save(); ctx.globalAlpha = Math.min(1, k * 1.4); drawPanel(ctx, a, 1080, 1920, top, logo); ctx.restore(); }
+    }
+    video.addEventListener("loadeddata", () => fontsReady.then(() => frame(0, 99)));
+    function run(record) {
+      return new Promise((done) => {
+        video.currentTime = 0; video.play();
+        const dur = (video.duration || 5) + END; const t0 = performance.now();
+        const tick = () => { const t = (performance.now() - t0) / 1000; frame(t, dur); if (t < dur) requestAnimationFrame(tick); else done(); };
+        requestAnimationFrame(tick);
+      });
+    }
+    c.querySelector('[data-act="play"]').onclick = () => run(false);
+    c.querySelector('[data-act="rec"]').onclick = async (e) => {
+      const btn = e.currentTarget; btn.disabled = true; btn.textContent = "Recording…";
+      const types = ["video/mp4;codecs=avc1", "video/mp4", "video/webm;codecs=vp9", "video/webm"];
+      const type = types.find((t) => window.MediaRecorder && MediaRecorder.isTypeSupported(t));
+      if (!type) { status.textContent = "This browser can't record video. Try Chrome, or use the plain clip."; btn.disabled = false; btn.textContent = "Download Reel"; return; }
+      const rec = new MediaRecorder(canvas.captureStream(30), { mimeType: type, videoBitsPerSecond: 12e6 }); const chunks = [];
+      rec.ondataavailable = (ev) => ev.data.size && chunks.push(ev.data);
+      rec.onstop = () => { const b = new Blob(chunks, { type }); const u = URL.createObjectURL(b); const l = document.createElement("a"); l.href = u; l.download = `buildmap-reel-${r.id}.${type.includes("mp4") ? "mp4" : "webm"}`; l.click(); setTimeout(() => URL.revokeObjectURL(u), 4000); btn.disabled = false; btn.textContent = "Download Reel"; if (!type.includes("mp4")) status.textContent = "Saved as WebM, which Meta accepts. Chrome or Safari saves MP4."; };
+      rec.start(); await run(true); rec.stop();
+    };
+    c.querySelector(".pickbtn").onclick = (e) => { const k = "Reel-" + r.id; picks.has(k) ? picks.delete(k) : picks.add(k); e.currentTarget.setAttribute("aria-pressed", String(picks.has(k))); save(); count(); };
+    reelGrid.appendChild(c);
+  });
+})();
+</script>
+</body>
+</html>

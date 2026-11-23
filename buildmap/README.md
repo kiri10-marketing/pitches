@@ -10,6 +10,7 @@ From an address to a sale-ready website. This folder holds the first pieces of t
 | `tools/validate.mjs` | Checks a job package: `node tools/validate.mjs <job folder>` |
 | `tools/to-site-brief.mjs` | Turns a package into `site-brief.md` and `copy-seed.json` for the website-generator skill |
 | `src/` | The BuildMap website (Next.js): brand, header product demo and the order form (address in, job file out) |
+| `public/marketing.html` | The launch ads board at `/marketing`: nine Meta ad angles for landowners, architects and agents at 1:1, 4:5 and 9:16 with PNG download, three Reels, and the launch plan. Pictures come from Higgsfield through the `/hf/` rewrite in `next.config.mjs` |
 | `src/app/brand/` | The brand sheet at `/brand`: logo, colour, type and voice. Logo files are in `public/brand/` (wordmark outlined, no fonts needed) |
 
 ## Order page
