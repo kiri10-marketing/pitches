@@ -31,8 +31,8 @@ export const hero = {
   status: "Private homes · Shared gardens · A common house · Two original villas retained",
   cta: "Register interest",
   image: "/media/hero-twilight.jpg", // still used for social previews
-  dayImage: "/media/hero-day.jpg", // original render relit for day, Port Hills added above the horizon (homes unchanged)
-  nightImage: "/media/hero-dusk.jpg", // original dusk render, pixel for pixel below the skyline, Port Hills added
+  dayImage: "/media/hero-day.jpg", // original render relit for day, Port Hills and the stadium added above the horizon (homes unchanged)
+  nightImage: "/media/hero-dusk.jpg", // original dusk render, pixel for pixel below the skyline, Port Hills and the stadium added
   imageAlt: "Artist's impression of The Central Circle at dusk: brick and sage-green homes around a lit shared garden, with two original villas on Kilmore Street",
   renderNote: "Artist's impression",
 };
@@ -235,6 +235,7 @@ export const form = {
 export const brochure = {
   href: "/brochure/The-Central-Circle-Brochure.pdf",
   label: "Download the brochure",
+  short: "Brochure",
   note: "PDF · 10 pages · 2.9 MB",
 };
 

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { site, nav } from "@/content/copy";
+import { site, nav, brochure } from "@/content/copy";
 
 // Transparent over the hero, stone once scrolled. Shows live Christchurch weather, as on The Rise.
 export default function SiteHeader() {
@@ -45,8 +45,8 @@ export default function SiteHeader() {
         </a>
         <div className="flex items-center justify-end gap-5 text-[0.8rem] uppercase tracking-[0.22em]">
           <a href="#location" className="hidden 2xl:inline hover:opacity-70">Location</a>
-          <a href="#register" className={`btn !min-h-[44px] !px-4 sm:!px-5 max-lg:!hidden ${solid || open ? "btn-ink" : "btn-ghost-light"}`}>
-            {nav.cta}
+          <a href={brochure.href} download className={`btn !min-h-[44px] !px-4 sm:!px-5 max-lg:!hidden ${solid || open ? "btn-ink" : "btn-ghost-light"}`}>
+            {brochure.short}
           </a>
         </div>
       </div>
@@ -58,6 +58,7 @@ export default function SiteHeader() {
             ))}
           </ul>
           <a href="#register" onClick={() => setOpen(false)} className="btn btn-ink mt-6 w-full">{nav.cta}</a>
+          <a href={brochure.href} download onClick={() => setOpen(false)} className="btn mt-3 w-full">{brochure.short}</a>
           {weather && <p className="mt-4 text-sm uppercase tracking-[0.2em] text-body">{site.weatherLabel} · {weather}</p>}
         </nav>
       )}
